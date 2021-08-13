@@ -1,7 +1,8 @@
 import "./App.css";
-import { Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, ThemeProvider } from "@material-ui/core";
+import { theme } from "../services/constant/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
+import Layout from "../components/Layout/Layout.jsx";
 const useStyles = makeStyles({
   button: {
     backgroundColor: "pink ",
@@ -12,9 +13,9 @@ function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
-      <div style={{ height: "100vh" }}>
-        <Button className={classes.button}>sdfsdfd</Button>
-      </div>
+      <ThemeProvider theme={theme}>
+        <Layout>How are you</Layout>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

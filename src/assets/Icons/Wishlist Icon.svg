@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Action Icons/Wishlist Icon</title>
+    <defs>
+        <filter id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.090196 0 0 0 0 0.090196 0 0 0 0 0.090196 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Action-Icons/Wishlist-Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Bound" x="0" y="0" width="24" height="24"></rect>
+        <g filter="url(#filter-1)" id="Wishlist-Icon">
+            <g transform="translate(1.500000, 2.500000)">
+                <path d="M15,1.795 C16.2101114,1.795 17.2925976,2.2531968 18.0700573,3.01582758 C18.8391957,3.77029581 19.305,4.81983385 19.305,5.99509537 C19.305,9.459087 15.9017077,12.1911754 11.1614868,16.4121173 L11.1614868,16.4121173 L10.4999984,17.0005788 L9.84469404,16.4176209 C5.09856238,12.1914159 1.695,9.45921869 1.695,5.99509537 C1.695,4.81983385 2.16080426,3.77029581 2.92994271,3.01582758 C3.70740243,2.2531968 4.78988856,1.795 6,1.795 C7.39153894,1.795 8.72733406,2.43006934 9.5991212,3.43037006 C9.99244703,3.8816776 10.2992184,4.41639149 10.5000718,4.99374812 C10.7008646,4.41624681 11.0076062,3.88161655 11.4008788,3.43037006 C12.2726659,2.43006934 13.6084611,1.795 15,1.795 Z" stroke="#171717" stroke-width="2.39"></path>
+            </g>
+        </g>
+    </g>
+</svg>

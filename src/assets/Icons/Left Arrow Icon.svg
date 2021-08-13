@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Action Icons/Left Arrow Icon</title>
+    <g id="Action-Icons/Left-Arrow-Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Bound" x="0" y="0" width="24" height="24"></rect>
+        <path d="M9.30604236,3 L10.9951202,4.68907782 L4.602,11.082 L24,11.0822374 L24,13.4709541 L4.575,13.47 L10.9951202,19.8907782 L9.30604237,21.579856 L1.706,13.979 L1.68907782,13.9951202 L1.68398628e-12,12.3060424 L0.017,12.29 L7.39805017e-09,12.2738136 L1.68907782,10.5847358 L1.706,10.601 L9.30604236,3 Z" id="Left-Arrow" fill="#171717"></path>
+    </g>
+</svg>

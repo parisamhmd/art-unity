@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Action Icons/Full Screen Icon</title>
+    <g id="Action-Icons/Full-Screen-Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Fullscreen-Icon">
+            <rect id="Bound" x="0" y="0" width="24" height="24"></rect>
+            <path d="M4.38871676,14 L4.388,19.61 L10,19.61 L10,21.9987168 L4.388,21.998 L4.38871676,22 L2,22 L2,14 L4.38871676,14 Z" id="Combined-Shape" fill="#171717"></path>
+            <line x1="4.03775259" y1="19.61" x2="19.6112832" y2="4.39" id="Line" stroke="#171717" stroke-width="2.399"></line>
+            <path d="M16.3887168,2 L16.388,7.61 L22,7.61 L22,9.99871676 L16.388,9.998 L16.3887168,10 L14,10 L14,2 L16.3887168,2 Z" id="Combined-Shape" fill="#171717" transform="translate(18.000000, 6.000000) scale(-1, -1) translate(-18.000000, -6.000000) "></path>
+        </g>
+    </g>
+</svg>
