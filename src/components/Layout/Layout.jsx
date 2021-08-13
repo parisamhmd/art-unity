@@ -35,7 +35,7 @@ import React from "react";
 // import UserSummary from "./UserSummary/UserSummary";
 // import { useSidebarCollapse } from "services/contexts/SideNavContext/SidenavCollapseContext";
 const drawerWidth = 12;
-const headerHeight = 4;
+const headerHeight = 6;
 
 const BaseLayout = ({ children, crumb }) => {
   const classes = useStyle();
@@ -64,7 +64,7 @@ const BaseLayout = ({ children, crumb }) => {
         >
           <div className={classes.logoBox}>
             <img
-              style={{ height: "5rem", width: "8.938rem" }}
+              style={{ height: "4rem", width: "8.938rem" }}
               src={logo}
               alt="logo"
             />
@@ -109,6 +109,7 @@ const useStyle = makeStyles((theme) => ({
     width: `calc(100% - ${drawerWidth}rem)`,
     marginRight: `${drawerWidth}rem`,
     boxShadow: `6px 6px 6px ${theme.palette.grey[100]}`,
+    backgroundColor: theme.palette.grey[300],
   },
   mainBox: {
     flexGrow: 1,
@@ -136,9 +137,9 @@ const useStyle = makeStyles((theme) => ({
     overflowY: "hidden",
   },
   logoBox: {
-    height: "7rem",
+    height: `${headerHeight}rem`,
     width: "100%",
-    padding: "1rem 1.5rem ",
+    padding: "0.875rem 1.5rem ",
     borderBottom: `solid 0.125rem ${theme.palette.grey[200]}`,
     zIndex: 20,
   },
