@@ -19,7 +19,7 @@
 // };
 
 // export default Layout;
-import { AppBar, Drawer, MenuList, ListItemIcon } from "@material-ui/core";
+import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../services/assets/Img/Logo/logo.svg";
 import React from "react";
@@ -36,7 +36,7 @@ import { routes } from "../../services/constant/routes";
 // import UserSummary from "./UserSummary/UserSummary";
 // import { useSidebarCollapse } from "services/contexts/SideNavContext/SidenavCollapseContext";
 const drawerWidth = 12;
-const headerHeight = 6;
+const headerHeight = 4;
 
 const BaseLayout = ({ children, crumb }) => {
   const classes = useStyle();
@@ -114,11 +114,11 @@ const useStyle = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.default,
   },
   appBar: {
-    height: `${headerHeight}rem`,
+    height: `${headerHeight - 0.125}rem`,
     width: `calc(100% - ${drawerWidth}rem)`,
     marginRight: `${drawerWidth}rem`,
-    boxShadow: `6px 6px 6px ${theme.palette.grey[100]}`,
-    backgroundColor: theme.palette.grey[300],
+    boxShadow: `4px 4px 4px ${theme.palette.grey[100]}`,
+    backgroundColor: theme.palette.background.paper,
   },
   mainBox: {
     flexGrow: 1,
@@ -148,7 +148,7 @@ const useStyle = makeStyles((theme) => ({
   logoBox: {
     height: `${headerHeight}rem`,
     width: "100%",
-    padding: "0.875rem 1.5rem ",
+    padding: "0rem 1.5rem ",
     borderBottom: `solid 0.125rem ${theme.palette.grey[200]}`,
     zIndex: 20,
   },
