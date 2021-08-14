@@ -1,9 +1,10 @@
 import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../services/assets/Img/Logo/logo.svg";
 import React from "react";
 import { routes } from "../../services/constant/routes";
+import clsx from "clsx";
 // import { useQueryClient } from "react-query";
 // import { images } from "services/constants/images";
 // import { EUserActionTypes } from "services/contexts/UserContext/models";
@@ -20,6 +21,7 @@ const headerHeight = 4;
 
 const BaseLayout = ({ children, crumb }) => {
   const classes = useStyle();
+  const { pathname } = useLocation();
   //   const userDispatch = useUserDispatch();
   //   const queryClient = useQueryClient();
   //   const [, setCollapsedItems] = useSidebarCollapse();
@@ -31,7 +33,6 @@ const BaseLayout = ({ children, crumb }) => {
   //     queryClient.resetQueries();
   //     setCollapsedItems(null);
   //   };
-
   return (
     <div className={classes.container}>
       <div className={classes.drawerBox}>
@@ -55,17 +56,25 @@ const BaseLayout = ({ children, crumb }) => {
             style={{ overflowY: "scroll" }}
           >
             <div className="h-0.5" />
-            <div style={{ paddingBottom: "4rem" }}>{/* <SideNav /> */}</div>
             <div className={classes.exitBtnBox}>
               <MenuList>
                 {routes.map((route) => (
-                  <MenuItem className="mt-6">
-                    <Link to={route.path}>
-                      {" "}
-                      <img src={route.icon} className="pl-2" />
-                      {route.title}
-                    </Link>
-                  </MenuItem>
+                  <Link to={route.path}>
+                    <MenuItem style={{ paddingTop: "1rem" }}>
+                      <img
+                        src={route.icon}
+                        className="px-3"
+                        alt={route.title}
+                      />
+                      <span
+                        className={clsx({
+                          [classes.selectedBox]: pathname === route.path,
+                        })}
+                      >
+                        {route.title}
+                      </span>
+                    </MenuItem>
+                  </Link>
                 ))}
               </MenuList>
             </div>
@@ -90,7 +99,7 @@ const useStyle = makeStyles((theme) => ({
     height: `${headerHeight - 0.125}rem`,
     width: `calc(100% - ${drawerWidth}rem)`,
     marginRight: `${drawerWidth}rem`,
-    boxShadow: `4px 4px 4px ${theme.palette.grey[100]}`,
+    boxShadow: `2px 2px 2px ${theme.palette.grey[100]}`,
     backgroundColor: theme.palette.background.paper,
   },
   mainBox: {
@@ -123,7 +132,8 @@ const useStyle = makeStyles((theme) => ({
     width: "100%",
     padding: "0rem 1.5rem ",
     borderBottom: `solid 0.125rem ${theme.palette.grey[200]}`,
-    zIndex: 20,
+    backgroundColor: theme.palette.background.paper,
+    zIndex: 200,
   },
   scrollableBox: {
     "&::-webkit-scrollbar": {
@@ -138,6 +148,10 @@ const useStyle = makeStyles((theme) => ({
   exitButton: {
     fontSize: ".875rem",
     fontWeight: "bold",
-    padding: ".5rem 1rem",
+    padding: ".5rem 2rem",
+  },
+  selectedBox: {
+    fontWeight: "bold",
+    color: theme.palette.secondary.main,
   },
 }));
