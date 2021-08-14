@@ -1,8 +1,10 @@
-import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../services/assets/Img/Logo/logo.svg";
-import React from "react";
+// import logoutIcon from "../../services/assets/Img/Logo/icons8-shutdown-35.png";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { routes } from "../../services/constant/routes";
 import clsx from "clsx";
 // import { useQueryClient } from "react-query";
@@ -25,14 +27,14 @@ const BaseLayout = ({ children, crumb }) => {
   //   const userDispatch = useUserDispatch();
   //   const queryClient = useQueryClient();
   //   const [, setCollapsedItems] = useSidebarCollapse();
-  //   const handleExit = () => {
-  //     LSService.clearToken();
-  //     redirect("/dashboard/auth", true);
-  //     userDispatch({ type: EUserActionTypes.LOGOUT });
-  //     // noinspection JSIgnoredPromiseFromCall
-  //     queryClient.resetQueries();
-  //     setCollapsedItems(null);
-  //   };
+  const handleExit = () => {
+    //     LSService.clearToken();
+    //     redirect("/dashboard/auth", true);
+    //     userDispatch({ type: EUserActionTypes.LOGOUT });
+    //     // noinspection JSIgnoredPromiseFromCall
+    //     queryClient.resetQueries();
+    //     setCollapsedItems(null);
+  };
   return (
     <div className={classes.container}>
       <div className={classes.drawerBox}>
@@ -82,7 +84,12 @@ const BaseLayout = ({ children, crumb }) => {
         </Drawer>
       </div>
       <div className={classes.mainBox}>
-        <AppBar position="fixed" className={classes.appBar} />
+        <AppBar position="fixed" className={classes.appBar}>
+          <ExitToAppIcon
+            onClick={() => handleExit()}
+            style={{ fontSize: "2rem", margin: "0.875rem", color: "black" }}
+          />
+        </AppBar>
         <main className={classes.main}>{children}</main>
       </div>
     </div>
