@@ -19,7 +19,7 @@
 // };
 
 // export default Layout;
-import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
+import { AppBar, Drawer, MenuList, ListItemIcon } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../services/assets/Img/Logo/logo.svg";
 import React from "react";
@@ -80,7 +80,10 @@ const BaseLayout = ({ children, crumb }) => {
             <div className={classes.exitBtnBox}>
               <MenuList>
                 {routes.map((route) => (
-                  <MenuItem link={route.path}>{route.title}</MenuItem>
+                  <MenuItem link={route.path}>
+                    <img src={route.icon} />
+                    {route.title}
+                  </MenuItem>
                 ))}
               </MenuList>
               {/* <MenuItem
