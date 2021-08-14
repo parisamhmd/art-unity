@@ -16,7 +16,6 @@ export const imagesProxy = (imagesBasePath, allImages, imagesInnerPaths) =>
           get(innerTarget, prop, receiver) {
             if (prop in innerTarget) {
               const imageName = innerTarget[prop];
-              console.log(`${baseAddress}${imageName}`);
               return `${baseAddress}${imageName}`;
             }
             return Reflect.get(innerTarget, prop, receiver);

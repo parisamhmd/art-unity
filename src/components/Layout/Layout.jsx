@@ -1,25 +1,5 @@
-// import React from "react";
-// import { makeclasses } from "@material-ui/core/classes";
-
-// const useStyle = makeclasses((theme) => ({
-//   container: {
-//     height: "100vh",
-//     width: "10rem",
-//     position: "fixed",
-//     right: "0",
-//     backgroundColor: "pink ",
-//     marginLeft: "10rem",
-//   },
-// }));
-
-// const Layout = (props) => {
-//   const classes = useStyle();
-
-//   return <div className={classes.container}>{props.children}</div>;
-// };
-
-// export default Layout;
 import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../services/assets/Img/Logo/logo.svg";
 import React from "react";
@@ -74,27 +54,20 @@ const BaseLayout = ({ children, crumb }) => {
             className={classes.scrollableBox}
             style={{ overflowY: "scroll" }}
           >
-            {/* <UserSummary /> */}
             <div className="h-0.5" />
             <div style={{ paddingBottom: "4rem" }}>{/* <SideNav /> */}</div>
             <div className={classes.exitBtnBox}>
               <MenuList>
                 {routes.map((route) => (
-                  <MenuItem link={route.path}>
-                    <img src={route.icon} />
-                    {route.title}
+                  <MenuItem className="mt-6">
+                    <Link to={route.path}>
+                      {" "}
+                      <img src={route.icon} className="pl-2" />
+                      {route.title}
+                    </Link>
                   </MenuItem>
                 ))}
               </MenuList>
-              {/* <MenuItem
-                title="خروج"
-                selectedImage=""
-                unSelectedImage={images.icons.exit}
-                hasChildren={false}
-                active={false}
-                collapse={false}
-                onClick={handleExit}
-              /> */}
             </div>
           </div>
         </Drawer>
