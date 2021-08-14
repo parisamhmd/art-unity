@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Action Icons/Play</title>
-    <g id="Action-Icons/Play" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Bound" x="0" y="0" width="24" height="24"></rect>
-        <polygon id="Play-Icon" fill="#171717" points="7 4 7 20 20 12"></polygon>
-    </g>
-</svg>

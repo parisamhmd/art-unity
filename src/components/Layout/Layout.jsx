@@ -19,10 +19,11 @@
 // };
 
 // export default Layout;
-import { AppBar, Drawer } from "@material-ui/core";
+import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import logo from "../../assets/Img/Logo/logo.svg";
+import logo from "../../services/assets/Img/Logo/logo.svg";
 import React from "react";
+import { routes } from "../../services/constant/routes";
 // import { useQueryClient } from "react-query";
 // import { images } from "services/constants/images";
 // import { EUserActionTypes } from "services/contexts/UserContext/models";
@@ -77,6 +78,11 @@ const BaseLayout = ({ children, crumb }) => {
             <div className="h-0.5" />
             <div style={{ paddingBottom: "4rem" }}>{/* <SideNav /> */}</div>
             <div className={classes.exitBtnBox}>
+              <MenuList>
+                {routes.map((route) => (
+                  <MenuItem link={route.path}>{route.title}</MenuItem>
+                ))}
+              </MenuList>
               {/* <MenuItem
                 title="خروج"
                 selectedImage=""

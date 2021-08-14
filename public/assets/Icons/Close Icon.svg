@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Action Icons/Close Icon</title>
-    <g id="Action-Icons/Close-Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Bound" x="0" y="0" width="24" height="24"></rect>
-        <path d="M19.366538,3 L21,4.63636364 L13.6489135,11.999 L21,19.3636364 L19.366538,21 L12.0149135,13.636 L12.0003754,13.6519751 L12,13.65 L11.9996246,13.6519751 L11.9850865,13.636 L4.63346196,21 L3,19.3636364 L10.3510865,11.999 L3.00000001,4.63636364 L4.63346197,3 L11.9840865,10.364 L11.9996246,10.3480249 L12,10.349 L12.0003754,10.3480249 L12.0159135,10.364 L19.366538,3 Z" id="Close" fill="#171717"></path>
-    </g>
-</svg>

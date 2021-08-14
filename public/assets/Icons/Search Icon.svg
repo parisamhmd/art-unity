@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Action Icons/Search Icon</title>
-    <g id="Action-Icons/Search-Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Bound" x="0" y="0" width="24" height="24"></rect>
-        <path d="M11,2 C15.9705627,2 20,6.02943725 20,11 C20,12.947935 19.3811546,14.7513309 18.3293416,16.2243098 L22.2880134,20.1836714 L20.5989356,21.8727492 L16.6947026,17.9695966 C15.14339,19.2386495 13.1606065,20 11,20 C6.02943725,20 2,15.9705627 2,11 C2,6.02943725 6.02943725,2 11,2 Z M11,4.39 C7.3493978,4.39 4.39,7.3493978 4.39,11 C4.39,14.6506022 7.3493978,17.61 11,17.61 C14.6506022,17.61 17.61,14.6506022 17.61,11 C17.61,7.3493978 14.6506022,4.39 11,4.39 Z" id="Search-icon" fill="#171717"></path>
-    </g>
-</svg>
