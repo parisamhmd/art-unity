@@ -1,15 +1,27 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../components/Table";
+import PageLayout from "../../components/Layout/PageLayout";
 const useStyle = makeStyles((theme) => ({
   container: {},
 }));
 
 const ArtistsPage = () => {
   const classes = useStyle();
-
+  const [search, setSearch] = React.useState(undefined);
   return (
     <div className={classes.container}>
+      <PageLayout
+        onAdd={() => {
+          console.log("Add");
+        }}
+        addButtonTitle="ایجاد نویسنده جدید"
+        searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
+        searchValue={search}
+        onSearchInputChange={(e) => {
+          setSearch(e);
+        }}
+      />
       <Table
         tableHeaderData={[
           { title: "اسم", value: "Name" },
@@ -18,7 +30,6 @@ const ArtistsPage = () => {
           { title: "علاقه", value: "Interest" },
           { title: "هنر", value: "Art" },
           { title: "تغییرات", value: "modify" },
-          //   { title: "هنر", value: "Art" },
         ]}
         data={[
           {

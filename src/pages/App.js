@@ -3,7 +3,7 @@ import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../services/constant/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
-import Layout from "../components/Layout/Layout";
+import Layout from "../components/Layout/BaseLayout";
 import ArtistsPage from "./Artists";
 import TopicsPage from "./Topics";
 import LayersPage from "./Layers";
