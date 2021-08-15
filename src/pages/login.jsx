@@ -8,7 +8,7 @@ const useStyle = makeStyles((theme) => ({
 const LoginPage = () => {
   const classes = useStyle();
 
-  return <div className={classes.container}>فهئثق</div>;
+  return <div className={classes.container}></div>;
 };
 
 export default LoginPage;

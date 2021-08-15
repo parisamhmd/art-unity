@@ -1,5 +1,5 @@
 import "./App.css";
-import { makeStyles, ThemeProvider } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../services/constant/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
@@ -11,13 +11,7 @@ import SkillsPage from "./Skills";
 import BlogPage from "./Blog";
 import ArtWorksPage from "./ArtWorks/index";
 
-const useStyles = makeStyles({
-  button: {
-    backgroundColor: "pink ",
-  },
-});
 function App() {
-  const classes = useStyles();
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
