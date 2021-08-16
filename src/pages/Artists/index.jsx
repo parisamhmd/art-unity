@@ -2,6 +2,7 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../components/Table";
 import PageLayout from "../../components/Layout/PageLayout";
+import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 const useStyle = makeStyles((theme) => ({
   container: {},
 }));
@@ -12,16 +13,19 @@ const ArtistsPage = () => {
   return (
     <div className={classes.container}>
       <PageLayout
-        onAdd={() => {
-          console.log("Add");
-        }}
+        // onAdd={() => {
+        //   console.log("Add");
+        // }}
         addButtonTitle="ایجاد نویسنده جدید"
         searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
         searchValue={search}
         onSearchInputChange={(e) => {
           setSearch(e);
         }}
-      />
+      >
+        <ArtistsFormModal />
+        {/* Modal Component */}
+      </PageLayout>
       <Table
         tableHeaderData={[
           { title: "اسم", value: "Name" },
