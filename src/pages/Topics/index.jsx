@@ -1,5 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import Table from "../../components/Table";
+import PageLayout from "../../components/Layout/PageLayout";
+import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
+import axios from "axios";
+import { useQuery } from "react-query";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
@@ -7,8 +12,46 @@ const useStyle = makeStyles((theme) => ({
 
 const TopicsPage = () => {
   const classes = useStyle();
+  const [search, setSearch] = React.useState(undefined);
 
-  return <div className={classes.container}> Topics</div>;
+  const getArtistsData = async () => {
+    const res = await axios.get("/artTopic/all");
+    return res.data;
+  };
+  const { data } = useQuery("/artist/all", getArtistsData);
+  return (
+    <div className={classes.container}>
+      <div className="bg-white p-10">
+        <PageLayout
+          // onAdd={() => {
+          //   console.log("Add");
+          // }}
+          addButtonTitle="ایجاد تاپیک جدید"
+          searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
+          searchValue={search}
+          onSearchInputChange={(e) => {
+            setSearch(e);
+          }}
+        >
+          <ArtistsFormModal />
+          {/* Modal Component */}
+        </PageLayout>
+        <Table
+          tableHeaderData={[
+            { title: "نام اثر", value: "name" },
+            { title: "تغییرات", value: "modify" },
+          ]}
+          data={data}
+          onDeleteRow={(id) => {
+            console.log("Delete " + id);
+          }}
+          onEditRow={() => {
+            console.log("Edit");
+          }}
+        />
+      </div>
+    </div>
+  );
 };
 
 export default TopicsPage;

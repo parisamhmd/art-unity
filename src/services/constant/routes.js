@@ -8,7 +8,7 @@ import artworksIcon from "../assets/Icons/icons8-art-prices-20.png";
 export const routes = [
   { path: "/artists", title: "هنرمندان", icon: artistsIcon },
   { path: "/topics", title: "تاپیک ها", icon: topicIcon },
-  { path: "/layers", title: "طبقه بندی ها", icon: layerIcon },
+  { path: "/categories", title: "طبقه بندی ها", icon: layerIcon },
   { path: "/skills", title: "مهارت ها  ", icon: skillIcon },
   { path: "/blog", title: "بلاگ", icon: blogIcon },
   { path: "/artworks", title: "آثار هنری ", icon: artworksIcon },

@@ -10,15 +10,15 @@ const useStyle = makeStyles((theme) => ({
   container: {},
 }));
 
-const SkillsPage = () => {
+const CategoriesPage = () => {
   const classes = useStyle();
   const [search, setSearch] = React.useState(undefined);
 
   const getArtistsData = async () => {
-    const res = await axios.get("/occupation/all");
+    const res = await axios.get("/artCategory/all");
     return res.data;
   };
-  const { data } = useQuery("/occupation/all", getArtistsData);
+  const { data } = useQuery("/artist/all", getArtistsData);
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
@@ -38,8 +38,9 @@ const SkillsPage = () => {
         </PageLayout>
         <Table
           tableHeaderData={[
-            { title: "عنوان", value: "name" },
-            { title: "عملیات", value: "modify" },
+            { title: "نام", value: "name" },
+            { title: "تاپیک", value: "artTopic.0.name" },
+            { title: "تغییرات", value: "modify" },
           ]}
           data={data}
           onDeleteRow={(id) => {
@@ -54,4 +55,4 @@ const SkillsPage = () => {
   );
 };
 
-export default SkillsPage;
+export default CategoriesPage;

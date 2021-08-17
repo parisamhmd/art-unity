@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import DeleteIcon from "../../services/assets/Icons/DeleteIcon.svg";
 import EditIcon from "../../services/assets/Icons/EditIcon.svg";
+import _ from "lodash";
 
 const Table = ({ tableHeaderData, data, onEditRow, onDeleteRow }) => {
   const classes = useStyle();
@@ -19,7 +20,7 @@ const Table = ({ tableHeaderData, data, onEditRow, onDeleteRow }) => {
         </tr>
       </Grid>
       <tbody>
-        {data.map((row, index) => (
+        {data?.map((row, index) => (
           <Grid
             key={index}
             container
@@ -42,12 +43,12 @@ const Table = ({ tableHeaderData, data, onEditRow, onDeleteRow }) => {
                     <img
                       src={DeleteIcon}
                       alt="DeleteIcon"
-                      onClick={() => onDeleteRow(row.id)}
+                      onClick={() => onDeleteRow(row._id)}
                     />
                     <img src={EditIcon} alt="EditIcon" onClick={onEditRow} />
                   </div>
                 ) : (
-                  row[cell.value]
+                  _.get(row, cell.value, "_") || "_"
                 )}
               </Grid>
             ))}
@@ -73,7 +74,7 @@ const useStyle = makeStyles((theme) => ({
   },
   th: {
     padding: "0.875rem",
-    height: "2.5rem",
+    height: "1rem",
     width: "100%",
     backgroundColor: theme.palette.secondary.dark,
     display: "flex",
@@ -114,7 +115,7 @@ const useStyle = makeStyles((theme) => ({
     fontWeight: 500,
     color: theme.palette.text.primary,
     boxSizing: "border-box",
-    padding: "1.188rem .875rem",
+    padding: "0.875rem .5rem",
   },
   deleteIcon: {
     width: "1.8rem",

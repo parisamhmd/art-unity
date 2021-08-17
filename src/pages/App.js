@@ -6,17 +6,18 @@ import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Layout from "../components/Layout/BaseLayout";
 import ArtistsPage from "./Artists";
 import TopicsPage from "./Topics";
-import LayersPage from "./Layers";
+import CategoriesPage from "./Categories";
 import SkillsPage from "./Skills";
 import BlogPage from "./Blog";
 import ArtWorksPage from "./ArtWorks/index";
-
+import LoginPage from "./login";
 function App() {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <Router>
+          <Route path="/login" render={() => <LoginPage />} />
           <Route
             path="/artists"
             render={() => (
@@ -35,10 +36,10 @@ function App() {
           />
           <Route
             exact
-            path="/layers"
+            path="/categories"
             render={() => (
               <Layout>
-                <LayersPage />
+                <CategoriesPage />
               </Layout>
             )}
           />
@@ -68,7 +69,7 @@ function App() {
               </Layout>
             )}
           />
-          <Route path="/" render={() => <Redirect to="/artists" />} />
+          <Route exact path="/" render={() => <Redirect to="/artists" />} />
         </Router>
       </ThemeProvider>
     </QueryClientProvider>

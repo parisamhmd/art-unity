@@ -115,6 +115,7 @@ const useStyle = makeStyles((theme) => ({
   main: {
     padding: `${headerHeight + 5}rem 3.25rem `,
     direction: "rtl",
+    background: "#D9D9D9",
     paddingRight: `${drawerWidth + 5}rem `,
     minHeight: "100vh",
   },
@@ -130,6 +131,8 @@ const useStyle = makeStyles((theme) => ({
     direction: "rtl",
   },
   drawerPaper: {
+    backgroundColor: "#2B3956",
+    color: "#fff",
     width: `${drawerWidth}rem)`,
     height: "100vh",
     overflowY: "hidden",

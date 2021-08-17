@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../components/Table";
 import PageLayout from "../../components/Layout/PageLayout";
 import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
+import axios from "axios";
+import { useQuery } from "react-query";
+
 const useStyle = makeStyles((theme) => ({
   container: {},
 }));
@@ -10,56 +13,44 @@ const useStyle = makeStyles((theme) => ({
 const ArtistsPage = () => {
   const classes = useStyle();
   const [search, setSearch] = React.useState(undefined);
+
+  const getArtistsData = async () => {
+    const res = await axios.get("/artist/all");
+    return res.data;
+  };
+  const { data } = useQuery("/artist/all", getArtistsData);
   return (
     <div className={classes.container}>
-      <PageLayout
-        // onAdd={() => {
-        //   console.log("Add");
-        // }}
-        addButtonTitle="ایجاد نویسنده جدید"
-        searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
-        searchValue={search}
-        onSearchInputChange={(e) => {
-          setSearch(e);
-        }}
-      >
-        <ArtistsFormModal />
-        {/* Modal Component */}
-      </PageLayout>
-      <Table
-        tableHeaderData={[
-          { title: "اسم", value: "Name" },
-          { title: "نام خانوادگی", value: "lastName" },
-          { title: "سن", value: "Age" },
-          { title: "علاقه", value: "Interest" },
-          { title: "هنر", value: "Art" },
-          { title: "تغییرات", value: "modify" },
-        ]}
-        data={[
-          {
-            id: 1,
-            Name: "پریسا",
-            lastName: "محمدی",
-            Age: 20,
-            Interest: "Painting",
-            Art: "نقاشی",
-          },
-          {
-            id: 0,
-            Name: "پریسا",
-            lastName: "محمدی",
-            Age: 25,
-            Interest: "Painting",
-            Art: "نقاشی",
-          },
-        ]}
-        onDeleteRow={(id) => {
-          console.log("Delete " + id);
-        }}
-        onEditRow={() => {
-          console.log("Edit");
-        }}
-      />
+      <div className="bg-white p-10">
+        <PageLayout
+          addButtonTitle="افزودن هنرمند جدید"
+          searchInputPlaceholder="بر روی اسم هنرمندان سرچ کنید "
+          searchValue={search}
+          onSearchInputChange={(e) => {
+            setSearch(e);
+          }}
+        >
+          <ArtistsFormModal />
+          {/* Modal Component */}
+        </PageLayout>
+        <Table
+          tableHeaderData={[
+            { title: "نام", value: "firstName" },
+            { title: "نام خانوادگی", value: "lastName" },
+            { title: "محل تولد", value: "birthPlace" },
+            { title: "سال تولد", value: "birthYear" },
+            { title: "هنر", value: "occupation.name" },
+            { title: "عملیات", value: "modify" },
+          ]}
+          data={data}
+          onDeleteRow={(id) => {
+            console.log("Delete " + id);
+          }}
+          onEditRow={() => {
+            console.log("Edit");
+          }}
+        />
+      </div>
     </div>
   );
 };

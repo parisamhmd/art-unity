@@ -4,6 +4,23 @@ import "./index.css";
 import App from "./pages/App";
 import reportWebVitals from "./reportWebVitals";
 import "tailwindcss/tailwind.css";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
+
+axios.defaults.baseURL = "http://37.152.187.245:5000";
+axios.interceptors.request.use((config) => {
+  const token = Cookies.get("token");
+  const { url } = config;
+  const notSendToken = url === "/admin/login";
+
+  if (!token && !notSendToken) {
+    window.location.replace("/login");
+  } else {
+    config.headers["Authorization"] = `Bearer ${token}`;
+  }
+  return config;
+});
 
 ReactDOM.render(
   <React.StrictMode>
