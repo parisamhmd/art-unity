@@ -14,19 +14,16 @@ const SkillsPage = () => {
   const classes = useStyle();
   const [search, setSearch] = React.useState(undefined);
 
-  const getArtistsData = async () => {
+  const getOccupationData = async () => {
     const res = await axios.get("/occupation/all");
     return res.data;
   };
-  const { data } = useQuery("/occupation/all", getArtistsData);
+  const { data } = useQuery("/occupation/all", getOccupationData);
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
         <PageLayout
-          // onAdd={() => {
-          //   console.log("Add");
-          // }}
-          addButtonTitle="ایجاد طبقه بندی جدید"
+          addButtonTitle="افزودن حرف جدید"
           searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
           searchValue={search}
           onSearchInputChange={(e) => {
@@ -38,7 +35,7 @@ const SkillsPage = () => {
         </PageLayout>
         <Table
           tableHeaderData={[
-            { title: "عنوان", value: "name" },
+            { title: "نام", value: "name" },
             { title: "عملیات", value: "modify" },
           ]}
           data={data}

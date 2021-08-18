@@ -14,19 +14,16 @@ const CategoriesPage = () => {
   const classes = useStyle();
   const [search, setSearch] = React.useState(undefined);
 
-  const getArtistsData = async () => {
+  const getCategoriesData = async () => {
     const res = await axios.get("/artCategory/all");
     return res.data;
   };
-  const { data } = useQuery("/artist/all", getArtistsData);
+  const { data } = useQuery("/artCategory/all", getCategoriesData);
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
         <PageLayout
-          // onAdd={() => {
-          //   console.log("Add");
-          // }}
-          addButtonTitle="ایجاد طبقه بندی جدید"
+          addButtonTitle="افزودن طبقه بندی جدید"
           searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
           searchValue={search}
           onSearchInputChange={(e) => {
@@ -39,7 +36,7 @@ const CategoriesPage = () => {
         <Table
           tableHeaderData={[
             { title: "نام", value: "name" },
-            { title: "تاپیک", value: "artTopic.0.name" },
+            { title: "تاپیک ها", value: "artTopic.0.name" },
             { title: "تغییرات", value: "modify" },
           ]}
           data={data}

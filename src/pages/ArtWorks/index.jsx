@@ -40,7 +40,7 @@ const ArtWorksPage = () => {
           tableHeaderData={[
             { title: "نام اثر", value: "title" },
             { title: "طبقه بندی", value: "artCategory[name]" },
-            { title: "هنرمند", value: "birthPlace" },
+            { title: "هنرمند", value: "artist.firstName" },
             { title: "تغییرات", value: "modify" },
           ]}
           data={data}

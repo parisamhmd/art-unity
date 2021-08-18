@@ -14,20 +14,17 @@ const TopicsPage = () => {
   const classes = useStyle();
   const [search, setSearch] = React.useState(undefined);
 
-  const getArtistsData = async () => {
+  const getArtTopicsData = async () => {
     const res = await axios.get("/artTopic/all");
     return res.data;
   };
-  const { data } = useQuery("/artist/all", getArtistsData);
+  const { data } = useQuery("/artTopic/all", getArtTopicsData);
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
         <PageLayout
-          // onAdd={() => {
-          //   console.log("Add");
-          // }}
-          addButtonTitle="ایجاد تاپیک جدید"
-          searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
+          addButtonTitle="افزودن تاپیک جدید"
+          searchInputPlaceholder="بر روی عنوان تاپیک ها سرچ کنید "
           searchValue={search}
           onSearchInputChange={(e) => {
             setSearch(e);
@@ -38,8 +35,8 @@ const TopicsPage = () => {
         </PageLayout>
         <Table
           tableHeaderData={[
-            { title: "نام اثر", value: "name" },
-            { title: "تغییرات", value: "modify" },
+            { title: "نام", value: "name" },
+            { title: "عملیات", value: "modify" },
           ]}
           data={data}
           onDeleteRow={(id) => {
