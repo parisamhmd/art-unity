@@ -1,8 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button, InputBase } from "@material-ui/core";
+import { InputBase } from "@material-ui/core";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
+import Button from "../Button";
 
 const PageLayout = ({
   addButtonTitle,
@@ -45,20 +46,14 @@ export default PageLayout;
 
 const useStyle = makeStyles((theme) => ({
   searchInput: {
+    width: "60%",
+    // marginLeft: "rem",
+    fontFamily: "Vazir",
     backgroundColor: theme.palette.background.paper,
     borderRadius: "0.5rem",
-    border: `2px solid ${theme.palette.secondary.dark}`,
-    height: "3rem",
+    border: `1px solid ${theme.palette.secondary.main}`,
+    height: "2.5rem",
     fontSize: "1rem",
-    padding: "1rem",
-  },
-  addButton: {
-    backgroundColor: theme.palette.secondary.dark,
-    borderRadius: "0.5rem",
-    color: theme.palette.background.paper,
-    height: "3rem",
-    fontSize: "1.125rem",
-    fontWeight: "bold",
     padding: "1rem",
   },
 }));

@@ -4,6 +4,7 @@ import { theme } from "../services/constant/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Layout from "../components/Layout/BaseLayout";
+import AlertContextProvider from "../../src/services/context/AlertContext/Provider";
 import ArtistsPage from "./Artists";
 import TopicsPage from "./Topics";
 import CategoriesPage from "./Categories";
@@ -16,61 +17,63 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <Router>
-          <Route path="/login" render={() => <LoginPage />} />
-          <Route
-            path="/artists"
-            render={() => (
-              <Layout>
-                <ArtistsPage />
-              </Layout>
-            )}
-          />
-          <Route
-            path="/topics"
-            render={() => (
-              <Layout>
-                <TopicsPage />
-              </Layout>
-            )}
-          />
-          <Route
-            exact
-            path="/categories"
-            render={() => (
-              <Layout>
-                <CategoriesPage />
-              </Layout>
-            )}
-          />
-          <Route
-            path="/skills"
-            render={() => (
-              <Layout>
-                <SkillsPage />
-              </Layout>
-            )}
-          />
-          <Route
-            exact
-            path="/blog"
-            render={() => (
-              <Layout>
-                <BlogPage />
-              </Layout>
-            )}
-          />
-          <Route
-            path="/artworks"
-            render={() => (
-              <Layout>
-                {" "}
-                <ArtWorksPage />{" "}
-              </Layout>
-            )}
-          />
-          <Route exact path="/" render={() => <Redirect to="/artists" />} />
-        </Router>
+        <AlertContextProvider>
+          <Router>
+            <Route path="/login" render={() => <LoginPage />} />
+            <Route
+              path="/artists"
+              render={() => (
+                <Layout>
+                  <ArtistsPage />
+                </Layout>
+              )}
+            />
+            <Route
+              path="/topics"
+              render={() => (
+                <Layout>
+                  <TopicsPage />
+                </Layout>
+              )}
+            />
+            <Route
+              exact
+              path="/categories"
+              render={() => (
+                <Layout>
+                  <CategoriesPage />
+                </Layout>
+              )}
+            />
+            <Route
+              path="/skills"
+              render={() => (
+                <Layout>
+                  <SkillsPage />
+                </Layout>
+              )}
+            />
+            <Route
+              exact
+              path="/blog"
+              render={() => (
+                <Layout>
+                  <BlogPage />
+                </Layout>
+              )}
+            />
+            <Route
+              path="/artworks"
+              render={() => (
+                <Layout>
+                  {" "}
+                  <ArtWorksPage />{" "}
+                </Layout>
+              )}
+            />
+            <Route exact path="/" render={() => <Redirect to="/artists" />} />
+          </Router>
+        </AlertContextProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

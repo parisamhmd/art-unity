@@ -8,6 +8,7 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
+
 const useStyle = makeStyles((theme) => ({
   container: {
     backgroundColor: "#D9D9D9",
@@ -62,6 +63,13 @@ const LoginPage = () => {
           <p className="text-2xl mt-2 text-right text-gray-600">
             ورود به پنل کاربری ادمین
           </p>
+          {/* <form
+            // method="post"
+            // action="/"
+            onSubmit={() => {
+              login();
+            }}
+          > */}
           <TextInput
             className="mt-10 mb-6"
             placeholder="09XXXXXXXXX"
@@ -72,15 +80,21 @@ const LoginPage = () => {
               e?.length < 12 && setNumber(e);
             }}
           />
+          {/* <input type="submit" value="Submit"> */}
           <Button
+            type="submit"
+            variant="contained"
+            color="primary"
             disabled={number.length < 11}
-            style={{ background: "blue", width: "100%", color: "white" }}
             onClick={() => {
               login();
             }}
+            className="w-full"
           >
             ورود
           </Button>
+          {/* </input> */}
+          {/* </form> */}
         </div>
       </div>
     </div>

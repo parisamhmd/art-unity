@@ -3,6 +3,8 @@ import { Link, useLocation } from "react-router-dom";
 import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../services/assets/Img/Logo/logo.svg";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
 // import logoutIcon from "../../services/assets/Img/Logo/icons8-shutdown-35.png";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { routes } from "../../services/constant/routes";
@@ -24,10 +26,13 @@ const headerHeight = 4;
 const BaseLayout = ({ children, crumb }) => {
   const classes = useStyle();
   const { pathname } = useLocation();
+  const history = useHistory();
   //   const userDispatch = useUserDispatch();
   //   const queryClient = useQueryClient();
   //   const [, setCollapsedItems] = useSidebarCollapse();
   const handleExit = () => {
+    Cookies.remove("token");
+    history.push("/login");
     //     LSService.clearToken();
     //     redirect("/dashboard/auth", true);
     //     userDispatch({ type: EUserActionTypes.LOGOUT });
@@ -63,18 +68,17 @@ const BaseLayout = ({ children, crumb }) => {
                 {routes.map((route) => (
                   <Link to={route.path}>
                     <MenuItem style={{ paddingTop: "1rem" }}>
-                      <img
-                        src={route.icon}
-                        className="px-3"
-                        alt={route.title}
-                      />
-                      <span
-                        className={clsx({
-                          [classes.selectedBox]: pathname === route.path,
-                        })}
+                      <div className="ml-4">{route.icon}</div>
+                      <p
+                        className={clsx(
+                          {
+                            [classes.selectedBox]: pathname === route.path,
+                          },
+                          classes.text
+                        )}
                       >
                         {route.title}
-                      </span>
+                      </p>
                     </MenuItem>
                   </Link>
                 ))}
@@ -86,6 +90,7 @@ const BaseLayout = ({ children, crumb }) => {
       <div className={classes.mainBox}>
         <AppBar position="fixed" className={classes.appBar}>
           <ExitToAppIcon
+            className="cursor-pointer"
             onClick={() => handleExit()}
             style={{ fontSize: "2rem", margin: "0.875rem", color: "black" }}
           />
@@ -115,7 +120,7 @@ const useStyle = makeStyles((theme) => ({
   main: {
     padding: `${headerHeight + 5}rem 3.25rem `,
     direction: "rtl",
-    background: "#D9D9D9",
+    background: "#F5F6F3",
     paddingRight: `${drawerWidth + 5}rem `,
     minHeight: "100vh",
   },
@@ -131,7 +136,7 @@ const useStyle = makeStyles((theme) => ({
     direction: "rtl",
   },
   drawerPaper: {
-    backgroundColor: "#2B3956",
+    backgroundColor: "#002D62",
     color: "#fff",
     width: `${drawerWidth}rem)`,
     height: "100vh",
@@ -163,5 +168,9 @@ const useStyle = makeStyles((theme) => ({
   selectedBox: {
     fontWeight: "bold",
     color: theme.palette.secondary.main,
+  },
+  text: {
+    fontFamily: "Vazir",
+    fontWeight: 500,
   },
 }));

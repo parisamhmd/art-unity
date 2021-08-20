@@ -1,8 +1,8 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
-import DeleteIcon from "../../services/assets/Icons/DeleteIcon.svg";
-import EditIcon from "../../services/assets/Icons/EditIcon.svg";
+import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import _ from "lodash";
 
 const Table = ({ tableHeaderData, data, onEditRow, onDeleteRow }) => {
@@ -36,16 +36,18 @@ const Table = ({ tableHeaderData, data, onEditRow, onDeleteRow }) => {
                 className={classes.td}
                 component="td"
                 xs={12}
-                style={{ wordBreak: "break-word" }}
+                style={{ wordBreak: "break-word", fontWeight: "bold" }}
               >
                 {cell.value === "modify" ? (
                   <div className="flex flex-wrap gap-2">
-                    <img
-                      src={DeleteIcon}
-                      alt="DeleteIcon"
+                    <EditOutlinedIcon
+                      className="cursor-pointer"
+                      onClick={onEditRow}
+                    />
+                    <DeleteOutlineIcon
+                      className="cursor-pointer"
                       onClick={() => onDeleteRow(row._id)}
                     />
-                    <img src={EditIcon} alt="EditIcon" onClick={onEditRow} />
                   </div>
                 ) : (
                   _.get(row, cell.value, "_") || "_"
@@ -63,6 +65,7 @@ export default Table;
 
 const useStyle = makeStyles((theme) => ({
   table: {
+    fontFamily: "Vazir",
     width: "100%",
     position: "relative",
   },
@@ -76,7 +79,7 @@ const useStyle = makeStyles((theme) => ({
     padding: "0.875rem",
     height: "1rem",
     width: "100%",
-    backgroundColor: theme.palette.secondary.dark,
+    backgroundColor: theme.palette.secondary.main,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -103,6 +106,7 @@ const useStyle = makeStyles((theme) => ({
   },
   td: {
     borderLeft: `solid 2px ${theme.palette.grey[200]}`,
+    fontWeight: 500,
     "&:last-child": {
       borderLeft: 0,
     },
@@ -112,7 +116,6 @@ const useStyle = makeStyles((theme) => ({
     justifyContent: "center",
     alignItems: "center",
     fontSize: "0.875rem",
-    fontWeight: 500,
     color: theme.palette.text.primary,
     boxSizing: "border-box",
     padding: "0.875rem .5rem",

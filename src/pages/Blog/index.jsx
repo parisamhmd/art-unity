@@ -5,6 +5,7 @@ import PageLayout from "../../components/Layout/PageLayout";
 import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
 import { useQuery } from "react-query";
+import filter from "../../services/utils/filter";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
@@ -42,7 +43,7 @@ const BlogPage = () => {
             { title: "نویسنده", value: "author" },
             { title: "عملیات", value: "modify" },
           ]}
-          data={data}
+          data={filter(data, "title", search)}
           onDeleteRow={(id) => {
             console.log("Delete " + id);
           }}

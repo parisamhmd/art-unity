@@ -15,7 +15,7 @@ axios.interceptors.request.use((config) => {
   const notSendToken = url === "/admin/login";
 
   if (!token && !notSendToken) {
-    window.location.replace("/login");
+    // window.location.replace("/login");
   } else {
     config.headers["Authorization"] = `Bearer ${token}`;
   }
