@@ -12,6 +12,7 @@ import SkillsPage from "./Skills";
 import BlogPage from "./Blog";
 import ArtWorksPage from "./ArtWorks/index";
 import LoginPage from "./login";
+
 function App() {
   const queryClient = new QueryClient();
   return (

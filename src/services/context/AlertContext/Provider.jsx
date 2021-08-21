@@ -1,122 +1,139 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { useState, useRef, useEffect, useCallback } from "react";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Dialog, Grid, Grow, Typography } from "@material-ui/core";
+import { CheckCircleOutline } from "@material-ui/icons";
+import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
+import ClearIcon from "@material-ui/icons/Clear";
 import Button from "../../../components/Button";
 import { AlertContext } from "./index";
 
-const useStyles = makeStyles(() => ({
-  button: {
-    borderRadius: 28,
-    marginTop: "1rem",
-  },
-  rootContainerPaper: {
-    background: "#F5F6F3",
-    padding: "1.875rem",
-    width: "18.75rem",
-  },
-  dialogTitle: {
-    marginBottom: "2.5rem",
-  },
-  divider: {
-    top: "7.625rem",
-  },
-  closeIcon: {
-    left: "1.875rem",
-  },
-  title: {
-    fontSize: "1.125rem",
-    lineHeight: "normal",
-    fontWeight: "bolder",
-  },
-  image: {
-    height: "6.25rem",
-    marginBottom: "1.25rem",
-  },
-}));
-
 export default function AlertContextProvider({ children }) {
   const classes = useStyles();
-  const [alertOpen, setAlertOpen] = React.useState(false);
-  const [allowDismiss, setAllowDismiss] = React.useState(true);
-  const [text, setText] = React.useState("");
-  const [confirmText, setConfirmText] = React.useState("");
-  const [refuseText, setRefuseText] = React.useState("");
-  const [icon, setIcon] = React.useState("");
-  const promptPromise = React.useRef();
-  const alertPromise = React.useRef();
-  const alertTimeOut = React.useRef();
-  React.useEffect(() => {
+  const theme = useTheme();
+  //   States
+  const [alertOpen, setAlertOpen] = useState(false);
+  const [allowDismiss, setAllowDismiss] = useState(true);
+
+  const [text, setText] = useState("");
+  const [icon, setIcon] = useState("confirm");
+
+  const [confirmText, setConfirmText] = useState("");
+  const [refuseText, setRefuseText] = useState("");
+
+  const promptPromise = useRef();
+  const alertPromise = useRef();
+  const alertTimeOut = useRef();
+
+  useEffect(() => {
     if (!alertOpen) {
-      if (alertTimeOut.current) {
+      if (alertTimeOut?.current) {
         clearTimeout(alertTimeOut.current);
       }
+
       alertTimeOut.current = undefined;
       alertPromise.current = undefined;
       promptPromise.current = undefined;
     }
   }, [alertOpen]);
-  const success = React.useCallback(({ text, icon, delay, allowDismiss }) => {
+
+  const success = useCallback(({ text, delay, allowDismiss }) => {
     setText(text);
     setConfirmText("");
     setAllowDismiss(allowDismiss || true);
-    setIcon(icon);
+    setIcon("success");
     setAlertOpen(true);
+
     alertTimeOut.current = setTimeout(() => {
       alertPromise.current?.(false);
       setAlertOpen(false);
-    }, (delay || 5) * 1000);
+    }, 4000);
     return new Promise()((resolve) => {
       alertPromise.current = resolve;
     });
   }, []);
-  const error = React.useCallback(({ text, icon, delay, allowDismiss }) => {
+
+  const error = useCallback(({ text, allowDismiss }) => {
     setText(text);
     setConfirmText("");
     setAllowDismiss(allowDismiss || true);
-    setIcon(icon);
+    setIcon("error");
     setAlertOpen(true);
+
     alertTimeOut.current = setTimeout(() => {
       alertPromise.current?.(false);
       setAlertOpen(false);
-    }, (delay || 5) * 1000);
+    }, 4000);
+
     return new Promise()((resolve) => {
       alertPromise.current = resolve;
     });
   }, []);
-  const prompt = React.useCallback(
-    ({ confirmText, refuseText, text, icon, allowDismiss }) => {
+
+  const prompt = useCallback(
+    ({ confirmText, refuseText, text, allowDismiss }) => {
       setText(text);
-      setAllowDismiss(allowDismiss || true);
+      setIcon("confirm");
       setAlertOpen(true);
+      setAllowDismiss(allowDismiss || true);
       setConfirmText(confirmText || "بله.");
       setRefuseText(refuseText || "خیر.");
-      setIcon(icon);
-      return new Promise()((resolve) => {
+
+      return new Promise((resolve) => {
         promptPromise.current = resolve;
       });
     },
     []
   );
+
+  let relatedIcon = (
+    <ErrorOutlineIcon
+      style={{
+        width: "10rem",
+        height: "10rem",
+        color: theme.palette.secondary.main,
+      }}
+    />
+  );
+  if (icon === "success") {
+    relatedIcon = (
+      <CheckCircleOutline
+        style={{
+          width: "10rem",
+          height: "10rem",
+          color: theme.palette.secondary.main,
+        }}
+      />
+    );
+  }
+  if (icon === "error") {
+    relatedIcon = (
+      <ClearIcon
+        style={{
+          width: "10rem",
+          height: "10rem",
+          color: theme.palette.secondary.main,
+        }}
+      />
+    );
+  }
+
   return (
     <AlertContext.Provider value={{ success, error, prompt }}>
       <Dialog
         open={alertOpen}
         onClose={() => {
-          promptPromise.current?.({ result: false, cancelReason: "dismiss" });
           alertPromise.current?.(true);
+          promptPromise.current?.({ result: false, cancelReason: "dismiss" });
           setAlertOpen(false);
         }}
         disableBackdropClick={!allowDismiss}
         disableEscapeKeyDown={!allowDismiss}
-        TransitionComponent={Grow}
-        transitionDuration={400}
-        maxWidth={false}
-        classes={{
-          paper: `bg-white ${classes.rootContainerPaper} rounded-10px relative flex flex-col items-center`,
-        }}
         PaperProps={{ elevation: 0 }}
+        classes={{
+          paper: ` ${classes.container} relative `,
+        }}
       >
-        <img alt="asset" src={icon} className={classes.image} />
+        {relatedIcon}
         <div
           id="dialog-title"
           className={`${classes.dialogTitle} inline-flex justify-center`}
@@ -167,3 +184,38 @@ export default function AlertContextProvider({ children }) {
     </AlertContext.Provider>
   );
 }
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    borderRadius: 28,
+    marginTop: "1rem",
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    background: theme.palette.grey[25],
+    borderRadius: "0.5rem",
+    padding: "1.75rem",
+    width: "20rem",
+  },
+  dialogTitle: {
+    margin: "1rem  0 2.5rem 0",
+  },
+  divider: {
+    top: "7.625rem",
+  },
+  closeIcon: {
+    left: "1.875rem",
+  },
+  title: {
+    fontFamily: "Vazir",
+    fontSize: "1.125rem",
+    lineHeight: "normal",
+    fontWeight: "bold",
+  },
+  image: {
+    height: "6.25rem",
+    marginBottom: "1.25rem",
+  },
+}));
