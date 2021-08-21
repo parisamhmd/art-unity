@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>Action Icons/Chevron Up Icon</title>
-    <g id="Action-Icons/Chevron-Up-Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <rect id="Bound" x="0" y="0" width="24" height="24"></rect>
-        <path d="M16.0995821,1.99776395 L17.9177639,3.81594576 L9.73623605,11.9977639 L17.9177639,20.1795821 L16.0995821,21.9977639 L7.91723605,13.8157639 L7.90041787,13.8332918 L6.08223605,12.01511 L6.09923605,11.9977639 L6.08223606,11.9804179 L7.90041788,10.1622361 L7.91823605,10.1797639 L16.0995821,1.99776395 Z" id="Bottom-Chevron" fill="#171717" transform="translate(12.000000, 11.997764) rotate(90.000000) translate(-12.000000, -11.997764) "></path>
-    </g>
-</svg>
