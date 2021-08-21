@@ -16,7 +16,7 @@ const TextInputLogin = ({
   className,
   type,
   errorMessage,
-  RequiredText,
+  Required,
   label,
   ...props
 }) => {
@@ -25,7 +25,7 @@ const TextInputLogin = ({
     <div>
       <FormControl fullWidth>
         <div className={classes.inputLabel}>
-          <p className={classes.requiredMessage}>(الزامی)</p>
+          {Required && <p className={classes.requiredMessage}>(الزامی)</p>}
           <p>{label} </p>
         </div>
         <FilledInput

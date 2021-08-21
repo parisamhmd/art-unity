@@ -8,6 +8,7 @@ import { useMutation } from "react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
+import { useAlert } from "../services/context/AlertContext";
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -32,6 +33,8 @@ const useStyle = makeStyles((theme) => ({
 const LoginPage = () => {
   const classes = useStyle();
   const history = useHistory();
+  const alert = useAlert();
+
   const [number, setNumber] = React.useState("");
 
   const { mutate: login } = useMutation(
@@ -45,9 +48,8 @@ const LoginPage = () => {
         history.push("/");
       },
       onError: (error) => {
-        // if (error.response.status === 500) ErrorToast("Error");
-        // let messages = getValidationMessages(error);
-        // ErrorToast("Validation Error", messages);
+        if (error.response.status === 404)
+          alert.error({ text: "کاربری با این شماره تلفن یافت نشد" });
       },
     }
   );
@@ -60,7 +62,7 @@ const LoginPage = () => {
           alt="art-unity"
         />
         <div className="border-t-2 mt-4">
-          <p className="text-2xl mt-2 text-right text-gray-600">
+          <p className="text-2xl mt-2 text-right text-gray-600 font-Vazir">
             ورود به پنل کاربری ادمین
           </p>
           {/* <form
@@ -80,7 +82,6 @@ const LoginPage = () => {
             onChange={(e) => {
               e?.length < 12 && setNumber(e);
             }}
-            RequiredText="RequiredText"
           />
           {/* <input type="submit" value="Submit"> */}
           <Button

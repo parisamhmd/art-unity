@@ -47,13 +47,15 @@ const ArtistsPage = () => {
           ]}
           data={filter(data, "firstName,lastName", search)}
           onDeleteRow={(id) => {
-            alert.prompt({
-              confirmText: "بله، حذف",
-              refuseText: "خیر",
-              text: "آیا از حذف این آگهی اطمینان دارید؟",
-              icon: logo,
-            });
-            console.log("Delete " + id);
+            alert
+              .prompt({
+                confirmText: "بله، حذف",
+                refuseText: "خیر",
+                text: "آیا از حذف این هنرمند اطمینان دارید؟",
+              })
+              .then(({ result }) => {
+                result && console.log("Delete " + id);
+              });
           }}
           onEditRow={() => {
             console.log("Edit");

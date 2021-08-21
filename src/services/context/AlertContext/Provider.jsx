@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Dialog, Grid, Grow, Typography } from "@material-ui/core";
+import { Dialog, Grid, Typography } from "@material-ui/core";
 import { CheckCircleOutline } from "@material-ui/icons";
 import ErrorOutlineIcon from "@material-ui/icons/ErrorOutline";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -10,6 +10,7 @@ import { AlertContext } from "./index";
 export default function AlertContextProvider({ children }) {
   const classes = useStyles();
   const theme = useTheme();
+
   //   States
   const [alertOpen, setAlertOpen] = useState(false);
   const [allowDismiss, setAllowDismiss] = useState(true);
@@ -161,7 +162,7 @@ export default function AlertContextProvider({ children }) {
                   {confirmText}
                 </Button>
               </Grid>
-              <Grid item className={classes.button}>
+              <Grid item className={classes.buttonContainer}>
                 <Button
                   selected={false}
                   fullWidth
@@ -186,7 +187,7 @@ export default function AlertContextProvider({ children }) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  button: {
+  buttonContainer: {
     borderRadius: 28,
     marginTop: "1rem",
   },
@@ -202,20 +203,10 @@ const useStyles = makeStyles((theme) => ({
   dialogTitle: {
     margin: "1rem  0 2.5rem 0",
   },
-  divider: {
-    top: "7.625rem",
-  },
-  closeIcon: {
-    left: "1.875rem",
-  },
   title: {
     fontFamily: "Vazir",
     fontSize: "1.125rem",
     lineHeight: "normal",
     fontWeight: "bold",
-  },
-  image: {
-    height: "6.25rem",
-    marginBottom: "1.25rem",
   },
 }));
