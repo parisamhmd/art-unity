@@ -1,25 +1,13 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useHistory } from "react-router-dom";
 import { AppBar, Drawer, MenuList, MenuItem } from "@material-ui/core";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { makeStyles } from "@material-ui/core/styles";
 import logo from "../../services/assets/Img/Logo/logo.svg";
-import Cookies from "js-cookie";
-import { useHistory } from "react-router-dom";
-// import logoutIcon from "../../services/assets/Img/Logo/icons8-shutdown-35.png";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import { routes } from "../../services/constant/routes";
+import Cookies from "js-cookie";
 import clsx from "clsx";
-// import { useQueryClient } from "react-query";
-// import { images } from "services/constants/images";
-// import { EUserActionTypes } from "services/contexts/UserContext/models";
-// import { useUserDispatch } from "services/contexts/UserContext/UserContext";
-// import { LSService } from "services/LocalStorage/localStorage";
-// import { redirect } from "services/utils/redirect";
-// import Header from "components/Header/Header";
-// import SideNav from "components/SideNav";
-// import MenuItem from "./MenuItems/MenuItem";
-// import UserSummary from "./UserSummary/UserSummary";
-// import { useSidebarCollapse } from "services/contexts/SideNavContext/SidenavCollapseContext";
+
 const drawerWidth = 12;
 const headerHeight = 4;
 
@@ -27,19 +15,12 @@ const BaseLayout = ({ children, crumb }) => {
   const classes = useStyle();
   const { pathname } = useLocation();
   const history = useHistory();
-  //   const userDispatch = useUserDispatch();
-  //   const queryClient = useQueryClient();
-  //   const [, setCollapsedItems] = useSidebarCollapse();
+
   const handleExit = () => {
     Cookies.remove("token");
     history.push("/login");
-    //     LSService.clearToken();
-    //     redirect("/dashboard/auth", true);
-    //     userDispatch({ type: EUserActionTypes.LOGOUT });
-    //     // noinspection JSIgnoredPromiseFromCall
-    //     queryClient.resetQueries();
-    //     setCollapsedItems(null);
   };
+
   return (
     <div className={classes.container}>
       <div className={classes.drawerBox}>
@@ -58,12 +39,9 @@ const BaseLayout = ({ children, crumb }) => {
               alt="logo"
             />
           </div>
-          <div
-            className={classes.scrollableBox}
-            style={{ overflowY: "scroll" }}
-          >
+          <div className={classes.scrollBox}>
             <div className="h-0.5" />
-            <div className={classes.exitBtnBox}>
+            <div>
               <MenuList>
                 {routes.map((route) => (
                   <Link to={route.path}>
@@ -120,12 +98,9 @@ const useStyle = makeStyles((theme) => ({
   main: {
     padding: `${headerHeight + 5}rem 3.25rem `,
     direction: "rtl",
-    background: "#F5F6F3",
+    backgroundColor: theme.palette.grey[25],
     paddingRight: `${drawerWidth + 5}rem `,
     minHeight: "100vh",
-  },
-  sideBox: {
-    paddingBottom: "8rem",
   },
   drawerBox: {
     width: `${drawerWidth}rem)`,
@@ -136,8 +111,8 @@ const useStyle = makeStyles((theme) => ({
     direction: "rtl",
   },
   drawerPaper: {
-    backgroundColor: "#002D62",
-    color: "#fff",
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.background.paper,
     width: `${drawerWidth}rem)`,
     height: "100vh",
     overflowY: "hidden",
@@ -150,23 +125,16 @@ const useStyle = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     zIndex: 200,
   },
-  scrollableBox: {
+  scrollBox: {
+    overflowY: "scroll",
     "&::-webkit-scrollbar": {
-      width: "0",
+      width: 0,
       padding: "1px",
     },
   },
-  exitBtnBox: {
-    textAlign: "center",
-    paddingBottom: "2rem",
-  },
-  exitButton: {
-    fontSize: ".875rem",
-    fontWeight: "bold",
-    padding: ".5rem 2rem",
-  },
   selectedBox: {
-    fontWeight: "bold",
+    fontWeight: 600,
+    fontFamily: "Vazir",
     color: theme.palette.secondary.main,
   },
   text: {

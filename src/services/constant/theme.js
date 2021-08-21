@@ -5,9 +5,11 @@ export const theme = createTheme({
       default: "#f5f5f5",
       paper: "#ffffff",
     },
+    primary: {
+      main: "#002D62",
+    },
     secondary: {
       main: "#F73668",
-      light: "#F9BFF2",
     },
     text: {
       primary: "#0a0520",
@@ -22,6 +24,8 @@ export const theme = createTheme({
       main: "#ff3528",
     },
     grey: {
+      25: "#F5F6F3",
+      50: "#D9D9D9",
       100: "rgba(23,23,23,0.08)",
       200: "rgba(23,23,23,0.2)",
       300: "rgba(23,23,23,0.5)",

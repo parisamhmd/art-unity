@@ -1,18 +1,16 @@
-// import {images} from "@constants/images";
-// import PrimaryButton from "@elements/Buttons/PrimaryButton";
-// import WhiteButton from "@elements/Buttons/WhiteButton";
-
-import { Dialog, Grid, Grow, Typography, Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import clsx from "clsx";
 import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Dialog, Grid, Grow, Typography } from "@material-ui/core";
+import Button from "../../../components/Button";
 import { AlertContext } from "./index";
 
 const useStyles = makeStyles(() => ({
   button: {
     borderRadius: 28,
+    marginTop: "1rem",
   },
   rootContainerPaper: {
+    background: "#F5F6F3",
     padding: "1.875rem",
     width: "18.75rem",
   },
@@ -146,14 +144,9 @@ export default function AlertContextProvider({ children }) {
                   {confirmText}
                 </Button>
               </Grid>
-              <Grid item className="mt-3.5">
+              <Grid item className={classes.button}>
                 <Button
-                  classes={{
-                    root: clsx([
-                      "border-2 border-solid bg-background-default border-grey-200",
-                      classes.button,
-                    ]),
-                  }}
+                  selected={false}
                   fullWidth
                   onClick={() => {
                     promptPromise.current?.({

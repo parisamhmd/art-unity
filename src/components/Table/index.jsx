@@ -25,9 +25,8 @@ const Table = ({ tableHeaderData, data, onEditRow, onDeleteRow }) => {
             key={index}
             container
             wrap="nowrap"
-            className={classes.trow}
             component="tr"
-            alignItems="stretch"
+            className={classes.trow}
           >
             {tableHeaderData.map((cell, index) => (
               <Grid
@@ -70,29 +69,27 @@ const useStyle = makeStyles((theme) => ({
     position: "relative",
   },
   thead: {
-    border: `solid .125rem ${theme.palette.background.paper}`,
-    borderTopLeftRadius: "10px",
-    borderTopRightRadius: "10px",
+    borderRadius: "10px 10px 0 0 ",
+    borderBottom: `solid .125rem ${theme.palette.background.paper}`,
     overflow: "hidden",
   },
   th: {
-    padding: "0.875rem",
-    height: "1rem",
+    fontSize: "0.875rem",
+    height: "3rem",
     width: "100%",
-    backgroundColor: theme.palette.secondary.main,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: "0.875rem",
-    fontWeight: "bold",
+    padding: "0.875rem",
     color: theme.palette.background.paper,
+    backgroundColor: theme.palette.secondary.main,
     "&:not(:last-child)": {
       borderLeft: `solid .125rem ${theme.palette.grey[200]}`,
     },
   },
   trow: {
     position: "relative",
-    borderBottom: `solid .125rem #f9f9f9`,
+    borderBottom: `solid .125rem ${theme.palette.background.paper}`,
     "&:last-child": {
       borderBottomRightRadius: "10px",
       borderBottomLeftRadius: "10px",
@@ -105,28 +102,19 @@ const useStyle = makeStyles((theme) => ({
     },
   },
   td: {
-    borderLeft: `solid 2px ${theme.palette.grey[200]}`,
     fontWeight: 500,
-    "&:last-child": {
-      borderLeft: 0,
-    },
-    backgroundColor: theme.palette.background.paper,
+    fontSize: "0.875rem",
+    padding: "0.875rem .5rem",
+    color: theme.palette.text.primary,
+    backgroundColor: theme.palette.grey[25],
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    fontSize: "0.875rem",
-    color: theme.palette.text.primary,
     boxSizing: "border-box",
-    padding: "0.875rem .5rem",
-  },
-  deleteIcon: {
-    width: "1.8rem",
-    height: "1.8rem",
-    padding: ".2rem",
-    position: "absolute",
-    top: "50%",
-    transform: "translateY(-50%)",
-    left: "-2.3rem",
+    borderLeft: `solid 2px ${theme.palette.grey[200]}`,
+    "&:last-child": {
+      borderLeft: 0,
+    },
   },
 }));

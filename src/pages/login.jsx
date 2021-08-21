@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Button } from "@material-ui/core";
+import Button from "../components/Button";
 import logo from "../services/assets/Img/Logo/logo.svg";
 import MailOutlineIcon from "@material-ui/icons/Person";
-import TextInput from "../components/TextInput/TextInputLogins";
+import TextInput from "../components/TextInput";
 import { useMutation } from "react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -76,20 +76,18 @@ const LoginPage = () => {
             value={number}
             icon={<MailOutlineIcon />}
             type="text"
+            label="تلفن همراه"
             onChange={(e) => {
               e?.length < 12 && setNumber(e);
             }}
+            RequiredText="RequiredText"
           />
           {/* <input type="submit" value="Submit"> */}
           <Button
-            type="submit"
-            variant="contained"
-            color="primary"
             disabled={number.length < 11}
             onClick={() => {
               login();
             }}
-            className="w-full"
           >
             ورود
           </Button>

@@ -1,93 +1,97 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { FormControl, makeStyles, FilledInput } from "@material-ui/core";
-import clsx from "clsx";
+import React from "react";
+import {
+  makeStyles,
+  InputAdornment,
+  FilledInput,
+  FormControl,
+} from "@material-ui/core";
+
+const TextInputLogin = ({
+  placeholder,
+  id,
+  value,
+  isRequired,
+  icon,
+  onChange,
+  className,
+  type,
+  errorMessage,
+  RequiredText,
+  label,
+  ...props
+}) => {
+  const classes = useStyles();
+  return (
+    <div>
+      <FormControl fullWidth>
+        <div className={classes.inputLabel}>
+          <p className={classes.requiredMessage}>(الزامی)</p>
+          <p>{label} </p>
+        </div>
+        <FilledInput
+          fullWidth
+          id={id}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+          required={isRequired}
+          className={`${classes.loginInput} ${className}`}
+          disableUnderline
+          startAdornment={
+            <InputAdornment position="start">{icon}</InputAdornment>
+          }
+          onChange={(event) => onChange(event.target.value)}
+          {...props}
+        />
+        <div className="flex justify-end">
+          <p className={classes.errorMessage}>{errorMessage}</p>
+        </div>
+      </FormControl>{" "}
+    </div>
+  );
+};
+
+export default TextInputLogin;
 
 const useStyles = makeStyles((theme) => ({
-    normalInput: {
-        // backgroundColor: "green",
-        "&.MuiFilledInput-root": {
-            backgroundColor: theme.palette.background.paper,
-            border: `1px solid ${theme.palette.grey[400]}`,
-        },
-        "& .MuiFilledInput-input": {
-            padding: "10px 20px 10px 20px",
-        },
+  inputLabel: {
+    color: theme.palette.text.primary,
+    margin: "0.5rem 0",
+    display: "flex",
+    justifyContent: "flex-end",
+    fontFamily: "Vazir",
+    fontWeight: "bold",
+  },
+  requiredMessage: {
+    color: theme.palette.secondary.main,
+    fontSize: "0.75rem",
+    marginRight: "0.5rem",
+  },
+  errorMessage: {
+    color: theme.palette.secondary.main,
+    fontFamily: "Vazir",
+    fontSize: "0.75rem",
+    fontWeight: "bold",
+  },
+  loginInput: {
+    margin: 0,
+    marginBottom: "0.5rem",
+    borderRadius: "0.5rem",
+    fontWeight: "bold",
+    fontSize: "1rem",
+    "& .MuiFilledInput-input": {
+      padding: "10px 15px",
     },
-    disabled: {
-        opacity: "0.6",
+    "&.MuiFilledInput-root": {
+      color: theme.palette.grey[300],
+      border: `2px solid ${theme.palette.grey[200]}`,
+      backgroundColor: theme.palette.background.paper,
     },
+    "&.Mui-focused": {
+      border: `2px solid ${theme.palette.secondary.main}`,
+    },
+    "& .MuiInputAdornment-positionStart": {
+      margin: "0 0 0 5px",
+    },
+  },
 }));
-
-const TextInput = ({
-                       id,
-                       name,
-    label,
-                       value,
-                       type,
-                       placeholder,
-                       isDisabled,
-                       hasError,
-                       isRequired,
-                       showRequiredText,
-                       className,
-                       onChange,
-                       ...rest
-                   }) => {
-    const classes = useStyles();
-    const [text, setText] = useState("");
-    useEffect(() => {
-        setText(value ? value : "");
-    }, [value]);
-    const handleChange = (text) => {
-        setText(text);
-        onChange(text);
-    };
-    return (
-        <div>
-            <label>{label}</label>
-            <FormControl fullWidth>
-                <FilledInput
-                    fullWidth
-                    id={id}
-                    placeholder={placeholder}
-                    aria-describedby={`${id}-helper`}
-                    value={text}
-                    type={type}
-                    name={name}
-                    disableUnderline
-                    className={clsx(
-                        className,
-                        classes.normalInput,
-                        `rounded-md`,"text-center",
-                        hasError ? "border-primary-main" : "",
-                        isDisabled ? classes.disabled : ""
-                    )}
-                    inputProps={{
-                        className: `placeholder-text-disabled focus:shadow-md`,
-                    }}
-                    required={isRequired}
-                    disabled={isDisabled}
-                    onChange={(event) => handleChange(event.target.value)}
-                    {...rest}
-                />
-                <div>
-                    {showRequiredText && (
-                        <p
-                            className={`
-              text-sm
-              ml-4
-              mt-1
-              text-primary-main
-              font-medium
-          `}
-                        >
-                            * This field is required
-                        </p>
-                    )}
-                </div>
-            </FormControl>
-        </div>
-    );
-};
-export default TextInput;
