@@ -14,7 +14,7 @@ const Table = ({
   isLoading = false,
 }) => {
   const classes = useStyle();
-  console.log(data);
+
   return (
     <table className={classes.table}>
       <Grid container className={classes.thead} component="thead">

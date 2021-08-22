@@ -4,7 +4,7 @@ import Table from "../../components/Table";
 import PageLayout from "../../components/Layout/PageLayout";
 import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
 
@@ -15,6 +15,7 @@ const useStyle = makeStyles((theme) => ({
 const TopicsPage = () => {
   const classes = useStyle();
   const alert = useAlert();
+  const queryClient = useQueryClient();
   const [search, setSearch] = React.useState(undefined);
 
   const getArtTopicsData = async () => {
@@ -23,6 +24,22 @@ const TopicsPage = () => {
   };
   const { data, status } = useQuery("/artTopic/all", getArtTopicsData);
 
+  const deleteArtist = async (id) => {
+    const res = await axios.delete(`/artTopic/delete/${id}`);
+    return res.data;
+  };
+
+  const { mutate: handleDelete } = useMutation(deleteArtist, {
+    onSuccess: (data) => {
+      queryClient.invalidateQueries("/artTopic/all");
+    },
+    onError: (error) => {
+      if (error.response.data.statusCode === 404) {
+        alert.error({ text: "تاپیک موردنظر یافت نشد" });
+      }
+      //   alert(error.response.data);
+    },
+  });
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
@@ -52,7 +69,7 @@ const TopicsPage = () => {
                 text: "آیا از حذف این تاپیک اطمینان دارید؟",
               })
               .then(({ result }) => {
-                result && console.log("Delete " + id);
+                result && handleDelete(id);
               });
           }}
           onEditRow={() => {
