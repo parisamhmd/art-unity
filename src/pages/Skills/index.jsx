@@ -4,7 +4,7 @@ import Table from "../../components/Table";
 import PageLayout from "../../components/Layout/PageLayout";
 import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
 
@@ -15,6 +15,7 @@ const useStyle = makeStyles((theme) => ({
 const SkillsPage = () => {
   const classes = useStyle();
   const alert = useAlert();
+  const queryClient = useQueryClient();
   const [search, setSearch] = React.useState(undefined);
 
   const getOccupationData = async () => {
@@ -23,6 +24,21 @@ const SkillsPage = () => {
   };
   const { data, status } = useQuery("/occupation/all", getOccupationData);
 
+  const deleteSkill = async (id) => {
+    const res = await axios.delete(`/admin/occupation/delete/${id}`);
+    return res.data;
+  };
+
+  const { mutate: handleDelete } = useMutation(deleteSkill, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("/occupation/all");
+    },
+    onError: (error) => {
+      if (error.response.data.statusCode === 404) {
+        alert.error({ text: "مهارت موردنظر یافت نشد" });
+      }
+    },
+  });
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
@@ -52,7 +68,7 @@ const SkillsPage = () => {
                 text: "آیا از حذف این مهارت اطمینان دارید؟",
               })
               .then(({ result }) => {
-                result && console.log("Delete " + id);
+                result && handleDelete(id);
               });
           }}
           onEditRow={() => {

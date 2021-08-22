@@ -26,12 +26,12 @@ const ArtistsPage = () => {
   const { data, status } = useQuery("/artist/all", getArtistsData);
 
   const deleteArtist = async (id) => {
-    const res = await axios.delete(`/artist/delete/${id}`);
+    const res = await axios.delete(`/admin/artist/delete/${id}`);
     return res.data;
   };
 
   const { mutate: handleDelete } = useMutation(deleteArtist, {
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries("/artist/all");
     },
     onError: (error) => {

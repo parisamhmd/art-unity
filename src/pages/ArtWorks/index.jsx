@@ -4,7 +4,7 @@ import Table from "../../components/Table";
 import PageLayout from "../../components/Layout/PageLayout";
 import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
 
@@ -15,6 +15,7 @@ const useStyle = makeStyles((theme) => ({
 const ArtWorksPage = () => {
   const classes = useStyle();
   const alert = useAlert();
+  const queryClient = useQueryClient();
   const [search, setSearch] = React.useState(undefined);
 
   const getArtistsData = async () => {
@@ -24,6 +25,21 @@ const ArtWorksPage = () => {
 
   const { data, status } = useQuery("/art/all", getArtistsData);
 
+  const deleteArtWork = async (id) => {
+    const res = await axios.delete(`/admin/art/delete/${id}`);
+    return res.data;
+  };
+
+  const { mutate: handleDelete } = useMutation(deleteArtWork, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("/art/all");
+    },
+    onError: (error) => {
+      if (error.response.data.statusCode === 404) {
+        alert.error({ text: "اثر هنری موردنظر یافت نشد" });
+      }
+    },
+  });
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
@@ -55,7 +71,7 @@ const ArtWorksPage = () => {
                 text: "آیا از حذف این اثر هنری اطمینان دارید؟",
               })
               .then(({ result }) => {
-                result && console.log("Delete " + id);
+                result && handleDelete(id);
               });
           }}
           onEditRow={() => {

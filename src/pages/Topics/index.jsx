@@ -25,7 +25,7 @@ const TopicsPage = () => {
   const { data, status } = useQuery("/artTopic/all", getArtTopicsData);
 
   const deleteArtist = async (id) => {
-    const res = await axios.delete(`/artTopic/delete/${id}`);
+    const res = await axios.delete(`/admin/artTopic/delete/${id}`);
     return res.data;
   };
 
@@ -37,7 +37,6 @@ const TopicsPage = () => {
       if (error.response.data.statusCode === 404) {
         alert.error({ text: "تاپیک موردنظر یافت نشد" });
       }
-      //   alert(error.response.data);
     },
   });
   return (

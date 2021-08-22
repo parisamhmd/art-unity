@@ -4,7 +4,7 @@ import Table from "../../components/Table";
 import PageLayout from "../../components/Layout/PageLayout";
 import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
 
@@ -15,6 +15,7 @@ const useStyle = makeStyles((theme) => ({
 const CategoriesPage = () => {
   const classes = useStyle();
   const alert = useAlert();
+  const queryClient = useQueryClient();
   const [search, setSearch] = React.useState(undefined);
 
   const getCategoriesData = async () => {
@@ -24,6 +25,21 @@ const CategoriesPage = () => {
 
   const { data, status } = useQuery("/artCategory/all", getCategoriesData);
 
+  const deleteArtCategory = async (id) => {
+    const res = await axios.delete(`/admin/artCategory/delete/${id}`);
+    return res.data;
+  };
+
+  const { mutate: handleDelete } = useMutation(deleteArtCategory, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("/artCategory/all");
+    },
+    onError: (error) => {
+      if (error.response.data.statusCode === 404) {
+        alert.error({ text: "طبقه‌بندی موردنظر یافت نشد" });
+      }
+    },
+  });
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
@@ -54,7 +70,7 @@ const CategoriesPage = () => {
                 text: "آیا از حذف این طبقه‌بندی اطمینان دارید؟",
               })
               .then(({ result }) => {
-                result && console.log("Delete " + id);
+                result && handleDelete(id);
               });
           }}
           onEditRow={() => {
