@@ -21,12 +21,19 @@ const useStyle = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    height: "25rem",
+    height: "26rem",
     marginTop: "7rem",
     padding: "2rem 3rem",
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.grey[100]}`,
     borderRadius: "5px",
+  },
+  text: {
+    fontFamily: "Vazir",
+    fontWeight: "bold",
+    color: theme.palette.text.primary,
+    fontSize: "1.875rem",
+    margin: "1rem 0 2rem 0",
   },
 }));
 
@@ -62,28 +69,19 @@ const LoginPage = () => {
           alt="art-unity"
         />
         <div className="border-t-2 mt-4">
-          <p className="text-2xl mt-2 text-right text-gray-600 font-Vazir">
-            ورود به پنل کاربری ادمین
-          </p>
-          {/* <form
-            // method="post"
-            // action="/"
-            onSubmit={() => {
-              login();
-            }}
-          > */}
-          <TextInput
-            className="mt-10 mb-6"
-            placeholder="09XXXXXXXXX"
-            value={number}
-            icon={<MailOutlineIcon />}
-            type="text"
-            label="تلفن همراه"
-            onChange={(e) => {
-              e?.length < 12 && setNumber(e);
-            }}
-          />
-          {/* <input type="submit" value="Submit"> */}
+          <p className={classes.text}>ورود به پنل کاربری ادمین</p>
+          <div className="mb-2">
+            <TextInput
+              placeholder="09XXXXXXXXX"
+              value={number}
+              icon={<MailOutlineIcon />}
+              type="text"
+              label="تلفن همراه"
+              onChange={(e) => {
+                e?.length < 12 && setNumber(e);
+              }}
+            />
+          </div>
           <Button
             disabled={number.length < 11}
             onClick={() => {
@@ -92,8 +90,6 @@ const LoginPage = () => {
           >
             ورود
           </Button>
-          {/* </input> */}
-          {/* </form> */}
         </div>
       </div>
     </div>
