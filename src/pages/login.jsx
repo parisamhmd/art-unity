@@ -10,33 +10,6 @@ import Cookies from "js-cookie";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "../services/context/AlertContext";
 
-const useStyle = makeStyles((theme) => ({
-  container: {
-    backgroundColor: "#D9D9D9",
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-  },
-  box: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "26rem",
-    marginTop: "7rem",
-    padding: "2rem 3rem",
-    backgroundColor: theme.palette.background.paper,
-    border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: "5px",
-  },
-  text: {
-    fontFamily: "Vazir",
-    fontWeight: "bold",
-    color: theme.palette.text.primary,
-    fontSize: "1.875rem",
-    margin: "1rem 0 2rem 0",
-  },
-}));
-
 const LoginPage = () => {
   const classes = useStyle();
   const history = useHistory();
@@ -97,3 +70,30 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+const useStyle = makeStyles((theme) => ({
+  container: {
+    backgroundColor: "#D9D9D9",
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+  },
+  box: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "26rem",
+    marginTop: "7rem",
+    padding: "2rem 3rem",
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: "5px",
+  },
+  text: {
+    fontFamily: "Vazir",
+    fontWeight: "bold",
+    color: theme.palette.text.primary,
+    fontSize: "1.875rem",
+    margin: "1rem 0 2rem 0",
+  },
+}));

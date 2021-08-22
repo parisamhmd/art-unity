@@ -6,6 +6,7 @@ import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
 import { useQuery } from "react-query";
 import filter from "../../services/utils/filter";
+import { useAlert } from "../../services/context/AlertContext/index";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
@@ -13,13 +14,15 @@ const useStyle = makeStyles((theme) => ({
 
 const SkillsPage = () => {
   const classes = useStyle();
+  const alert = useAlert();
   const [search, setSearch] = React.useState(undefined);
 
   const getOccupationData = async () => {
     const res = await axios.get("/occupation/all");
     return res.data;
   };
-  const { data } = useQuery("/occupation/all", getOccupationData);
+  const { data, status } = useQuery("/occupation/all", getOccupationData);
+
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
@@ -40,8 +43,17 @@ const SkillsPage = () => {
             { title: "عملیات", value: "modify" },
           ]}
           data={filter(data, "name", search)}
+          isLoading={!status || status === "loading"}
           onDeleteRow={(id) => {
-            console.log("Delete " + id);
+            alert
+              .prompt({
+                confirmText: "بله، حذف",
+                refuseText: "خیر",
+                text: "آیا از حذف این مهارت اطمینان دارید؟",
+              })
+              .then(({ result }) => {
+                result && console.log("Delete " + id);
+              });
           }}
           onEditRow={() => {
             console.log("Edit");

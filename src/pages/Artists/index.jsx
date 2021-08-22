@@ -7,7 +7,6 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
-import logo from "../../services/assets/Img/Logo/logo.svg";
 const useStyle = makeStyles((theme) => ({
   container: {},
 }));
@@ -21,7 +20,9 @@ const ArtistsPage = () => {
     const res = await axios.get("/artist/all");
     return res.data;
   };
-  const { data } = useQuery("/artist/all", getArtistsData);
+
+  const { data, status } = useQuery("/artist/all", getArtistsData);
+
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
@@ -46,6 +47,7 @@ const ArtistsPage = () => {
             { title: "عملیات", value: "modify" },
           ]}
           data={filter(data, "firstName,lastName", search)}
+          isLoading={!status || status === "loading"}
           onDeleteRow={(id) => {
             alert
               .prompt({

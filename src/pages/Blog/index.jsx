@@ -6,6 +6,7 @@ import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
 import { useQuery } from "react-query";
 import filter from "../../services/utils/filter";
+import { useAlert } from "../../services/context/AlertContext/index";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
@@ -13,21 +14,21 @@ const useStyle = makeStyles((theme) => ({
 
 const BlogPage = () => {
   const classes = useStyle();
+  const alert = useAlert();
   const [search, setSearch] = React.useState(undefined);
 
   const getArtistsData = async () => {
     const res = await axios.get("/blog/all");
     return res.data;
   };
-  const { data } = useQuery("/artist/all", getArtistsData);
+
+  const { data, status } = useQuery("/blog/all", getArtistsData);
+
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
         <PageLayout
-          // onAdd={() => {
-          //   console.log("Add");
-          // }}
-          addButtonTitle="ایجاد طبقه بندی جدید"
+          addButtonTitle="ایجاد بلاگ جدید"
           searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
           searchValue={search}
           onSearchInputChange={(e) => {
@@ -44,8 +45,17 @@ const BlogPage = () => {
             { title: "عملیات", value: "modify" },
           ]}
           data={filter(data, "title", search)}
+          isLoading={!status || status === "loading"}
           onDeleteRow={(id) => {
-            console.log("Delete " + id);
+            alert
+              .prompt({
+                confirmText: "بله، حذف",
+                refuseText: "خیر",
+                text: "آیا از حذف این بلاگ اطمینان دارید؟",
+              })
+              .then(({ result }) => {
+                result && console.log("Delete " + id);
+              });
           }}
           onEditRow={() => {
             console.log("Edit");
