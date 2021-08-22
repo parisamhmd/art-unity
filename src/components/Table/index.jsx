@@ -1,13 +1,20 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import EditOutlinedIcon from "@material-ui/icons/EditOutlined";
 import _ from "lodash";
 
-const Table = ({ tableHeaderData, data, onEditRow, onDeleteRow }) => {
+const Table = ({
+  tableHeaderData,
+  data,
+  onEditRow,
+  onDeleteRow,
+  isLoading = false,
+}) => {
   const classes = useStyle();
-
+  console.log(data);
   return (
     <table className={classes.table}>
       <Grid container className={classes.thead} component="thead">
@@ -20,41 +27,72 @@ const Table = ({ tableHeaderData, data, onEditRow, onDeleteRow }) => {
         </tr>
       </Grid>
       <tbody>
-        {data?.map((row, index) => (
-          <Grid
-            key={index}
-            container
-            wrap="nowrap"
-            component="tr"
-            className={classes.trow}
-          >
-            {tableHeaderData.map((cell, index) => (
-              <Grid
-                key={index}
-                item
-                className={classes.td}
-                component="td"
-                xs={12}
-                style={{ wordBreak: "break-word", fontWeight: "bold" }}
-              >
-                {cell.value === "modify" ? (
-                  <div className="flex flex-wrap gap-2">
-                    <EditOutlinedIcon
-                      className="cursor-pointer"
-                      onClick={onEditRow}
-                    />
-                    <DeleteOutlineIcon
-                      className="cursor-pointer"
-                      onClick={() => onDeleteRow(row._id)}
-                    />
-                  </div>
-                ) : (
-                  _.get(row, cell.value, "_") || "_"
-                )}
-              </Grid>
-            ))}
+        {isLoading ? (
+          [1, 2, 3, 4, 5, 6, 7, 8]?.map((row, index) => (
+            <Grid
+              key={index}
+              container
+              wrap="nowrap"
+              component="tr"
+              className={classes.trow}
+            >
+              {tableHeaderData.map((cell, index) => (
+                <Grid
+                  key={index}
+                  item
+                  className={classes.td}
+                  component="td"
+                  xs={12}
+                  style={{ wordBreak: "break-word", fontWeight: "bold" }}
+                >
+                  <Skeleton variant="text" width={70} />
+                </Grid>
+              ))}
+            </Grid>
+          ))
+        ) : data?.length > 0 ? (
+          data?.map((row, index) => (
+            <Grid
+              key={index}
+              container
+              wrap="nowrap"
+              component="tr"
+              className={classes.trow}
+            >
+              {tableHeaderData.map((cell, index) => (
+                <Grid
+                  key={index}
+                  item
+                  className={classes.td}
+                  component="td"
+                  xs={12}
+                  style={{ wordBreak: "break-word", fontWeight: "bold" }}
+                >
+                  {cell.value === "modify" ? (
+                    <div className="flex flex-wrap gap-2">
+                      <EditOutlinedIcon
+                        className="cursor-pointer"
+                        onClick={onEditRow}
+                      />
+                      <DeleteOutlineIcon
+                        className="cursor-pointer"
+                        onClick={() => onDeleteRow(row._id)}
+                      />
+                    </div>
+                  ) : (
+                    _.get(row, cell.value, "_") || "_"
+                  )}
+                </Grid>
+              ))}
+            </Grid>
+          ))
+        ) : (
+          <Grid container justify="center">
+            <Grid item>
+              <p className={classes.notFoundText}>موردی یافت نشد</p>
+            </Grid>
           </Grid>
-        ))}
+        )}
       </tbody>
     </table>
   );
@@ -116,5 +154,11 @@ const useStyle = makeStyles((theme) => ({
     "&:last-child": {
       borderLeft: 0,
     },
+  },
+  notFoundText: {
+    fontFamily: "Vazir",
+    margin: "2rem",
+    fontWeight: "bold",
+    fontSize: "1.5rem",
   },
 }));
