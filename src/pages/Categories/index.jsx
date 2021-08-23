@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../components/Table";
-import PageLayout from "../../components/Layout/PageLayout";
+import PageLayout from "../../components/Layout/PageListLayout";
 import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";

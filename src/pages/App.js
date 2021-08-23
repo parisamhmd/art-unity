@@ -7,6 +7,7 @@ import Layout from "../components/Layout/BaseLayout";
 import AlertContextProvider from "../../src/services/context/AlertContext/Provider";
 import ArtistsPage from "./Artists";
 import TopicsPage from "./Topics";
+import CreateTopicPage from "./Topics/create";
 import CategoriesPage from "./Categories";
 import SkillsPage from "./Skills";
 import BlogPage from "./Blog";
@@ -30,6 +31,7 @@ function App() {
               )}
             />
             <Route
+              exact
               path="/topics"
               render={() => (
                 <Layout>
@@ -37,6 +39,15 @@ function App() {
                 </Layout>
               )}
             />
+            <Route
+              path="/topics/create"
+              render={() => (
+                <Layout>
+                  <CreateTopicPage />
+                </Layout>
+              )}
+            />
+
             <Route
               exact
               path="/categories"

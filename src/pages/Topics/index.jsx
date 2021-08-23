@@ -1,12 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../components/Table";
-import PageLayout from "../../components/Layout/PageLayout";
-import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
+import PageListLayout from "../../components/Layout/PageListLayout";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
+import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
@@ -16,6 +16,7 @@ const TopicsPage = () => {
   const classes = useStyle();
   const alert = useAlert();
   const queryClient = useQueryClient();
+  const history = useHistory();
   const [search, setSearch] = React.useState(undefined);
 
   const getArtTopicsData = async () => {
@@ -24,12 +25,12 @@ const TopicsPage = () => {
   };
   const { data, status } = useQuery("/artTopic/all", getArtTopicsData);
 
-  const deleteArtist = async (id) => {
+  const deleteTopic = async (id) => {
     const res = await axios.delete(`/admin/artTopic/delete/${id}`);
     return res.data;
   };
 
-  const { mutate: handleDelete } = useMutation(deleteArtist, {
+  const { mutate: handleDelete } = useMutation(deleteTopic, {
     onSuccess: (data) => {
       queryClient.invalidateQueries("/artTopic/all");
     },
@@ -39,20 +40,21 @@ const TopicsPage = () => {
       }
     },
   });
+
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
-        <PageLayout
+        <PageListLayout
           addButtonTitle="افزودن تاپیک جدید"
           searchInputPlaceholder="بر روی عنوان تاپیک ها سرچ کنید "
           searchValue={search}
           onSearchInputChange={(e) => {
             setSearch(e);
           }}
-        >
-          <ArtistsFormModal />
-          {/* Modal Component */}
-        </PageLayout>
+          onAddButtonClick={() => {
+            history.push("/topics/create");
+          }}
+        />
         <Table
           tableHeaderData={[
             { title: "نام", value: "name" },

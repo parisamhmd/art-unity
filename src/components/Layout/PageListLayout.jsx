@@ -1,17 +1,16 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { InputBase, Grid, Dialog, DialogContent } from "@material-ui/core";
+import { InputBase, Grid } from "@material-ui/core";
 import Button from "../Button";
 
-const PageLayout = ({
+const PageListLayout = ({
   addButtonTitle,
   searchInputPlaceholder,
   searchValue: value,
   onSearchInputChange: handleChange,
-  children,
+  onAddButtonClick: handleClick,
 }) => {
   const classes = useStyle();
-  const [open, setOpen] = React.useState(false);
 
   return (
     <div className="flex items-center justify-between mb-10 ">
@@ -25,17 +24,14 @@ const PageLayout = ({
           />
         </Grid>
         <Grid item xs={2}>
-          <Button children={addButtonTitle} onClick={() => setOpen(true)} />
+          <Button children={addButtonTitle} onClick={() => handleClick()} />
         </Grid>
       </Grid>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogContent>{children}</DialogContent>
-      </Dialog>
     </div>
   );
 };
 
-export default PageLayout;
+export default PageListLayout;
 
 const useStyle = makeStyles((theme) => ({
   searchInput: {

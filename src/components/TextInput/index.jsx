@@ -10,22 +10,22 @@ const TextInputLogin = ({
   placeholder,
   id,
   value,
-  isRequired,
   icon,
   onChange,
   className,
   type,
   errorMessage,
-  Required,
+  required,
   label,
+  isNumber,
   ...props
 }) => {
-  const classes = useStyles();
+  const classes = useStyles({ isNumber });
   return (
     <div>
       <FormControl fullWidth>
         <div className={classes.inputLabel}>
-          {Required && <p className={classes.requiredMessage}>(الزامی)</p>}
+          {required && <p className={classes.requiredMessage}>(الزامی)</p>}
           <p>{label} </p>
         </div>
         <FilledInput
@@ -34,13 +34,15 @@ const TextInputLogin = ({
           placeholder={placeholder}
           type={type}
           value={value}
-          required={isRequired}
           className={`${classes.loginInput} ${className}`}
           disableUnderline
-          startAdornment={
-            <InputAdornment position="start">{icon}</InputAdornment>
-          }
-          onChange={(event) => onChange(event.target.value)}
+          //   startAdornment={
+          //     <InputAdornment position="start">{icon}</InputAdornment>
+          //   }
+          onChange={(event) => {
+            if (isNumber) /^\d*$/.test(event.target.value) && onChange(event);
+            else onChange(event);
+          }}
           {...props}
         />
         <div className="flex justify-end">
@@ -73,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "0.75rem",
     fontWeight: "bold",
   },
-  loginInput: {
+  loginInput: ({ isNumber }) => ({
     margin: 0,
     marginBottom: "0.5rem",
     borderRadius: "0.5rem",
@@ -81,9 +83,12 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1rem",
     "& .MuiFilledInput-input": {
       padding: "10px 15px",
+      textAlign: isNumber ? "left" : "right",
+      direction: isNumber ? "ltr" : "rtl",
     },
     "&.MuiFilledInput-root": {
-      color: theme.palette.grey[300],
+      fontFamily: "Vazir",
+      color: theme.palette.text.primary,
       border: `2px solid ${theme.palette.grey[200]}`,
       backgroundColor: theme.palette.background.paper,
     },
@@ -93,5 +98,5 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiInputAdornment-positionStart": {
       margin: "0 0 0 5px",
     },
-  },
+  }),
 }));

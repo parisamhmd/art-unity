@@ -50,7 +50,9 @@ const LoginPage = () => {
               icon={<MailOutlineIcon />}
               type="text"
               label="تلفن همراه"
-              onChange={(e) => {
+              isNumber
+              onChange={(event) => {
+                const e = event.target.value;
                 e?.length < 12 && setNumber(e);
               }}
             />

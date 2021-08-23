@@ -47,7 +47,7 @@ export default function AlertContextProvider({ children }) {
     alertTimeOut.current = setTimeout(() => {
       alertPromise.current?.(false);
       setAlertOpen(false);
-    }, 4000);
+    }, 3000);
     return new Promise()((resolve) => {
       alertPromise.current = resolve;
     });
@@ -63,7 +63,7 @@ export default function AlertContextProvider({ children }) {
     alertTimeOut.current = setTimeout(() => {
       alertPromise.current?.(false);
       setAlertOpen(false);
-    }, 4000);
+    }, 3000);
 
     return new Promise()((resolve) => {
       alertPromise.current = resolve;

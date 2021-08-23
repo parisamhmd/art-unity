@@ -50,7 +50,9 @@ const BaseLayout = ({ children, crumb }) => {
                       <p
                         className={clsx(
                           {
-                            [classes.selectedBox]: pathname === route.path,
+                            [classes.selectedBox]: pathname.includes(
+                              route.path
+                            ),
                           },
                           classes.text
                         )}
