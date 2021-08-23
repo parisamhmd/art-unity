@@ -8,8 +8,11 @@ import AlertContextProvider from "../../src/services/context/AlertContext/Provid
 import ArtistsPage from "./Artists";
 import TopicsPage from "./Topics";
 import CreateTopicPage from "./Topics/create";
+import SingleTopicPage from "./Topics/detail";
 import CategoriesPage from "./Categories";
 import SkillsPage from "./Skills";
+import CreateSkillsPage from "./Skills/create";
+import SingleSkillsPage from "./Skills/detail";
 import BlogPage from "./Blog";
 import ArtWorksPage from "./ArtWorks/index";
 import LoginPage from "./login";
@@ -47,7 +50,14 @@ function App() {
                 </Layout>
               )}
             />
-
+            <Route
+              path="/topics/:id"
+              render={() => (
+                <Layout>
+                  <SingleTopicPage />
+                </Layout>
+              )}
+            />
             <Route
               exact
               path="/categories"
@@ -58,10 +68,27 @@ function App() {
               )}
             />
             <Route
+              exact
               path="/skills"
               render={() => (
                 <Layout>
                   <SkillsPage />
+                </Layout>
+              )}
+            />
+            <Route
+              path="/skills/create"
+              render={() => (
+                <Layout>
+                  <CreateSkillsPage />
+                </Layout>
+              )}
+            />
+            <Route
+              path="/skills/:id"
+              render={() => (
+                <Layout>
+                  <SingleSkillsPage />
                 </Layout>
               )}
             />

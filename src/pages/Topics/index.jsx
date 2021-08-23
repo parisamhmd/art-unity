@@ -73,8 +73,8 @@ const TopicsPage = () => {
                 result && handleDelete(id);
               });
           }}
-          onEditRow={() => {
-            console.log("Edit");
+          onEditRow={(id) => {
+            history.push(`/topics/${id}`);
           }}
         />
       </div>

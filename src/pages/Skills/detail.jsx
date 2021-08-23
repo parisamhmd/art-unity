@@ -8,24 +8,41 @@ import { useAlert } from "../../services/context/AlertContext/index";
 import { Form, Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
-import { useMutation } from "react-query";
-import { useHistory } from "react-router-dom";
+import { useQuery, useMutation } from "react-query";
+import { useHistory, useParams } from "react-router-dom";
 
-const CreateTopicPage = () => {
+const SingleOccupationPage = () => {
   const history = useHistory();
-  const classes = useStyle();
+  const { id } = useParams();
   const alert = useAlert();
 
-  const createTopic = async (data) => {
-    await axios.post("/admin/artTopic/create", data);
+  const getOccupationData = async () => {
+    const res = await axios.get(`admin/occupation/${id}/`);
+    return res.data;
   };
 
-  const { mutate: create } = useMutation(createTopic, {
+  const { data: initialData } = useQuery(
+    `admin/occupation/${id}/`,
+    getOccupationData,
+    {
+      onError: (err) => {
+        if (err.response.status === 403) {
+          history.push("/login");
+        }
+      },
+      enabled: !!id,
+    }
+  );
+
+  const editOccupation = async (data) => {
+    await axios.put(`/admin/occupation/update/${id}`, data);
+  };
+
+  const { mutate: edit } = useMutation(editOccupation, {
     onSuccess: () => {
-      history.push("/topics");
-      alert.success({ text: "تاپیک با موفقیت افزوده شد" });
+      alert.success({ text: "حرفه با موفقیت ویرایش شد" });
     },
-    onError: (error) => {},
+    onError: () => {},
   });
 
   const defaultInitialValues = {
@@ -39,15 +56,15 @@ const CreateTopicPage = () => {
 
   return (
     <div className="bg-white p-10 ">
-      <PageDetailLayout title="افزودن تاپیک جدید" />
+      <PageDetailLayout title="ویرایش حرفه " />
       <Formik
         enableReinitialize
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={validationSchema}
-        initialValues={defaultInitialValues}
-        onSubmit={(values, formikHelpers) => {
-          create(values);
+        initialValues={initialData || defaultInitialValues}
+        onSubmit={(values) => {
+          edit(values);
         }}
       >
         {() => (
@@ -62,7 +79,7 @@ const CreateTopicPage = () => {
                 <InputField name="name" label="نام" required />
               </Grid>
               <div className="flex flex-col items-center gap-4  mt-9 w-60">
-                <Button type="submit" selected children="ایجاد" />
+                <Button type="submit" selected children="ویرایش" />
               </div>
             </Grid>
           </Form>
@@ -72,6 +89,6 @@ const CreateTopicPage = () => {
   );
 };
 
-export default CreateTopicPage;
+export default SingleOccupationPage;
 
-const useStyle = makeStyles((theme) => ({}));
+const useStyle = makeStyles(() => ({}));

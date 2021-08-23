@@ -1,12 +1,12 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../components/Table";
-import PageLayout from "../../components/Layout/PageListLayout";
-import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
-import axios from "axios";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import PageListLayout from "../../components/Layout/PageListLayout";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
+import axios from "axios";
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
@@ -16,6 +16,7 @@ const SkillsPage = () => {
   const classes = useStyle();
   const alert = useAlert();
   const queryClient = useQueryClient();
+  const history = useHistory();
   const [search, setSearch] = React.useState(undefined);
 
   const getOccupationData = async () => {
@@ -35,24 +36,25 @@ const SkillsPage = () => {
     },
     onError: (error) => {
       if (error.response.data.statusCode === 404) {
-        alert.error({ text: "مهارت موردنظر یافت نشد" });
+        alert.error({ text: "حرفه موردنظر یافت نشد" });
       }
     },
   });
+
   return (
     <div className={classes.container}>
       <div className="bg-white p-10">
-        <PageLayout
-          addButtonTitle="افزودن حرف جدید"
+        <PageListLayout
+          addButtonTitle="افزودن حرفه جدید"
           searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
           searchValue={search}
           onSearchInputChange={(e) => {
             setSearch(e);
           }}
-        >
-          <ArtistsFormModal />
-          {/* Modal Component */}
-        </PageLayout>
+          onAddButtonClick={() => {
+            history.push("/skills/create");
+          }}
+        />
         <Table
           tableHeaderData={[
             { title: "نام", value: "name" },
@@ -65,14 +67,14 @@ const SkillsPage = () => {
               .prompt({
                 confirmText: "بله، حذف",
                 refuseText: "خیر",
-                text: "آیا از حذف این مهارت اطمینان دارید؟",
+                text: "آیا از حذف این حرفه اطمینان دارید؟",
               })
               .then(({ result }) => {
                 result && handleDelete(id);
               });
           }}
-          onEditRow={() => {
-            console.log("Edit");
+          onEditRow={(id) => {
+            history.push(`/skills/${id}`);
           }}
         />
       </div>

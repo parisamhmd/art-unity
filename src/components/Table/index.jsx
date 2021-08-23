@@ -72,7 +72,7 @@ const Table = ({
                     <div className="flex flex-wrap gap-2">
                       <EditOutlinedIcon
                         className="cursor-pointer"
-                        onClick={onEditRow}
+                        onClick={() => onEditRow(row._id)}
                       />
                       <DeleteOutlineIcon
                         className="cursor-pointer"

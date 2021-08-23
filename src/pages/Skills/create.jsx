@@ -11,19 +11,19 @@ import * as Yup from "yup";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
-const CreateTopicPage = () => {
+const CreateSkillPage = () => {
   const history = useHistory();
   const classes = useStyle();
   const alert = useAlert();
 
   const createTopic = async (data) => {
-    await axios.post("/admin/artTopic/create", data);
+    await axios.post("/admin/occupation/create", data);
   };
 
   const { mutate: create } = useMutation(createTopic, {
     onSuccess: () => {
-      history.push("/topics");
-      alert.success({ text: "تاپیک با موفقیت افزوده شد" });
+      history.push("/skills");
+      alert.success({ text: "حرفه با موفقیت افزوده شد" });
     },
     onError: (error) => {},
   });
@@ -39,7 +39,7 @@ const CreateTopicPage = () => {
 
   return (
     <div className="bg-white p-10 ">
-      <PageDetailLayout title="افزودن تاپیک جدید" />
+      <PageDetailLayout title="افزودن حرفه جدید" />
       <Formik
         enableReinitialize
         validateOnBlur={false}
@@ -72,6 +72,6 @@ const CreateTopicPage = () => {
   );
 };
 
-export default CreateTopicPage;
+export default CreateSkillPage;
 
 const useStyle = makeStyles((theme) => ({}));
