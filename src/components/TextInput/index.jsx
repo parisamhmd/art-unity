@@ -81,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "0.5rem",
     borderRadius: "0.5rem",
     fontSize: "1rem",
+    fontWeight: "bold",
     "& .MuiFilledInput-input": {
       padding: "10px 15px",
       textAlign: isNumber ? "left" : "right",

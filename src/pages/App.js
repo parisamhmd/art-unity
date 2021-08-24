@@ -2,7 +2,13 @@ import "./App.css";
 import { ThemeProvider } from "@material-ui/core";
 import { theme } from "../services/constant/theme";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
 import Layout from "../components/Layout/BaseLayout";
 import AlertContextProvider from "../../src/services/context/AlertContext/Provider";
 import ArtistsPage from "./Artists";
@@ -26,112 +32,123 @@ function App() {
       <ThemeProvider theme={theme}>
         <AlertContextProvider>
           <Router>
-            <Route path="/login" render={() => <LoginPage />} />
-            <Route
-              path="/artists"
-              render={() => (
-                <Layout>
-                  <ArtistsPage />
-                </Layout>
-              )}
-            />
-            {/* Topics */}
-            <Route
-              exact
-              path="/topics"
-              render={() => (
-                <Layout>
-                  <TopicsPage />
-                </Layout>
-              )}
-            />
-            <Route
-              path="/topics/create"
-              render={() => (
-                <Layout>
-                  <CreateTopicPage />
-                </Layout>
-              )}
-            />
-            <Route
-              path="/topics/:id"
-              render={() => (
-                <Layout>
-                  <SingleTopicPage />
-                </Layout>
-              )}
-            />
-            {/* Category */}
-            <Route
-              exact
-              path="/categories"
-              render={() => (
-                <Layout>
-                  <CategoriesPage />
-                </Layout>
-              )}
-            />
-            <Route
-              path="/categories/create"
-              render={() => (
-                <Layout>
-                  <CreateCategoryPage />
-                </Layout>
-              )}
-            />
-            <Route
-              path="/categories/:id"
-              render={() => (
-                <Layout>
-                  <SingleCategoryPage />
-                </Layout>
-              )}
-            />
-            {/* Occupation */}
-            <Route
-              exact
-              path="/skills"
-              render={() => (
-                <Layout>
-                  <SkillsPage />
-                </Layout>
-              )}
-            />
-            <Route
-              path="/skills/create"
-              render={() => (
-                <Layout>
-                  <CreateSkillsPage />
-                </Layout>
-              )}
-            />
-            <Route
-              path="/skills/:id"
-              render={() => (
-                <Layout>
-                  <SingleSkillsPage />
-                </Layout>
-              )}
-            />
-            <Route
-              exact
-              path="/blog"
-              render={() => (
-                <Layout>
-                  <BlogPage />
-                </Layout>
-              )}
-            />
-            <Route
-              path="/artworks"
-              render={() => (
-                <Layout>
-                  {" "}
-                  <ArtWorksPage />{" "}
-                </Layout>
-              )}
-            />
-            <Route exact path="/" render={() => <Redirect to="/artists" />} />
+            <Switch>
+              <Route path="/login" render={() => <LoginPage />} />
+              <Route
+                exact
+                path="/artists"
+                render={() => (
+                  <Layout>
+                    <ArtistsPage />
+                  </Layout>
+                )}
+              />
+              {/* Topics */}{" "}
+              <Route
+                exact
+                path="/topics"
+                render={() => (
+                  <Layout>
+                    <TopicsPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/topics/create"
+                render={() => (
+                  <Layout>
+                    <CreateTopicPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/topics/:id"
+                render={() => (
+                  <Layout>
+                    <SingleTopicPage />
+                  </Layout>
+                )}
+              />
+              {/* Category */}
+              <Route
+                exact
+                path="/categories"
+                render={() => (
+                  <Layout>
+                    <CategoriesPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/categories/create"
+                render={() => (
+                  <Layout>
+                    <CreateCategoryPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/categories/:id"
+                render={() => (
+                  <Layout>
+                    <SingleCategoryPage />
+                  </Layout>
+                )}
+              />
+              {/* Occupation */}
+              <Route
+                exact
+                path="/skills"
+                render={() => (
+                  <Layout>
+                    <SkillsPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/skills/create"
+                render={() => (
+                  <Layout>
+                    <CreateSkillsPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                // exact
+                path="/skills/:id"
+                render={() => (
+                  <Layout>
+                    <SingleSkillsPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                exact
+                path="/blog"
+                render={() => (
+                  <Layout>
+                    <BlogPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/artworks"
+                render={() => (
+                  <Layout>
+                    {" "}
+                    <ArtWorksPage />{" "}
+                  </Layout>
+                )}
+              />
+              <Route exact path="/" render={() => <Redirect to="/artists" />} />
+            </Switch>
           </Router>
         </AlertContextProvider>
       </ThemeProvider>

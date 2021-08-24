@@ -20,10 +20,8 @@ const SingleDropdown = ({
       width: "100%",
       height: "2.75rem",
       fontFamily: "Vazir",
-      fontWeight: 700,
       fontSize: "1rem",
       padding: "0 0.625rem 0",
-      color: theme.palette.text.primary,
       backgroundColor: theme.palette.background.paper,
       boxShadow: `0  ${theme.palette.grey[100]}`,
       borderRadius: ShowDropdown ? "0.5rem 0.5rem 0 0" : "0.5rem",
@@ -52,29 +50,25 @@ const SingleDropdown = ({
       fontFamily: "Vazir",
       fontWeight: "bold",
       fontSize: "1rem",
-      color: theme.palette.text.disabled,
+      color: theme.palette.grey[200],
     }),
     option: (styles, { isSelected }) => {
       return {
         ...styles,
         width: "100%",
         fontFamily: "Vazir",
-        fontSize: "0.875rem",
-        fontWeight: 500,
+        fontSize: "1rem",
+        fontWeight: "bold",
         textAlign: "center",
-        marginTop: "1.875rem",
-        padding: 0,
+        padding: "0.9rem",
         outline: "none",
-        backgroundColor: theme.palette.background.default,
+        backgroundColor: theme.palette.background.paper,
         color: isSelected
           ? theme.palette.secondary.main
           : theme.palette.text.primary,
         cursor: "pointer",
-        ":last-child": {
-          marginBottom: "0.975rem",
-        },
         ":hover": {
-          background: theme.palette.background.paper,
+          background: theme.palette.background.default,
         },
       };
     },
@@ -90,9 +84,12 @@ const SingleDropdown = ({
         background: theme.palette.background.default,
       },
       "::-webkit-scrollbar-thumb": {
-        background: theme.palette.grey[400],
+        background: theme.palette.grey[200],
         borderRadius: "8px",
       },
+    }),
+    input: (base) => ({
+      fontWeight: "bold",
     }),
     dropdownIndicator: (base) => ({
       ...base,
@@ -107,6 +104,7 @@ const SingleDropdown = ({
         <p>{label} </p>
       </div>
       <Select
+        placeholder={`${label} را انتخاب کنید`}
         options={options}
         noOptionsMessage={() => "موردی یافت نشد"}
         onMenuClose={() => setShowDropdown(false)}
@@ -114,9 +112,10 @@ const SingleDropdown = ({
         components={{ IndicatorSeparator: () => null }}
         captureMenuScroll={false}
         maxMenuHeight={185}
-        onChange={(option) => {
-          onChange(option);
-        }}
+        isClearable
+        // onChange={(option) => {
+        //   onChange(option);
+        // }}
         {...props}
         styles={Styles}
         {...style}

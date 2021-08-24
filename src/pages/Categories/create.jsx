@@ -63,7 +63,22 @@ const CreateCategoryPage = () => {
                 <InputField name="name" label="نام" required />
               </Grid>{" "}
               <Grid item xs={12} className="w-full">
-                {/* <SingleDropdown name="name" label="نام" required /> */}
+                <SingleDropdown
+                  name="name"
+                  label="نام"
+                  required
+                  options={[
+                    { label: "label1", value: "1" },
+                    { label: "label2", value: "2" },
+                    { label: "label3", value: "3" },
+                    { label: "label1", value: "1" },
+                    { label: "label2", value: "2" },
+                    { label: "label3", value: "3" },
+                    { label: "label1", value: "1" },
+                    { label: "label2", value: "2" },
+                    { label: "label3", value: "3" },
+                  ]}
+                />
               </Grid>
               <div className="flex flex-col items-center gap-4  mt-9 w-60">
                 <Button type="submit" selected children="ایجاد" />
