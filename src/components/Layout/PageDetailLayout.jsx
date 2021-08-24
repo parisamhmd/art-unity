@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import clsx from "clsx";
 
 const PageDetailLayout = ({ title }) => {
   const classes = useStyle();
@@ -16,7 +17,7 @@ const PageDetailLayout = ({ title }) => {
         </Grid>
         <Grid item>
           <ArrowBackIcon
-            className="cursor-pointer"
+            className={clsx("cursor-pointer", classes.backButton)}
             onClick={() =>
               history.push(
                 history.location.pathname.split("/").slice(0, -1).join("/")
@@ -38,5 +39,14 @@ const useStyle = makeStyles((theme) => ({
     fontWeight: 700,
     marginBottom: "1rem",
     color: theme.palette.secondary.main,
+  },
+  backButton: {
+    width: "2rem",
+    height: "2rem",
+    padding: "0.25rem",
+    borderRadius: "50%",
+    "&:hover": {
+      backgroundColor: theme.palette.grey[100],
+    },
   },
 }));

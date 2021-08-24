@@ -3,10 +3,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../components/Table";
 import PageLayout from "../../components/Layout/PageListLayout";
 import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
-import axios from "axios";
-import { useQuery, useMutation, useQueryClient } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
+import axios from "axios";
+import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
@@ -16,6 +17,8 @@ const CategoriesPage = () => {
   const classes = useStyle();
   const alert = useAlert();
   const queryClient = useQueryClient();
+  const history = useHistory();
+
   const [search, setSearch] = React.useState(undefined);
 
   const getCategoriesData = async () => {
@@ -50,6 +53,9 @@ const CategoriesPage = () => {
           onSearchInputChange={(e) => {
             setSearch(e);
           }}
+          onAddButtonClick={() => {
+            history.push("/categories/create");
+          }}
         >
           <ArtistsFormModal />
           {/* Modal Component */}
@@ -73,8 +79,8 @@ const CategoriesPage = () => {
                 result && handleDelete(id);
               });
           }}
-          onEditRow={() => {
-            console.log("Edit");
+          onEditRow={(id) => {
+            history.push(`/categories/${id}`);
           }}
         />
       </div>

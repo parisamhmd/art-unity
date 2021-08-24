@@ -10,6 +10,8 @@ import TopicsPage from "./Topics";
 import CreateTopicPage from "./Topics/create";
 import SingleTopicPage from "./Topics/detail";
 import CategoriesPage from "./Categories";
+import CreateCategoryPage from "./Categories/create";
+import SingleCategoryPage from "./Categories/detail";
 import SkillsPage from "./Skills";
 import CreateSkillsPage from "./Skills/create";
 import SingleSkillsPage from "./Skills/detail";
@@ -33,6 +35,7 @@ function App() {
                 </Layout>
               )}
             />
+            {/* Topics */}
             <Route
               exact
               path="/topics"
@@ -58,6 +61,7 @@ function App() {
                 </Layout>
               )}
             />
+            {/* Category */}
             <Route
               exact
               path="/categories"
@@ -67,6 +71,23 @@ function App() {
                 </Layout>
               )}
             />
+            <Route
+              path="/categories/create"
+              render={() => (
+                <Layout>
+                  <CreateCategoryPage />
+                </Layout>
+              )}
+            />
+            <Route
+              path="/categories/:id"
+              render={() => (
+                <Layout>
+                  <SingleCategoryPage />
+                </Layout>
+              )}
+            />
+            {/* Occupation */}
             <Route
               exact
               path="/skills"

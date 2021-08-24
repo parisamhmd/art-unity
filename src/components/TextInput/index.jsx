@@ -77,9 +77,9 @@ const useStyles = makeStyles((theme) => ({
   },
   loginInput: ({ isNumber }) => ({
     margin: 0,
+    height: "2.75rem",
     marginBottom: "0.5rem",
     borderRadius: "0.5rem",
-    fontWeight: "bold",
     fontSize: "1rem",
     "& .MuiFilledInput-input": {
       padding: "10px 15px",
