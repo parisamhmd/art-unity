@@ -1,52 +1,30 @@
-import React, {useEffect, useState} from "react";
-import {Grid, Tooltip, Typography} from "@material-ui/core";
-import {images} from "services/constants/images";
-import CustomMultiDropdown from "./customMutiDropdown";
+import React, { useEffect, useState } from "react";
+import { Grid, Tooltip, Typography, makeStyles } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import CustomMultiDropdown from "./CustomMultiDropdown";
 
-export type IMultiDropdownProps<T extends number | string> = {
-  label?: string;
-  hint?: string;
-  placeholder?: string;
-  defaultValues?: Array<IDropdownOption<T>>;
-  values?: Array<IDropdownOption<T>>;
-  options?: Array<IDropdownOption<T>>;
-  isDisabled?: boolean;
-  isError?: boolean;
-  required?: boolean;
-  maxItem: number;
-  onChange?: (selectedOption: Array<IDropdownOption<T>>) => void;
-  style?: any;
-  errorMessage?: string;
-};
-
-export interface IDropdownOption<T> {
-  value: T;
-  label: string;
-  [key: string]: any;
-}
-function MultiDropdown<T extends number | string = number | string>({
+const MultiDropdown = ({
   label,
-  hint,
-  placeholder,
-  defaultValues,
   values,
   options,
   isDisabled,
-  isError,
   errorMessage,
   required,
   maxItem,
   onChange: handleChange,
   style,
-}: IMultiDropdownProps<T>) {
-  const [selectedOptions, setSelectedOptions] = useState<Array<IDropdownOption<T>>>(defaultValues || []);
-  useEffect(() => {
-    if (values || defaultValues) {
-      setSelectedOptions(values ? values : defaultValues ? defaultValues : []);
-    }
-  }, [values, defaultValues]);
+  ...props
+}) => {
+  const classes = useStyle();
+  const [selectedOptions, setSelectedOptions] = useState(values || []);
 
-  const handleOptionClick = (e: IDropdownOption<T> | undefined) => {
+  useEffect(() => {
+    if (values) {
+      setSelectedOptions(values ? values : []);
+    }
+  }, [values]);
+
+  const handleOptionClick = (e) => {
     if (e) {
       setSelectedOptions((prev) => {
         const next = [...prev].concat(e);
@@ -56,7 +34,7 @@ function MultiDropdown<T extends number | string = number | string>({
     }
   };
 
-  const handleDeleteOption = (element: IDropdownOption<T>) => {
+  const handleDeleteOption = (element) => {
     setSelectedOptions((prev) => {
       const next = [...prev]?.filter((item) => element.value !== item.value);
       handleChange?.(next);
@@ -65,97 +43,75 @@ function MultiDropdown<T extends number | string = number | string>({
   };
 
   return (
-    <>
+    <div>
       <CustomMultiDropdown
         label={label}
-        hint={hint}
-        placeholder={placeholder ? placeholder : "هینت ..."}
         options={options}
         isDisabled={selectedOptions.length >= maxItem || isDisabled}
-        isError={isError}
+        errorMessage={errorMessage}
         required={required}
         selectedOptions={values ? values : selectedOptions}
-        onInputChange={handleOptionClick}
+        onChange={handleOptionClick}
         style={style}
+        {...props}
       />
-      {errorMessage && (
-        <Grid item className="mt-1">
-          <Typography color="error" className="font-medium text-3">
-            {errorMessage}
-          </Typography>
-        </Grid>
-      )}
-      <Grid className=" pt-3" container wrap="wrap" spacing={1}>
-        {!values
-          ? selectedOptions &&
-            selectedOptions.map((element) => (
-              <Grid
-                item
-                container
-                key={element.value}
-                alignItems="center"
-                className="rounded-2 h-10 ml-2.5 mb-2 px-2.5 bg-Secondary  bg-opacity-4"
-                xs={5}
-              >
-                <Grid item xs={10}>
-                  <Tooltip
-                    title={options?.find((item) => item.value === element.value)?.label as string}
-                    placement="bottom"
-                    classes={{tooltip: "text-xs "}}
-                  >
-                    <Typography
-                      className="text-3 overflow-hidden overflow-ellipsis whitespace-nowrap font-bold"
-                      color="secondary"
-                    >
-                      {options?.find((item) => item.value === element.value)?.label}
-                    </Typography>
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={2}>
-                  <img
-                    src={images.icons.close}
-                    className="cursor-pointer w-4 h-4"
-                    alt="closeIcon"
-                    onClick={() => handleDeleteOption(element)}
-                  />
-                </Grid>
+      <Grid container wrap="wrap" spacing={1} className={classes.elementBox}>
+        {values &&
+          values?.map((element) => (
+            <Grid
+              item
+              container
+              key={element.value}
+              justifyContent="space-around"
+              alignItems="center"
+              className={classes.element}
+              xs={3}
+            >
+              <Grid item xs={9}>
+                <Tooltip
+                  title={
+                    options?.find((item) => item.value === element.value)?.label
+                  }
+                  placement="top"
+                  classes={{ tooltip: "text-3xs" }}
+                >
+                  <Typography className={classes.elementText} color="secondary">
+                    {
+                      options?.find((item) => item.value === element.value)
+                        ?.label
+                    }
+                  </Typography>
+                </Tooltip>
               </Grid>
-            ))
-          : values.map((element) => (
-              <Grid
-                item
-                container
-                key={element.value}
-                alignItems="center"
-                className="rounded-2 h-10 ml-2.5 mb-2 px-2.5 bg-Secondary bg-opacity-4"
-                xs={5}
-              >
-                <Grid item xs={10}>
-                  <Tooltip
-                    title={options?.find((item) => item.value === element.value)?.label as string}
-                    placement="bottom"
-                    classes={{tooltip: "text-xs "}}
-                  >
-                    <Typography
-                      className="text-3 text overflow-hidden overflow-ellipsis whitespace-nowrap font-bold text-center"
-                      color="secondary"
-                    >
-                      {options?.find((item) => item.value === element.value)?.label}
-                    </Typography>
-                  </Tooltip>
-                </Grid>
-                <Grid item xs={2}>
-                  <img
-                    src={images.icons.close}
-                    className="cursor-pointer w-4 h-4"
-                    alt="closeIcon"
-                    onClick={() => handleDeleteOption(element)}
-                  />
-                </Grid>
+              <Grid item xs={2}>
+                <CloseIcon
+                  className="cursor-pointer w-3 h-3"
+                  onClick={() => handleDeleteOption(element)}
+                />
               </Grid>
-            ))}
+            </Grid>
+          ))}
       </Grid>
-    </>
+    </div>
   );
-}
+};
 export default MultiDropdown;
+
+const useStyle = makeStyles((theme) => ({
+  elementBox: {
+    paddingTop: "1rem",
+    direction: "rtl",
+  },
+  element: {
+    height: "2.5rem",
+    margin: "0 0.5rem 0.5rem",
+    borderRadius: "0.5rem",
+    background: theme.palette.grey[25],
+  },
+  elementText: {
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    fontWeight: 600,
+  },
+}));

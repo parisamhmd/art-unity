@@ -2,7 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import Button from "../../components/Button";
-import SingleDropdown from "../../components/Dropdown/SingleDropdown";
+import SingleDropdown from "../../components/Dropdown/MultiDropdown";
+import MultiDropdown from "../../components/Dropdown/MultiDropdown";
 import InputField from "../../components/FormicFields/TextInputField";
 import PageDetailLayout from "../../components/Layout/PageDetailLayout";
 import { useAlert } from "../../services/context/AlertContext/index";
@@ -11,12 +12,15 @@ import axios from "axios";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
+import UploadFile from "../../components/UploadImage/PreviewImage";
+
+import mock from "../../services/assets/Img/mock.jfif";
 
 const CreateCategoryPage = () => {
   const history = useHistory();
   const classes = useStyle();
   const alert = useAlert();
-
+  const [test, setTest] = React.useState([]);
   const createCategory = async (data) => {
     await axios.post("/admin/artCategory/create", data);
   };
@@ -55,34 +59,21 @@ const CreateCategoryPage = () => {
           <Form>
             <Grid
               container
-              direction="column"
+              //   direction="column"
               alignItems="center"
+              justifyContent="space-around"
+              wrap="wrap"
               style={{ direction: "ltr" }}
             >
-              <Grid item xs={12} className="w-full">
+              <Grid item xs={5} className="w-full">
                 <InputField name="name" label="نام" required />
               </Grid>{" "}
-              <Grid item xs={12} className="w-full">
-                <SingleDropdown
-                  name="name"
-                  label="نام"
-                  required
-                  options={[
-                    { label: "label1", value: "1" },
-                    { label: "label2", value: "2" },
-                    { label: "label3", value: "3" },
-                    { label: "label1", value: "1" },
-                    { label: "label2", value: "2" },
-                    { label: "label3", value: "3" },
-                    { label: "label1", value: "1" },
-                    { label: "label2", value: "2" },
-                    { label: "label3", value: "3" },
-                  ]}
-                />
-              </Grid>
+              <Grid item xs={5} className="w-full">
+                <UploadFile alt="picture1" imageURL={mock} />
+              </Grid>{" "}
               <div className="flex flex-col items-center gap-4  mt-9 w-60">
                 <Button type="submit" selected children="ایجاد" />
-              </div>
+              </div>{" "}
             </Grid>
           </Form>
         )}

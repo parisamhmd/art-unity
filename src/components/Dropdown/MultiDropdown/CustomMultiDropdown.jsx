@@ -1,20 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Select from "react-select";
+import Select, { Styles } from "react-select";
 
-const SingleDropdown = ({
-  placeholder,
+const CustomMultiDropdown = ({
   label,
   options,
-  errorMessage,
+  placeholder,
+  selectedOptions,
   required,
-  onChange,
+  isDisabled,
+  errorMessage,
+  onInputChange,
   style,
+  onChange,
   ...props
 }) => {
   const theme = useTheme();
-  const classes = useStyles();
+  const classes = useStyle();
   const [ShowDropdown, setShowDropdown] = useState(false);
+  const [selectedItems, setSelectedItems] = useState([]);
+
   const Styles = {
     control: (base) => ({
       ...base,
@@ -53,7 +58,7 @@ const SingleDropdown = ({
       fontSize: "1rem",
       color: theme.palette.grey[200],
     }),
-    option: (styles, { isSelected }) => {
+    option: (styles, { isSelected, isDisabled }) => {
       return {
         ...styles,
         width: "100%",
@@ -64,9 +69,10 @@ const SingleDropdown = ({
         padding: "0.9rem",
         outline: "none",
         backgroundColor: theme.palette.background.paper,
-        color: isSelected
-          ? theme.palette.secondary.main
-          : theme.palette.text.primary,
+        color:
+          isSelected || isDisabled
+            ? theme.palette.secondary.main
+            : theme.palette.text.primary,
         cursor: "pointer",
         ":hover": {
           background: theme.palette.background.default,
@@ -98,6 +104,10 @@ const SingleDropdown = ({
     }),
   };
 
+  useEffect(() => {
+    selectedOptions && setSelectedItems(selectedOptions);
+  }, [selectedOptions]);
+
   return (
     <div className={classes.container}>
       <div className={classes.inputLabel}>
@@ -106,14 +116,23 @@ const SingleDropdown = ({
       </div>
       <Select
         placeholder={!!placeholder ? placeholder : `${label} را انتخاب کنید`}
+        value={
+          selectedItems?.length !== 0
+            ? selectedItems[selectedItems?.length - 1]
+            : null
+        }
         options={options}
         noOptionsMessage={() => "موردی یافت نشد!"}
+        isDisabled={isDisabled}
+        isSearchable
+        isOptionDisabled={(option) =>
+          selectedItems?.find((item) => item.value === option.value)
+        }
         onMenuClose={() => setShowDropdown(false)}
         onMenuOpen={() => setShowDropdown(true)}
         components={{ IndicatorSeparator: () => null }}
         captureMenuScroll={false}
         maxMenuHeight={185}
-        isClearable
         onChange={(option) => {
           onChange(option);
         }}
@@ -121,7 +140,7 @@ const SingleDropdown = ({
         {...props}
         {...style}
         classNamePrefix="react-select"
-      />
+      />{" "}
       <div className="flex justify-end">
         <p className={classes.errorMessage}>{errorMessage}</p>
       </div>
@@ -129,9 +148,9 @@ const SingleDropdown = ({
   );
 };
 
-export default SingleDropdown;
+export default CustomMultiDropdown;
 
-const useStyles = makeStyles((theme) => ({
+const useStyle = makeStyles((theme) => ({
   container: {
     fontFamily: "Vazir",
     fontWeight: "bold",
