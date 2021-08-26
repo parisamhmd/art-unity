@@ -42,6 +42,7 @@ const useStyle = makeStyles((theme) => ({
   container: {
     width: "8.125rem",
     height: "9.125rem",
+    minWidth: "8.125rem",
     position: "relative",
     "&:hover div": {
       display: "flex",

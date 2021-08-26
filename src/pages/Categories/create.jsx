@@ -2,8 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import Button from "../../components/Button";
-import SingleDropdown from "../../components/Dropdown/MultiDropdown";
-import MultiDropdown from "../../components/Dropdown/MultiDropdown";
 import InputField from "../../components/FormicFields/TextInputField";
 import PageDetailLayout from "../../components/Layout/PageDetailLayout";
 import { useAlert } from "../../services/context/AlertContext/index";
@@ -12,15 +10,13 @@ import axios from "axios";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
-import UploadFile from "../../components/UploadImage/PreviewImage";
-
+import UploadInput from "../../components/UploadImage";
 import mock from "../../services/assets/Img/mock.jfif";
 
 const CreateCategoryPage = () => {
   const history = useHistory();
   const classes = useStyle();
   const alert = useAlert();
-  const [test, setTest] = React.useState([]);
   const createCategory = async (data) => {
     await axios.post("/admin/artCategory/create", data);
   };
@@ -69,7 +65,10 @@ const CreateCategoryPage = () => {
                 <InputField name="name" label="نام" required />
               </Grid>{" "}
               <Grid item xs={5} className="w-full">
-                <UploadFile alt="picture1" imageURL={mock} />
+                <UploadInput
+                  files={[mock, mock, mock, mock, mock, mock]}
+                  maxItem={8}
+                />
               </Grid>{" "}
               <div className="flex flex-col items-center gap-4  mt-9 w-60">
                 <Button type="submit" selected children="ایجاد" />
