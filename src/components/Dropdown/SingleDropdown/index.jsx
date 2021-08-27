@@ -122,7 +122,7 @@ const SingleDropdown = ({
         {...style}
         classNamePrefix="react-select"
       />
-      <div className="flex justify-end">
+      <div className="flex justify-end mt-2">
         <p className={classes.errorMessage}>{errorMessage}</p>
       </div>
     </div>

@@ -17,6 +17,7 @@ const CreateCategoryPage = () => {
   const history = useHistory();
   const classes = useStyle();
   const alert = useAlert();
+  const [loading, setLoading] = React.useState(false);
   const createCategory = async (data) => {
     await axios.post("/admin/artCategory/create", data);
   };
@@ -66,8 +67,21 @@ const CreateCategoryPage = () => {
               </Grid>{" "}
               <Grid item xs={5} className="w-full">
                 <UploadInput
-                  files={[mock, mock, mock, mock, mock, mock]}
+                  files={[
+                    { src: mock, id: 1 },
+                    { src: mock, id: 2 },
+                    { src: mock, id: 3 },
+                    { src: mock, id: 4 },
+                    { src: mock, id: 5 },
+                    { src: mock, id: 6 },
+                  ]}
                   maxItem={8}
+                  isLoading={loading}
+                  onSend={(e) => {
+                    console.log(e);
+                    setLoading(true);
+                  }}
+                  onDelete={(e) => console.log(e, " Delete")}
                 />
               </Grid>{" "}
               <div className="flex flex-col items-center gap-4  mt-9 w-60">

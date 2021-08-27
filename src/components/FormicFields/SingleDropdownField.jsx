@@ -1,16 +1,14 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TextInput from "../TextInput";
+import SingleDropdown from "../Dropdown/SingleDropdown";
 import { useField } from "formik";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
 }));
 
-const TextInputField = ({
-  placeholder,
-  className,
-  type,
+const SingleDropdownField = ({
+  options,
   errorMessage,
   required,
   label,
@@ -20,17 +18,15 @@ const TextInputField = ({
   const [field, { error }] = useField(props);
   return (
     <div className={classes.container}>
-      <TextInput
-        placeholder={placeholder}
-        type={type}
+      <SingleDropdown
         errorMessage={error}
         required={required}
         label={label}
+        value={options?.find((e) => e.value === field.value)}
         {...field}
-        {...props}
       />
     </div>
   );
 };
 
-export default TextInputField;
+export default SingleDropdownField;

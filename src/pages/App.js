@@ -23,6 +23,8 @@ import CreateSkillsPage from "./Skills/create";
 import SingleSkillsPage from "./Skills/detail";
 import BlogPage from "./Blog";
 import ArtWorksPage from "./ArtWorks/index";
+import CreateArtWorkPage from "./ArtWorks/create";
+import SingleArtWorkPage from "./ArtWorks/detail";
 import LoginPage from "./login";
 
 function App() {
@@ -119,7 +121,7 @@ function App() {
                 )}
               />
               <Route
-                // exact
+                exact
                 path="/skills/:id"
                 render={() => (
                   <Layout>
@@ -128,7 +130,6 @@ function App() {
                 )}
               />
               <Route
-                exact
                 exact
                 path="/blog"
                 render={() => (
@@ -144,6 +145,24 @@ function App() {
                   <Layout>
                     {" "}
                     <ArtWorksPage />{" "}
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/artworks/create"
+                render={() => (
+                  <Layout>
+                    <CreateArtWorkPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/artworks/:id"
+                render={() => (
+                  <Layout>
+                    <SingleArtWorkPage />
                   </Layout>
                 )}
               />

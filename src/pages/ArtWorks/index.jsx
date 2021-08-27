@@ -7,7 +7,7 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
-
+import { useHistory } from "react-router-dom";
 const useStyle = makeStyles((theme) => ({
   container: {},
 }));
@@ -16,6 +16,7 @@ const ArtWorksPage = () => {
   const classes = useStyle();
   const alert = useAlert();
   const queryClient = useQueryClient();
+  const history = useHistory();
   const [search, setSearch] = React.useState(undefined);
 
   const getArtistsData = async () => {
@@ -50,10 +51,10 @@ const ArtWorksPage = () => {
           onSearchInputChange={(e) => {
             setSearch(e);
           }}
-        >
-          <ArtistsFormModal />
-          {/* Modal Component */}
-        </PageLayout>
+          onAddButtonClick={() => {
+            history.push("/artworks/create");
+          }}
+        />
         <Table
           tableHeaderData={[
             { title: "نام اثر", value: "title" },
@@ -74,8 +75,8 @@ const ArtWorksPage = () => {
                 result && handleDelete(id);
               });
           }}
-          onEditRow={() => {
-            console.log("Edit");
+          onEditRow={(id) => {
+            history.push(`/artworks/${id}`);
           }}
         />
       </div>

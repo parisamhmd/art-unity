@@ -27,7 +27,6 @@ const TextInputField = ({
         required={required}
         label={label}
         {...field}
-        {...props}
       />
     </div>
   );

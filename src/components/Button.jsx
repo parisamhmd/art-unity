@@ -44,6 +44,7 @@ const useStyle = makeStyles((theme) => ({
         ? theme.palette.background.paper
         : theme.palette.secondary.main
       : theme.palette.grey[50],
+    border: `2px solid ${theme.palette.secondary.main}`,
     width: "100%",
     fontSize: "15px",
     fontWeight: "bold",

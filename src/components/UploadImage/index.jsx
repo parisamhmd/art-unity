@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import PreviewFile from "./PreviewImage";
 import UploadFile from "./UploadInput";
 
-const FileInput = ({ files, onDelete, maxItem = 5, onSend }) => {
+const FileInput = ({ files, onDelete, maxItem = 5, onSend, isLoading }) => {
   const classes = useStyle();
 
   return (
@@ -12,8 +12,8 @@ const FileInput = ({ files, onDelete, maxItem = 5, onSend }) => {
         <div className="ml-2 mt-1">
           <PreviewFile
             alt={`picture${index}`}
-            imageURL={file}
-            onDelete={onDelete}
+            imageURL={file.src}
+            onDelete={() => onDelete(file.id)}
           />
         </div>
       ))}
@@ -21,6 +21,7 @@ const FileInput = ({ files, onDelete, maxItem = 5, onSend }) => {
         <div className="ml-2 mt-1">
           <UploadFile
             id="unique"
+            isLoading={isLoading}
             handleChange={(e) => {
               onSend(e.target.value);
             }}
