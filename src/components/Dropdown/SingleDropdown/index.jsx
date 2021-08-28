@@ -66,7 +66,7 @@ const SingleDropdown = ({
         backgroundColor: theme.palette.background.paper,
         color: isSelected
           ? theme.palette.secondary.main
-          : theme.palette.text.primary,
+          : theme.palette.grey[600],
         cursor: "pointer",
         ":hover": {
           background: theme.palette.background.default,

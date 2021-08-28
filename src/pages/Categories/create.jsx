@@ -30,7 +30,6 @@ const CreateCategoryPage = () => {
   };
   const { data } = useQuery("/artTopic/all", getArtTopicsData);
 
-  //   console.log(data);
   const { mutate: create } = useMutation(createCategory, {
     onSuccess: () => {
       history.push("/categories");
@@ -76,7 +75,6 @@ const CreateCategoryPage = () => {
             image: values.image[0],
             artTopic: values.artTopic.map(({ value }) => value),
           };
-          console.log(data);
           create(data);
         }}
       >
