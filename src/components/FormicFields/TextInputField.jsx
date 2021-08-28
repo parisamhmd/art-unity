@@ -11,7 +11,6 @@ const TextInputField = ({
   placeholder,
   className,
   type,
-  errorMessage,
   required,
   label,
   ...props

@@ -22,7 +22,7 @@ const PreviewImage = ({ id, isLoading = false, handleChange }) => {
         accept="image/*"
         type="file"
         className="hidden"
-        onChange={handleChange}
+        onChange={!isLoading && handleChange}
       />
     </div>
   );

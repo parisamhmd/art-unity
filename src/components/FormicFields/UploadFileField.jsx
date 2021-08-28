@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TextInput from "../TextInput";
+import UploadInput from "../UploadImage";
 import { useField } from "formik";
 
 const useStyle = makeStyles((theme) => ({
@@ -8,26 +8,34 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 const TextInputField = ({
-  placeholder,
-  className,
-  type,
-  errorMessage,
   required,
   label,
+  maxItem,
+  loading = false,
+  onUpload,
   ...props
 }) => {
   const classes = useStyle();
-  const [field, { error }] = useField(props);
+  const [field, { error }, { setValue }] = useField(props);
   return (
     <div className={classes.container}>
-      <TextInput
-        placeholder={placeholder}
-        type={type}
-        errorMessage={error}
-        required={required}
+      <UploadInput
         label={label}
+        required={required}
+        errorMessage={error}
+        files={field.value?.map((file) => ({ src: file, id: file }))}
+        maxItem={maxItem}
+        isLoading={loading}
+        onSend={(event) => {
+          const data = new FormData();
+          data.append("file", event.target.files[0]);
+          onUpload(data);
+        }}
+        onDelete={(id) => {
+          setValue(field.value?.filter((item) => item !== id));
+        }}
         {...field}
-      />
+      />{" "}
     </div>
   );
 };

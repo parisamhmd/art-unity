@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import Button from "../../components/Button";
 import InputField from "../../components/FormicFields/TextInputField";
+import UploadInputField from "../../components/UploadImage";
 import PageDetailLayout from "../../components/Layout/PageDetailLayout";
 import { useAlert } from "../../services/context/AlertContext/index";
 import { Form, Formik } from "formik";
@@ -10,7 +11,6 @@ import axios from "axios";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
-import UploadInput from "../../components/UploadImage";
 import mock from "../../services/assets/Img/mock.jfif";
 
 const CreateCategoryPage = () => {
@@ -18,6 +18,8 @@ const CreateCategoryPage = () => {
   const classes = useStyle();
   const alert = useAlert();
   const [loading, setLoading] = React.useState(false);
+  const [files, setFile] = React.useState([]);
+
   const createCategory = async (data) => {
     await axios.post("/admin/artCategory/create", data);
   };
@@ -28,6 +30,18 @@ const CreateCategoryPage = () => {
       alert.success({ text: "طبقه‌بندی با موفقیت افزوده شد" });
     },
     onError: (error) => {},
+  });
+
+  const uploadFile = async (data) => {
+    const res = await axios.post("/admin/upload?type=art", data);
+    return res.data;
+  };
+  const { mutate: upload } = useMutation(uploadFile, {
+    onSuccess: (data) => {
+      setFile([...files, data.url]);
+      console.log(data);
+      setLoading(false);
+    },
   });
 
   const defaultInitialValues = {
@@ -62,27 +76,26 @@ const CreateCategoryPage = () => {
               wrap="wrap"
               style={{ direction: "ltr" }}
             >
-              <Grid item xs={5} className="w-full">
+              <Grid item md={5} xs={11} className="w-full">
                 <InputField name="name" label="نام" required />
               </Grid>{" "}
-              <Grid item xs={5} className="w-full">
-                <UploadInput
-                  files={[
-                    { src: mock, id: 1 },
-                    { src: mock, id: 2 },
-                    { src: mock, id: 3 },
-                    { src: mock, id: 4 },
-                    { src: mock, id: 5 },
-                    { src: mock, id: 6 },
-                  ]}
-                  maxItem={8}
+              <Grid item md={5} xs={11} className="w-full">
+                {/* <UploadInput
+                  label="تصویر"
+                  required
+                  files={files.map((file) => ({ src: file, id: file }))}
+                  maxItem={2}
                   isLoading={loading}
-                  onSend={(e) => {
-                    console.log(e);
+                  onSend={(event) => {
+                    const data = new FormData();
+                    data.append("file", event.target.files[0]);
+                    upload(data);
                     setLoading(true);
                   }}
-                  onDelete={(e) => console.log(e, " Delete")}
-                />
+                  onDelete={(id) => {
+                    setFile(files?.filter((item) => item !== id));
+                  }}
+                /> */}
               </Grid>{" "}
               <div className="flex flex-col items-center gap-4  mt-9 w-60">
                 <Button type="submit" selected children="ایجاد" />
