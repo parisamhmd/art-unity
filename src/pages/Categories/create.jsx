@@ -20,15 +20,15 @@ const CreateCategoryPage = () => {
   const [loading, setLoading] = React.useState(false);
   const [files, setFile] = React.useState([]);
 
-  const createCategory = async (data) => {
-    await axios.post("/admin/artCategory/create", data);
-  };
-
   const getArtTopicsData = async () => {
     const res = await axios.get("/artTopic/all");
     return res.data;
   };
   const { data } = useQuery("/artTopic/all", getArtTopicsData);
+
+  const createCategory = async (data) => {
+    await axios.post("/admin/artCategory/create", data);
+  };
 
   const { mutate: create } = useMutation(createCategory, {
     onSuccess: () => {
@@ -57,7 +57,12 @@ const CreateCategoryPage = () => {
   const validationSchema = () =>
     Yup.object({
       name: Yup.string().required("این فیلد الزامی است"),
-      files: Yup.array(),
+      artTopic: Yup.array()
+        .min(1, "حداقل یک تاپیک انتخاب نمایید")
+        .required("این فیلد الزامی است"),
+      image: Yup.array()
+        .min(1, "این فیلد الزامی است")
+        .required("این فیلد الزامی است"),
     });
 
   return (
