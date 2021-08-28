@@ -4,7 +4,9 @@ import SingleDropdown from "../Dropdown/SingleDropdown";
 import { useField } from "formik";
 
 const useStyle = makeStyles((theme) => ({
-  container: {},
+  container: {
+    direction: "ltr",
+  },
 }));
 
 const SingleDropdownField = ({

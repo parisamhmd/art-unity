@@ -4,7 +4,9 @@ import MultiDropdown from "../Dropdown/MultiDropdown/index";
 import { useField } from "formik";
 
 const useStyle = makeStyles((theme) => ({
-  container: {},
+  container: {
+    direction: "ltr",
+  },
 }));
 
 const MultiDropdownField = ({
@@ -15,15 +17,17 @@ const MultiDropdownField = ({
   ...props
 }) => {
   const classes = useStyle();
-  const [field, { error }] = useField(props);
+  const [{ value }, { error }, { setValue }] = useField(props);
   return (
     <div className={classes.container}>
       <MultiDropdown
         errorMessage={error}
         required={required}
         label={label}
-        values={options?.find((e) => e.value === field.value)}
-        {...field}
+        values={value}
+        options={options}
+        onChange={(e) => setValue(e)}
+        {...props}
       />
     </div>
   );

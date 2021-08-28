@@ -4,7 +4,9 @@ import TextArea from "../TextArea";
 import { useField } from "formik";
 
 const useStyle = makeStyles((theme) => ({
-  container: {},
+  container: {
+    direction: "ltr",
+  },
 }));
 
 const TextAreaField = ({ errorMessage, required, label, ...props }) => {

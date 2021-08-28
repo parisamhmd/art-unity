@@ -10,7 +10,7 @@ const MultiDropdown = ({
   isDisabled,
   errorMessage,
   required,
-  maxItem,
+  maxItem = options?.length,
   onChange: handleChange,
   style,
   ...props
@@ -109,6 +109,7 @@ const useStyle = makeStyles((theme) => ({
     background: theme.palette.grey[25],
   },
   elementText: {
+    fontFamily: "Vazir",
     overflow: "hidden",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",

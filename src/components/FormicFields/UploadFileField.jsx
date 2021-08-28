@@ -4,14 +4,16 @@ import UploadInput from "../UploadImage";
 import { useField } from "formik";
 
 const useStyle = makeStyles((theme) => ({
-  container: {},
+  container: {
+    direction: "ltr",
+  },
 }));
 
 const TextInputField = ({
   required,
   label,
   maxItem,
-  loading = false,
+  isLoading,
   onUpload,
   ...props
 }) => {
@@ -23,9 +25,13 @@ const TextInputField = ({
         label={label}
         required={required}
         errorMessage={error}
-        files={field.value?.map((file) => ({ src: file, id: file }))}
+        files={
+          field.value
+            ? field.value?.map((file) => ({ src: file, id: file }))
+            : []
+        }
         maxItem={maxItem}
-        isLoading={loading}
+        isLoading={isLoading}
         onSend={(event) => {
           const data = new FormData();
           data.append("file", event.target.files[0]);

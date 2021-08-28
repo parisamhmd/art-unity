@@ -4,7 +4,9 @@ import TextInput from "../TextInput";
 import { useField } from "formik";
 
 const useStyle = makeStyles((theme) => ({
-  container: {},
+  container: {
+    direction: "ltr",
+  },
 }));
 
 const TextInputField = ({

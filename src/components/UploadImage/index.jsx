@@ -32,7 +32,7 @@ const FileInput = ({
               />
             </div>
           ))}
-        {files.length < maxItem && (
+        {files?.length < maxItem && (
           <div className="ml-2 mt-1">
             <UploadFile
               id="unique"
