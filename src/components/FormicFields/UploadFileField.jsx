@@ -15,6 +15,7 @@ const TextInputField = ({
   maxItem,
   isLoading,
   onUpload,
+  onDelete: handleDelete,
   ...props
 }) => {
   const classes = useStyle();
@@ -39,6 +40,7 @@ const TextInputField = ({
         }}
         onDelete={(id) => {
           setValue(field.value?.filter((item) => item !== id));
+          handleDelete(id);
         }}
         {...field}
       />{" "}

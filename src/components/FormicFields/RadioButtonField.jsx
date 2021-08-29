@@ -11,15 +11,14 @@ const RadioButtonField = ({ label, ...props }) => {
     setValue(false);
   }, []);
   return (
-    <div>
+    <div className={classes.container}>
       <div className={classes.inputLabel}>
         <p>{label} </p>
       </div>
-      <div className={classes.container}>
+      <div className={classes.box}>
         <Button selected={field.value === true} onClick={() => setValue(true)}>
           دارد
         </Button>
-
         <Button
           selected={field.value === false}
           onClick={() => setValue(false)}
@@ -35,6 +34,9 @@ export default RadioButtonField;
 
 const useStyle = makeStyles((theme) => ({
   container: {
+    direction: "ltr",
+  },
+  box: {
     width: "100%",
     display: "flex",
     gap: 3,

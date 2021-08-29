@@ -23,6 +23,7 @@ const SingleDropdown = ({
       fontFamily: "Vazir",
       fontSize: "1rem",
       padding: "0 0.625rem 0",
+      fontWeight: "normal",
       backgroundColor: theme.palette.background.paper,
       boxShadow: `0  ${theme.palette.grey[100]}`,
       borderRadius: ShowDropdown ? "0.5rem 0.5rem 0 0" : "0.5rem",

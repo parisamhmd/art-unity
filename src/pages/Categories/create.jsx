@@ -113,7 +113,7 @@ const CreateCategoryPage = () => {
                   }}
                 />
               </Grid>{" "}
-              <div className="flex flex-col items-center gap-4  mt-9 w-60">
+              <div className="flex flex-col items-center gap-4 mt-9 w-60">
                 <Button type="submit" selected children="ایجاد" />
               </div>{" "}
             </Grid>

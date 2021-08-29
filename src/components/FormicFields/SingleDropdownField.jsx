@@ -17,15 +17,17 @@ const SingleDropdownField = ({
   ...props
 }) => {
   const classes = useStyle();
-  const [field, { error }] = useField(props);
+  const [field, { error }, { setValue }] = useField(props);
   return (
     <div className={classes.container}>
       <SingleDropdown
         errorMessage={error}
         required={required}
         label={label}
-        value={options?.find((e) => e.value === field.value)}
-        {...field}
+        options={options}
+        onChange={(e) => setValue(e)}
+        value={field.value}
+        {...props}
       />
     </div>
   );

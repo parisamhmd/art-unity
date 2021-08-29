@@ -5,24 +5,38 @@ import Button from "../../components/Button";
 import InputField from "../../components/FormicFields/TextInputField";
 import SingleDropdownField from "../../components/FormicFields/SingleDropdownField";
 import TextAreaField from "../../components/FormicFields/TextAreaField";
+import UploadFileField from "../../components/FormicFields/UploadFileField";
 import PageDetailLayout from "../../components/Layout/PageDetailLayout";
 import RadioButtonField from "../../components/FormicFields/RadioButtonField";
 import { useAlert } from "../../services/context/AlertContext/index";
 import { Form, Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
-import { useMutation } from "react-query";
+import { useQuery, useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
 const CreateSkillPage = () => {
   const history = useHistory();
   const classes = useStyle();
   const alert = useAlert();
+  const [loading, setLoading] = React.useState(false);
+  const [files, setFile] = React.useState([]);
+
+  const getArtTopicsData = async () => {
+    const res = await axios.get("/artCategory/all");
+    return res.data;
+  };
+  const { data: categories } = useQuery("/artCategory/all", getArtTopicsData);
+
+  const getArtistsData = async () => {
+    const res = await axios.get("/artist/all");
+    return res.data;
+  };
+  const { data: artists } = useQuery("/artist/all", getArtistsData);
 
   const createTopic = async (data) => {
     await axios.post("/admin/occupation/create", data);
   };
-
   const { mutate: create } = useMutation(createTopic, {
     onSuccess: () => {
       history.push("/skills");
@@ -31,15 +45,45 @@ const CreateSkillPage = () => {
     onError: (error) => {},
   });
 
+  const uploadFile = async (data) => {
+    const res = await axios.post("/admin/upload?type=art", data);
+    return res.data;
+  };
+  const { mutate: upload } = useMutation(uploadFile, {
+    onSuccess: (data) => {
+      setFile([...files, data.url]);
+      setLoading(false);
+    },
+  });
   const defaultInitialValues = {
     title: "",
+    artCategory: "",
+    artist: "",
+    artStoryَSpeaker: "",
+    artStoryَAuthor: "",
+    artStoryَVideoURL: "",
+    artStoryَText: "",
+    price: "",
+    count: "",
+    year: "",
+    length: "",
+    height: "",
+    width: "",
+    version: "",
+    sign: false,
+    wayOfCreation: "",
+    images: files,
   };
 
   const validationSchema = () =>
     Yup.object({
       title: Yup.string().required("این فیلد الزامی است"),
-      artCategory: Yup.string().required("این فیلد الزامی است"),
-      artist: Yup.string().required("این فیلد الزامی است"),
+      artCategory: Yup.object()
+        .shape({ value: Yup.string(), label: Yup.string() })
+        .required("این فیلد الزامی است"),
+      artist: Yup.object()
+        .shape({ value: Yup.string(), label: Yup.string() })
+        .required("این فیلد الزامی است"),
       artStoryَSpeaker: Yup.string().required("این فیلد الزامی است"),
       artStoryَAuthor: Yup.string().required("این فیلد الزامی است"),
       artStoryَVideoURL: Yup.string()
@@ -47,7 +91,7 @@ const CreateSkillPage = () => {
         .required("این فیلد الزامی است"),
       artStoryَText: Yup.string().required("این فیلد الزامی است"),
       price: Yup.string().required("این فیلد الزامی است"),
-      Inventory: Yup.number()
+      count: Yup.number()
         .typeError("این فیلد باید عدد باشد")
         .required("این فیلد الزامی است"),
       year: Yup.number()
@@ -64,6 +108,9 @@ const CreateSkillPage = () => {
         .required("این فیلد الزامی است"),
       version: Yup.string().required("این فیلد الزامی است"),
       wayOfCreation: Yup.string().required("این فیلد الزامی است"),
+      images: Yup.array()
+        .min(1, "این فیلد الزامی است")
+        .required("این فیلد الزامی است"),
     });
 
   return (
@@ -76,36 +123,24 @@ const CreateSkillPage = () => {
         validationSchema={validationSchema}
         initialValues={defaultInitialValues}
         onSubmit={(values, formikHelpers) => {
-          create(values);
+          console.log(values);
+          //   create(values);
         }}
       >
         {() => (
           <Form>
-            <Grid
-              container
-              //   direction="column"
-              //   alignItems="center"
-              justifyContent="space-around"
-              wrap="wrap"
-              className="gap-5"
-              style={{ direction: "ltr" }}
-            >
-              <Grid item md={5} xs={11} className="w-full">
-                <SingleDropdownField
-                  options={[]}
-                  name="artCategory"
-                  label="طبقه بندی"
-                  required
-                />
-              </Grid>
+            <Grid container justifyContent="space-around" wrap="wrap">
               <Grid item md={5} xs={11} className="w-full">
                 <InputField name="title" label="عنوان اثر" required />
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
                 <SingleDropdownField
-                  options={[]}
-                  name="artist"
-                  label="هنرمند"
+                  options={categories?.map(({ _id: value, name: label }) => ({
+                    value,
+                    label,
+                  }))}
+                  name="artCategory"
+                  label="طبقه بندی"
                   required
                 />
               </Grid>
@@ -117,9 +152,13 @@ const CreateSkillPage = () => {
                 />
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
-                <InputField
-                  name="artStoryَVideoURL"
-                  label="لینک ویدیو داستان اثر"
+                <SingleDropdownField
+                  options={artists?.map(({ _id, firstName, lastName }) => ({
+                    value: _id,
+                    label: `${firstName} ${lastName}`,
+                  }))}
+                  name="artist"
+                  label="هنرمند"
                   required
                 />
               </Grid>
@@ -130,11 +169,34 @@ const CreateSkillPage = () => {
                   required
                 />
               </Grid>
+              <Grid item md={5} xs={11} className="w-full">
+                <InputField
+                  name="artStoryَVideoURL"
+                  label="لینک ویدیو داستان اثر"
+                  required
+                />
+              </Grid>
               <Grid item xs={11} className="w-full">
                 <TextAreaField
                   name="artStoryَText"
                   label="متن داستان اثر"
                   required
+                />
+              </Grid>{" "}
+              <Grid item xs={11} style={{ marginBottom: "1rem" }}>
+                <UploadFileField
+                  name="images"
+                  label="تصاویر"
+                  required
+                  maxItem={5}
+                  isLoading={loading}
+                  onUpload={(data) => {
+                    setLoading(true);
+                    upload(data);
+                  }}
+                  onDelete={(id) => {
+                    setFile(files?.filter((item) => item !== id));
+                  }}
                 />
               </Grid>
               <Grid item xs={11}>
@@ -142,22 +204,25 @@ const CreateSkillPage = () => {
                 <p className={classes.text}>ویژگی ها </p>
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
-                <InputField name="Inventory" label="موجودی" required />
-              </Grid>
-              <Grid item md={5} xs={11} className="w-full">
                 <InputField name="price" label="قیمت" required />
               </Grid>
+              <Grid item md={5} xs={11} className="w-full">
+                <InputField name="count" label="موجودی" required />
+              </Grid>
+              <Grid item md={5} xs={11} className="w-full">
+                <InputField name="width" label="عرض" required />
+              </Grid>{" "}
               <Grid item md={5} xs={11} className="w-full">
                 <InputField name="length" label="طول" required />
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
-                <InputField name="width" label="عرض" required />
+                <InputField name="height" label="ارتفاع" required />
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
                 <InputField name="year" label="سال خلق اثر" required />
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
-                <InputField name="height" label="ارتفاع" required />
+                <RadioButtonField name="sign" label="امضا" />
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
                 <InputField
@@ -167,13 +232,10 @@ const CreateSkillPage = () => {
                 />
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
-                <RadioButtonField name="sign" label="امضا" />
-              </Grid>
-              <Grid item md={5} xs={11} className="w-full">
                 <InputField name="version" label="نسخه" required />
               </Grid>{" "}
               <Grid item xs={11} />
-              <div className="flex flex-col items-center gap-4 w-60">
+              <div className="flex flex-col items-center gap-4  mt-9 w-60">
                 <Button type="submit" selected children="ایجاد" />
               </div>
             </Grid>

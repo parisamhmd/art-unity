@@ -22,7 +22,6 @@ const ArtistsPage = () => {
     const res = await axios.get("/artist/all");
     return res.data;
   };
-
   const { data, status } = useQuery("/artist/all", getArtistsData);
 
   const deleteArtist = async (id) => {

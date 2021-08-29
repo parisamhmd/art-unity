@@ -12,8 +12,8 @@ const TextArea = ({ required, label, errorMessage, ...props }) => {
       </div>
       <TextareaAutosize
         className={classes.textArea}
-        minRows={10}
-        maxRow={10}
+        minRows={8}
+        maxRow={8}
         {...props}
       />
       <div className="flex justify-end">
