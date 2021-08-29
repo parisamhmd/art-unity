@@ -12,6 +12,8 @@ import {
 import Layout from "../components/Layout/BaseLayout";
 import AlertContextProvider from "../../src/services/context/AlertContext/Provider";
 import ArtistsPage from "./Artists";
+import CreateArtistPage from "./Artists/create";
+import SingleArtistPage from "./Artists/detail";
 import TopicsPage from "./Topics";
 import CreateTopicPage from "./Topics/create";
 import SingleTopicPage from "./Topics/detail";
@@ -42,6 +44,24 @@ function App() {
                 render={() => (
                   <Layout>
                     <ArtistsPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/artists/create"
+                render={() => (
+                  <Layout>
+                    <CreateArtistPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/artists/:id"
+                render={() => (
+                  <Layout>
+                    <SingleArtistPage />
                   </Layout>
                 )}
               />

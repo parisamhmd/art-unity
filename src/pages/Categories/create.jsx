@@ -106,11 +106,6 @@ const CreateCategoryPage = () => {
                   label="تصویر"
                   required
                   maxItem={1}
-                  isLoading={loading}
-                  onUpload={(data) => {
-                    setLoading(true);
-                    upload(data);
-                  }}
                 />
               </Grid>{" "}
               <div className="flex flex-col items-center gap-4 mt-9 w-60">

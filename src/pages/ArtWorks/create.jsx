@@ -15,18 +15,19 @@ import * as Yup from "yup";
 import { useQuery, useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
 
-const CreateSkillPage = () => {
+const CreateArtWorkPage = () => {
   const history = useHistory();
   const classes = useStyle();
   const alert = useAlert();
-  const [loading, setLoading] = React.useState(false);
-  const [files, setFile] = React.useState([]);
 
-  const getArtTopicsData = async () => {
+  const getArtCategoriesData = async () => {
     const res = await axios.get("/artCategory/all");
     return res.data;
   };
-  const { data: categories } = useQuery("/artCategory/all", getArtTopicsData);
+  const { data: categories } = useQuery(
+    "/artCategory/all",
+    getArtCategoriesData
+  );
 
   const getArtistsData = async () => {
     const res = await axios.get("/artist/all");
@@ -34,27 +35,17 @@ const CreateSkillPage = () => {
   };
   const { data: artists } = useQuery("/artist/all", getArtistsData);
 
-  const createTopic = async (data) => {
+  const createArtWork = async (data) => {
     await axios.post("/admin/occupation/create", data);
   };
-  const { mutate: create } = useMutation(createTopic, {
+  const { mutate: create } = useMutation(createArtWork, {
     onSuccess: () => {
-      history.push("/skills");
+      history.push("/artworks");
       alert.success({ text: "اثر هنری با موفقیت افزوده شد" });
     },
     onError: (error) => {},
   });
 
-  const uploadFile = async (data) => {
-    const res = await axios.post("/admin/upload?type=art", data);
-    return res.data;
-  };
-  const { mutate: upload } = useMutation(uploadFile, {
-    onSuccess: (data) => {
-      setFile([...files, data.url]);
-      setLoading(false);
-    },
-  });
   const defaultInitialValues = {
     title: "",
     artCategory: "",
@@ -72,7 +63,7 @@ const CreateSkillPage = () => {
     version: "",
     sign: false,
     wayOfCreation: "",
-    images: files,
+    images: [],
   };
 
   const validationSchema = () =>
@@ -113,6 +104,32 @@ const CreateSkillPage = () => {
         .required("این فیلد الزامی است"),
     });
 
+  const handleCreate = ({
+    title,
+    images,
+    price,
+    artist,
+    artCategory,
+    artStoryَText,
+    artStoryَVideoURL,
+    count,
+  }) => {
+    create({
+      size: "small",
+      price: price,
+      imgList: images,
+      artist: artist,
+      artCategory: artCategory,
+      artStory: {
+        title: "ty",
+        image: "w3ed",
+        videoUrl: artStoryَVideoURL,
+        text: artStoryَText,
+      },
+      featureList: { price: price, count: count },
+      title: title,
+    });
+  };
   return (
     <div className="bg-white p-10 ">
       <PageDetailLayout title="افزودن اثر هنری جدید" />
@@ -123,13 +140,17 @@ const CreateSkillPage = () => {
         validationSchema={validationSchema}
         initialValues={defaultInitialValues}
         onSubmit={(values, formikHelpers) => {
-          console.log(values);
-          //   create(values);
+          handleCreate(values);
         }}
       >
         {() => (
           <Form>
-            <Grid container justifyContent="space-around" wrap="wrap">
+            <Grid
+              container
+              justifyContent="space-around"
+              wrap="wrap"
+              className="gap-4"
+            >
               <Grid item md={5} xs={11} className="w-full">
                 <InputField name="title" label="عنوان اثر" required />
               </Grid>
@@ -189,49 +210,41 @@ const CreateSkillPage = () => {
                   label="تصاویر"
                   required
                   maxItem={5}
-                  isLoading={loading}
-                  onUpload={(data) => {
-                    setLoading(true);
-                    upload(data);
-                  }}
-                  onDelete={(id) => {
-                    setFile(files?.filter((item) => item !== id));
-                  }}
                 />
               </Grid>
               <Grid item xs={11}>
                 <hr />
                 <p className={classes.text}>ویژگی ها </p>
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <InputField name="price" label="قیمت" required />
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <InputField name="count" label="موجودی" required />
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <InputField name="width" label="عرض" required />
               </Grid>{" "}
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <InputField name="length" label="طول" required />
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <InputField name="height" label="ارتفاع" required />
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <InputField name="year" label="سال خلق اثر" required />
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <RadioButtonField name="sign" label="امضا" />
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <InputField
                   name="wayOfCreation"
                   label="شیوه خلق اثر"
                   required
                 />
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
+              <Grid item md={3} xs={11} className="w-full">
                 <InputField name="version" label="نسخه" required />
               </Grid>{" "}
               <Grid item xs={11} />
@@ -246,11 +259,11 @@ const CreateSkillPage = () => {
   );
 };
 
-export default CreateSkillPage;
+export default CreateArtWorkPage;
 
 const useStyle = makeStyles((theme) => ({
   text: {
-    fontSize: "1.875rem",
+    fontSize: "1.873rem",
     fontWeight: "bold",
     fontFamily: "Vazir",
     direction: "rtl",

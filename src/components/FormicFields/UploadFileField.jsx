@@ -2,6 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import UploadInput from "../UploadImage";
 import { useField } from "formik";
+import axios from "axios";
+import { useMutation } from "react-query";
 
 const useStyle = makeStyles((theme) => ({
   container: {
@@ -20,6 +22,18 @@ const TextInputField = ({
 }) => {
   const classes = useStyle();
   const [field, { error }, { setValue }] = useField(props);
+  const [loading, setLoading] = React.useState(false);
+
+  const uploadFile = async (data) => {
+    const res = await axios.post("/admin/upload?type=art", data);
+    return res.data;
+  };
+  const { mutate: upload } = useMutation(uploadFile, {
+    onSuccess: (data) => {
+      setValue([...field.value, data.url]);
+      setLoading(false);
+    },
+  });
   return (
     <div className={classes.container}>
       <UploadInput
@@ -32,18 +46,18 @@ const TextInputField = ({
             : []
         }
         maxItem={maxItem}
-        isLoading={isLoading}
+        isLoading={loading}
         onSend={(event) => {
+          setLoading(true);
           const data = new FormData();
           data.append("file", event.target.files[0]);
-          onUpload(data);
+          upload(data);
         }}
         onDelete={(id) => {
           setValue(field.value?.filter((item) => item !== id));
-          handleDelete(id);
         }}
         {...field}
-      />{" "}
+      />
     </div>
   );
 };
