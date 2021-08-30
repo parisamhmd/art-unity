@@ -17,8 +17,6 @@ const CreateCategoryPage = () => {
   const history = useHistory();
   const classes = useStyle();
   const alert = useAlert();
-  const [loading, setLoading] = React.useState(false);
-  const [files, setFile] = React.useState([]);
 
   const getArtTopicsData = async () => {
     const res = await axios.get("/artTopic/all");
@@ -38,20 +36,10 @@ const CreateCategoryPage = () => {
     onError: (error) => {},
   });
 
-  const uploadFile = async (data) => {
-    const res = await axios.post("/admin/upload?type=art", data);
-    return res.data;
-  };
-  const { mutate: upload } = useMutation(uploadFile, {
-    onSuccess: (data) => {
-      setFile([...files, data.url]);
-      setLoading(false);
-    },
-  });
   const defaultInitialValues = {
     name: "",
     artTopic: [],
-    image: files,
+    image: [],
   };
 
   const validationSchema = () =>
