@@ -31,8 +31,8 @@ const PreviewImage = ({ id, isLoading = false, handleChange }) => {
 export default PreviewImage;
 const useStyle = makeStyles((theme) => ({
   container: {
-    width: "8.125rem",
-    height: "9.125rem",
+    width: "9.125rem",
+    height: "10.125rem",
     minWidth: "8.125rem",
   },
   uploadBox: {

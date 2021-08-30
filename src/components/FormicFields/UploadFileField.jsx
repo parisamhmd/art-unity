@@ -15,28 +15,26 @@ const TextInputField = ({
   required,
   label,
   maxItem,
-  isLoading,
   onUpload,
   onDelete: handleDelete,
   ...props
 }) => {
   const classes = useStyle();
   const [field, { error }, { setValue }] = useField(props);
-  const [loading, setLoading] = React.useState(false);
 
   const uploadFile = async (data) => {
     const res = await axios.post("/admin/upload?type=art", data);
     return res.data;
   };
-  const { mutate: upload } = useMutation(uploadFile, {
+  const { mutate: upload, isLoading } = useMutation(uploadFile, {
     onSuccess: (data) => {
       setValue([...field.value, data.url]);
-      setLoading(false);
     },
   });
   return (
     <div className={classes.container}>
       <UploadInput
+        id={field.name}
         label={label}
         required={required}
         errorMessage={error}
@@ -46,9 +44,8 @@ const TextInputField = ({
             : []
         }
         maxItem={maxItem}
-        isLoading={loading}
+        isLoading={isLoading}
         onSend={(event) => {
-          setLoading(true);
           const data = new FormData();
           data.append("file", event.target.files[0]);
           upload(data);

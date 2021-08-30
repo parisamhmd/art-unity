@@ -11,6 +11,7 @@ const FileInput = ({
   isLoading,
   required,
   label,
+  id,
   errorMessage,
 }) => {
   const classes = useStyle();
@@ -35,7 +36,7 @@ const FileInput = ({
         {files?.length < maxItem && (
           <div className="ml-2 mt-1">
             <UploadFile
-              id="unique"
+              id={`unique${id}`}
               isLoading={isLoading}
               handleChange={(e) => {
                 onSend(e);

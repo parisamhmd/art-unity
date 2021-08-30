@@ -19,6 +19,7 @@ const TextAreaField = ({ errorMessage, required, label, ...props }) => {
         required={required}
         label={label}
         {...field}
+        {...props}
       />
     </div>
   );

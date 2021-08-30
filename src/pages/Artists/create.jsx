@@ -7,13 +7,15 @@ import SingleDropdownField from "../../components/FormicFields/SingleDropdownFie
 import TextAreaField from "../../components/FormicFields/TextAreaField";
 import UploadFileField from "../../components/FormicFields/UploadFileField";
 import PageDetailLayout from "../../components/Layout/PageDetailLayout";
-import RadioButtonField from "../../components/FormicFields/RadioButtonField";
+import RadioButtonField from "../../components/FormicFields/customField";
 import { useAlert } from "../../services/context/AlertContext/index";
+
 import { Form, Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
 import { useQuery, useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
+import CustomField from "../../components/FormicFields/customField";
 
 const CreateArtistPage = () => {
   const history = useHistory();
@@ -66,21 +68,27 @@ const CreateArtistPage = () => {
       aboutme: Yup.string().required("این فیلد الزامی است"),
       onedaywithme: Yup.object()
         .shape({
-          image: Yup.string(),
-          url: Yup.string(),
-          text: Yup.string(),
+          image: Yup.string().required("این فیلد الزامی است"),
+          url: Yup.string()
+            .url("یک آدرس معتبر وارد نمایید")
+            .required("این فیلد الزامی است"),
+          text: Yup.string().required("این فیلد الزامی است"),
         })
         .required("این فیلد الزامی است"),
       interview: Yup.object().shape({
-        image: Yup.string(),
-        url: Yup.string(),
-        text: Yup.string(),
+        image: Yup.string().required("این فیلد الزامی است"),
+        url: Yup.string()
+          .url("یک آدرس معتبر وارد نمایید")
+          .required("این فیلد الزامی است"),
+        text: Yup.string().required("این فیلد الزامی است"),
       }),
-      lifeRoute: Yup.array().shape({
-        title: Yup.string(),
-        image: Yup.string(),
-        text: Yup.string(),
-      }),
+      lifeRoute: Yup.array().of(
+        Yup.object().shape({
+          title: Yup.string().required("این فیلد الزامی است"),
+          image: Yup.string().required("این فیلد الزامی است"),
+          text: Yup.string().required("این فیلد الزامی است"),
+        })
+      ),
       favQoute: Yup.object().shape({
         image: Yup.string(),
         occupation: Yup.string(),
@@ -111,6 +119,7 @@ const CreateArtistPage = () => {
           <Form>
             <Grid
               container
+              direction="row"
               justifyContent="space-around"
               wrap="wrap"
               className="gap-4"
@@ -122,6 +131,12 @@ const CreateArtistPage = () => {
                 <InputField name="lastName" label="نام خانوادگی" required />
               </Grid>
               <Grid item md={5} xs={11} className="w-full">
+                <InputField name="birthPlace" label="محل تولد" required />
+              </Grid>
+              <Grid item md={5} xs={11} className="w-full">
+                <InputField name="birthYear" label="سال تولد" required />
+              </Grid>{" "}
+              <Grid item md={5} xs={11} className="w-full">
                 <SingleDropdownField
                   options={occupations?.map(({ _id: value, name: label }) => ({
                     value,
@@ -131,95 +146,45 @@ const CreateArtistPage = () => {
                   label="مهارت"
                   required
                 />
-              </Grid>{" "}
-              <Grid item md={5} xs={11} className="w-full">
-                <InputField name="birthPlace" label="محل تولد" required />
               </Grid>
-              <Grid item md={5} xs={11} className="w-full">
-                <InputField name="birthYear" label="سال تولد" required />
+              <Grid
+                container
+                justifyContent="space-around"
+                item
+                md={5}
+                xs={11}
+                className="w-full"
+              >
+                <Grid item md={5} xs={11} style={{ marginBottom: "1rem" }}>
+                  <UploadFileField
+                    name="avatarImage"
+                    label="تصویر آواتار هنرمند"
+                    required
+                    maxItem={1}
+                  />
+                </Grid>
+                <Grid item md={5} xs={11} style={{ marginBottom: "1rem" }}>
+                  <UploadFileField
+                    name="headerImage"
+                    label="تصویر پس‌زمینه هنرمند"
+                    required
+                    maxItem={1}
+                  />
+                </Grid>
               </Grid>
               <Grid item xs={11} className="w-full">
                 <TextAreaField name="aboutme" label="درباره من" required />
-              </Grid>
-              <Grid item xs={11} style={{ marginBottom: "1rem" }}>
-                <UploadFileField
-                  name="avatarImage"
-                  label="تصویر آواتار هنرمند"
-                  required
-                  maxItem={1}
-                />
-              </Grid>
+              </Grid>{" "}
               <Grid item md={5} xs={11} className="w-full">
-                <InputField
-                  name="artStoryَSpeaker"
-                  label="راوی داستان اثر"
-                  required
-                />
-              </Grid>
-              <Grid item md={5} xs={11} className="w-full">
-                <InputField
-                  name="artStoryَAuthor"
-                  label="نویسنده داستان اثر"
-                  required
-                />
-              </Grid>
-              <Grid item md={5} xs={11} className="w-full">
-                <InputField
-                  name="artStoryَVideoURL"
-                  label="لینک ویدیو داستان اثر"
-                  required
-                />
-              </Grid>
-              <Grid item xs={11} className="w-full">
-                <TextAreaField
-                  name="artStoryَText"
-                  label="متن داستان اثر"
+                <CustomField
+                  name="onedaywithme"
+                  label="یک روز با من"
                   required
                 />
               </Grid>{" "}
-              <Grid item xs={11} style={{ marginBottom: "1rem" }}>
-                <UploadFileField
-                  name="images"
-                  label="تصاویر"
-                  required
-                  maxItem={5}
-                />
+              <Grid item md={5} xs={11} className="w-full">
+                <CustomField name="interview" label="مصاحبه" required />
               </Grid>
-              <Grid item xs={11}>
-                <hr />
-                <p className={classes.text}>ویژگی ها </p>
-              </Grid>
-              <Grid item md={3} xs={11} className="w-full">
-                <InputField name="price" label="قیمت" required />
-              </Grid>
-              <Grid item md={3} xs={11} className="w-full">
-                <InputField name="count" label="موجودی" required />
-              </Grid>
-              <Grid item md={3} xs={11} className="w-full">
-                <InputField name="width" label="عرض" required />
-              </Grid>{" "}
-              <Grid item md={3} xs={11} className="w-full">
-                <InputField name="length" label="طول" required />
-              </Grid>
-              <Grid item md={3} xs={11} className="w-full">
-                <InputField name="height" label="ارتفاع" required />
-              </Grid>
-              <Grid item md={3} xs={11} className="w-full">
-                <InputField name="year" label="سال خلق اثر" required />
-              </Grid>
-              <Grid item md={3} xs={11} className="w-full">
-                <RadioButtonField name="sign" label="امضا" />
-              </Grid>
-              <Grid item md={3} xs={11} className="w-full">
-                <InputField
-                  name="wayOfCreation"
-                  label="شیوه خلق اثر"
-                  required
-                />
-              </Grid>
-              <Grid item md={3} xs={11} className="w-full">
-                <InputField name="version" label="نسخه" required />
-              </Grid>{" "}
               <Grid item xs={11} />
               <div className="flex flex-col items-center gap-4  mt-9 w-60">
                 <Button type="submit" selected children="ایجاد" />
