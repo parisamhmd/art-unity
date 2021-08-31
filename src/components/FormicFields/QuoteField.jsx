@@ -23,19 +23,40 @@ const CustomField = ({ label, ...props }) => {
   });
 
   return (
-    <div className={classes.container}>
-      <div className={classes.label}>
+    <Grid
+      container
+      direction="row-reverse"
+      justifyContent="space-around"
+      wrap="wrap"
+      className={classes.container}
+    >
+      <Grid item xs={12} className={classes.label}>
         <p className="mb-2">{label} </p>
         <hr />
-      </div>
-      <TextInput
-        type="text"
-        errorMessage={error?.url}
-        required
-        label="آدرس"
-        onChange={(e) => setValue({ ...field.value, url: e?.target.value })}
-      />
-      <div>
+      </Grid>
+      <Grid item md={5} xs={11}>
+        <TextInput
+          type="qouteTeller"
+          errorMessage={error?.qouteTeller}
+          required
+          label="گوینده"
+          onChange={(e) =>
+            setValue({ ...field.value, qouteTeller: e?.target.value })
+          }
+        />
+      </Grid>
+      <Grid item md={5} xs={11}>
+        <TextInput
+          type="occupation"
+          errorMessage={error?.occupation}
+          required
+          label="حرفه"
+          onChange={(e) =>
+            setValue({ ...field.value, occupation: e?.target.value })
+          }
+        />
+      </Grid>
+      <Grid item xs={11}>
         <UploadInput
           id={field.name}
           label="تصویر"
@@ -58,16 +79,16 @@ const CustomField = ({ label, ...props }) => {
           }}
           {...field}
         />
-      </div>
-      <div className="mt-5">
+      </Grid>
+      <Grid item xs={11}>
         <TextArea
           errorMessage={error?.text}
           label="متن"
           required
           onChange={(e) => setValue({ ...field.value, text: e?.target.value })}
         />{" "}
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
@@ -78,7 +99,8 @@ const useStyle = makeStyles((theme) => ({
     direction: "ltr",
     border: `2px solid ${theme.palette.grey[200]}`,
     borderRadius: "0.5rem",
-    padding: "1.5rem",
+    padding: "1rem",
+    gap: "1rem",
   },
   label: {
     color: theme.palette.text.primary,
@@ -87,5 +109,20 @@ const useStyle = makeStyles((theme) => ({
     fontFamily: "Vazir",
     fontWeight: "bold",
     fontSize: "1.25rem",
+  },
+  box: {
+    width: "100%",
+    display: "flex",
+    gap: 3,
+    padding: "0.25rem",
+    direction: "rtl",
+  },
+  inputLabel: {
+    color: theme.palette.text.primary,
+    margin: "0.5rem 0",
+    display: "flex",
+    justifyContent: "flex-end",
+    fontFamily: "Vazir",
+    fontWeight: "bold",
   },
 }));

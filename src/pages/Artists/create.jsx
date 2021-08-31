@@ -6,10 +6,10 @@ import InputField from "../../components/FormicFields/TextInputField";
 import SingleDropdownField from "../../components/FormicFields/SingleDropdownField";
 import TextAreaField from "../../components/FormicFields/TextAreaField";
 import UploadFileField from "../../components/FormicFields/UploadFileField";
+import OptionPlus from "../../components/OptionPlus.jsx";
 import PageDetailLayout from "../../components/Layout/PageDetailLayout";
-import RadioButtonField from "../../components/FormicFields/customField";
+import QuoteField from "../../components/FormicFields/QuoteField";
 import { useAlert } from "../../services/context/AlertContext/index";
-
 import { Form, Formik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
@@ -21,6 +21,7 @@ const CreateArtistPage = () => {
   const history = useHistory();
   const classes = useStyle();
   const alert = useAlert();
+  const [life, setLife] = React.useState([]);
 
   const getArtTopicsData = async () => {
     const res = await axios.get("/occupation/all");
@@ -90,10 +91,10 @@ const CreateArtistPage = () => {
         })
       ),
       favQoute: Yup.object().shape({
-        image: Yup.string(),
-        occupation: Yup.string(),
-        text: Yup.string(),
-        qouteTeller: Yup.string(),
+        image: Yup.string().required("این فیلد الزامی است"),
+        occupation: Yup.string().required("این فیلد الزامی است"),
+        text: Yup.string().required("این فیلد الزامی است"),
+        qouteTeller: Yup.string().required("این فیلد الزامی است"),
       }),
       avatarImage: Yup.string().required("این فیلد الزامی است"),
       headerImage: Yup.string().required("این فیلد الزامی است"),
@@ -104,7 +105,7 @@ const CreateArtistPage = () => {
   };
   return (
     <div className="bg-white p-10 ">
-      <PageDetailLayout title="افزودن اثر هنری جدید" />
+      <PageDetailLayout title="افزودن هنرمند جدید" />
       <Formik
         enableReinitialize
         validateOnBlur={false}
@@ -184,6 +185,20 @@ const CreateArtistPage = () => {
               </Grid>{" "}
               <Grid item md={5} xs={11} className="w-full">
                 <CustomField name="interview" label="مصاحبه" required />
+              </Grid>{" "}
+              <Grid item xs={11} className="w-full">
+                <QuoteField name="favQoute" label="نقل قول" required />
+              </Grid>
+              <Grid item xs={11} className="w-full">
+                <OptionPlus
+                  name="myLife"
+                  label="زندگی من"
+                  maxItem={5}
+                  value={[{ image: "", text: "fdf", title: "fj" }]}
+                  onChange={(e) => {
+                    console.log(e);
+                  }}
+                />
               </Grid>
               <Grid item xs={11} />
               <div className="flex flex-col items-center gap-4  mt-9 w-60">

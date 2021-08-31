@@ -45,7 +45,7 @@ const FileInput = ({
           </div>
         )}{" "}
       </div>
-      <div className="flex justify-end">
+      <div className="flex justify-end ">
         <p className={classes.errorMessage}>{errorMessage}</p>
       </div>
     </div>
@@ -59,6 +59,7 @@ const useStyle = makeStyles((theme) => ({
     display: "flex",
     direction: "rtl",
     flexWrap: "wrap",
+    marginBottom: "0.5rem",
   },
   inputLabel: {
     color: theme.palette.text.primary,

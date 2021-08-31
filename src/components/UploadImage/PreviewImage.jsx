@@ -10,7 +10,7 @@ const PreviewImage = ({ imageURL, alt, onDelete: handleDelete }) => {
   return (
     <div className={classes.container}>
       <div className={classes.imageBox}>
-        <Avatar
+        <img
           src={imageURL}
           alt={alt}
           variant="rounded"
@@ -58,6 +58,7 @@ const useStyle = makeStyles((theme) => ({
   image: {
     width: "100%",
     height: "100%",
+    objectFit: "cover",
   },
   deleteBox: {
     width: "100%",
