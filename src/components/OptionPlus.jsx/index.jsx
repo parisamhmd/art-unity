@@ -1,77 +1,93 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { useEffect } from "react";
+import { Grid } from "@material-ui/core";
 import Card from "./item";
 import Button from "../Button";
 
-const OptionPlus = ({ value, onChange: handleChange, maxItem }) => {
+const OptionPlus = ({
+  value,
+  errorMessage,
+  onChange: handleChange,
+  maxItem,
+  required = true,
+  label,
+}) => {
   const classes = useStyle();
-  const [items, setItems] = useState([]);
 
-  React.useEffect(() => {
-    setItems(value);
-  }, [value]);
-
-  useEffect(() => {
-    handleChange(items);
-  }, [items, handleChange]);
-
-  const addNewItem = () => {
-    if (items?.length <= maxItem) {
-      setItems((prevItems) => [
-        ...prevItems,
-        { title: "", image: "", text: "" },
-      ]);
+  const handleAddItem = () => {
+    if (!value || value?.length < maxItem) {
+      handleChange([...value, { title: "", image: "", text: "" }]);
     }
   };
 
   const handleDeleteItem = (deletedIndex) => {
-    const newItems = items.filter((Item, index) => index !== deletedIndex);
-    setItems(newItems);
+    const newItems = value.filter((Item, index) => index !== deletedIndex);
+    handleChange(newItems);
   };
 
-  const handleValueChange = (value, changedIndex) => {
-    const changedData = items.map((item, index) => {
-      if (changedIndex === index) return value;
+  const handleValueChange = (cardValue, changedIndex) => {
+    const changedData = value?.map((item, index) => {
+      if (changedIndex === index) return cardValue;
       return item;
     });
-    setItems(changedData);
-    // setItems([...items, { ...changedData, ...value }]); ///***************************         */
-    handleChange(items);
+    handleChange(changedData);
   };
 
   return (
     <div className={classes.container}>
-      {" "}
-      <div className="flex wrap">
-        {items?.map((item, index) => (
-          <Card
-            id={index}
-            values={item}
-            onChange={handleValueChange}
-            handleDeleteItem={handleDeleteItem}
-          />
+      <div className={classes.inputLabel}>
+        <p className={classes.label}>{label} </p>
+        {required && <p className={classes.requiredMessage}>(الزامی)</p>}
+        <div className="h-5 w-20 mr-3">
+          <Button
+            selected
+            isDisabled={value?.length >= maxItem}
+            onClick={handleAddItem}
+          >
+            افزودن
+          </Button>
+        </div>
+      </div>
+      <hr className="mb-5" />
+      <Grid container wrap="wrap" spacing={3}>
+        {value?.map((item, index) => (
+          <Grid item lg={4} xs={12}>
+            <Card
+              errorMessage={errorMessage && errorMessage[index]}
+              id={index}
+              values={item}
+              onChange={handleValueChange}
+              handleDeleteItem={handleDeleteItem}
+            />
+          </Grid>
         ))}
-      </div>
-      <div>
-        <Button
-          selected
-          isDisabled={items?.length >= maxItem}
-          onClick={addNewItem}
-        >
-          Add new Item
-        </Button>
-      </div>
+        <Grid item md={4} xs={12}></Grid>
+      </Grid>
     </div>
   );
 };
 
 export default OptionPlus;
 const useStyle = makeStyles((theme) => ({
+  inputLabel: {
+    color: theme.palette.text.primary,
+    margin: "0.5rem 0",
+    display: "flex",
+    // justifyContent: "flex-start",
+    fontFamily: "Vazir",
+    direction: "rtl",
+    fontWeight: "bold",
+    marginBottom: "0.5rem",
+    paddingBottom: "1rem",
+  },
+  requiredMessage: {
+    color: theme.palette.secondary.main,
+    fontSize: "0.75rem",
+    marginRight: "0.5rem",
+  },
   label: {
     color: theme.palette.text.primary,
     marginBottom: "0.5rem",
-    direction: "rtl",
     fontFamily: "Vazir",
     fontWeight: "bold",
     fontSize: "1.25rem",

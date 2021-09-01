@@ -8,7 +8,13 @@ import { useMutation } from "react-query";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import { useAlert } from "../../services/context/AlertContext/index";
 
-const Item = ({ id, values, onChange: handleChange, handleDeleteItem }) => {
+const Item = ({
+  id,
+  values,
+  onChange: handleChange,
+  handleDeleteItem,
+  errorMessage,
+}) => {
   const classes = useStyle();
   const alert = useAlert();
 
@@ -28,6 +34,7 @@ const Item = ({ id, values, onChange: handleChange, handleDeleteItem }) => {
         <TextInput
           type="text"
           label="عنوان"
+          errorMessage={errorMessage?.text}
           onChange={(e) =>
             handleChange({ ...values, title: e?.target.value }, id)
           }
@@ -35,6 +42,7 @@ const Item = ({ id, values, onChange: handleChange, handleDeleteItem }) => {
         <UploadInput
           id={id}
           label="تصویر"
+          errorMessage={errorMessage?.image}
           files={
             values.image ? [{ src: values?.image, id: values?.image }] : []
           }
@@ -52,7 +60,7 @@ const Item = ({ id, values, onChange: handleChange, handleDeleteItem }) => {
         <div className="mt-5">
           <TextArea
             label="متن"
-            required
+            errorMessage={errorMessage?.text}
             onChange={(e) =>
               handleChange({ ...values, text: e?.target.value }, id)
             }
@@ -83,7 +91,7 @@ export default Item;
 
 const useStyle = makeStyles((theme) => ({
   container: {
-    minWidth: "22rem",
+    // minWidth: "20rem",
     direction: "ltr",
     border: `2px solid ${theme.palette.grey[200]}`,
     borderRadius: "0.5rem",

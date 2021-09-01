@@ -22,7 +22,7 @@ const ArtistsPage = () => {
   const [search, setSearch] = React.useState(undefined);
 
   const getArtistsData = async () => {
-    const res = await axios.get("/artist/all?page=2&limit=10");
+    const res = await axios.get("/artist/all?page=5&limit=10");
     return res.data;
   };
   const { data, status } = useQuery("/artist/all", getArtistsData);

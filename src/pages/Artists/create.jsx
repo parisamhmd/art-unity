@@ -6,7 +6,7 @@ import InputField from "../../components/FormicFields/TextInputField";
 import SingleDropdownField from "../../components/FormicFields/SingleDropdownField";
 import TextAreaField from "../../components/FormicFields/TextAreaField";
 import UploadFileField from "../../components/FormicFields/UploadFileField";
-import OptionPlus from "../../components/OptionPlus.jsx";
+import OptionPlusField from "../../components/FormicFields/OptionPlusField";
 import PageDetailLayout from "../../components/Layout/PageDetailLayout";
 import QuoteField from "../../components/FormicFields/QuoteField";
 import { useAlert } from "../../services/context/AlertContext/index";
@@ -96,12 +96,19 @@ const CreateArtistPage = () => {
         text: Yup.string().required("این فیلد الزامی است"),
         qouteTeller: Yup.string().required("این فیلد الزامی است"),
       }),
-      avatarImage: Yup.string().required("این فیلد الزامی است"),
-      headerImage: Yup.string().required("این فیلد الزامی است"),
+      avatarImage: Yup.array().required("این فیلد الزامی است"),
+      headerImage: Yup.array().required("این فیلد الزامی است"),
     });
 
-  const handleCreate = () => {
-    create();
+  const handleCreate = (v) => {
+    const data = {
+      ...v,
+      avatarImage: v.avatarImage[0],
+      headerImage: v.headerImage[0],
+      occupation: v.occupation.value,
+    };
+    console.log(data);
+    create(data);
   };
   return (
     <div className="bg-white p-10 ">
@@ -190,14 +197,11 @@ const CreateArtistPage = () => {
                 <QuoteField name="favQoute" label="نقل قول" required />
               </Grid>
               <Grid item xs={11} className="w-full">
-                <OptionPlus
-                  name="myLife"
+                <OptionPlusField
+                  name="lifeRoute"
                   label="زندگی من"
+                  required
                   maxItem={5}
-                  value={[{ image: "", text: "fdf", title: "fj" }]}
-                  onChange={(e) => {
-                    console.log(e);
-                  }}
                 />
               </Grid>
               <Grid item xs={11} />
