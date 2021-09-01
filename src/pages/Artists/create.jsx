@@ -29,10 +29,10 @@ const CreateArtistPage = () => {
   };
   const { data: occupations } = useQuery("/occupation/all", getArtTopicsData);
 
-  const createTopic = async (data) => {
+  const createArtist = async (data) => {
     await axios.post("/admin/artist/create", data);
   };
-  const { mutate: create } = useMutation(createTopic, {
+  const { mutate: create } = useMutation(createArtist, {
     onSuccess: () => {
       history.push("/artists");
       alert.success({ text: "هنرمند با موفقیت افزوده شد" });

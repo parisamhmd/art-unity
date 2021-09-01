@@ -36,9 +36,10 @@ const CustomField = ({ label, ...props }) => {
       </Grid>
       <Grid item md={5} xs={11}>
         <TextInput
-          type="qouteTeller"
+          type="text"
           errorMessage={error?.qouteTeller}
           required
+          value={field.value.qouteTeller}
           label="گوینده"
           onChange={(e) =>
             setValue({ ...field.value, qouteTeller: e?.target.value })
@@ -47,9 +48,10 @@ const CustomField = ({ label, ...props }) => {
       </Grid>
       <Grid item md={5} xs={11}>
         <TextInput
-          type="occupation"
+          type="text"
           errorMessage={error?.occupation}
           required
+          value={field.value.occupation}
           label="حرفه"
           onChange={(e) =>
             setValue({ ...field.value, occupation: e?.target.value })
@@ -63,7 +65,7 @@ const CustomField = ({ label, ...props }) => {
           required
           errorMessage={error?.image}
           files={
-            field.value.image
+            field.value?.image
               ? [{ src: field.value?.image, id: field.value?.image }]
               : []
           }
@@ -84,6 +86,7 @@ const CustomField = ({ label, ...props }) => {
         <TextArea
           errorMessage={error?.text}
           label="متن"
+          value={field.value.text}
           required
           onChange={(e) => setValue({ ...field.value, text: e?.target.value })}
         />{" "}

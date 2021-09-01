@@ -19,9 +19,6 @@ const SingleCategoryPage = () => {
   const classes = useStyle();
   const alert = useAlert();
 
-  const [loading, setLoading] = React.useState(false);
-  const [files, setFile] = React.useState([]);
-
   const getCategoryData = async () => {
     const res = await axios.get(`admin/artCategory/${id}/`);
     return res.data;
@@ -55,21 +52,10 @@ const SingleCategoryPage = () => {
     onError: (error) => {},
   });
 
-  const uploadFile = async (data) => {
-    const res = await axios.post("/admin/upload?type=art", data);
-    return res.data;
-  };
-  const { mutate: upload } = useMutation(uploadFile, {
-    onSuccess: (data) => {
-      setFile([...files, data.url]);
-      setLoading(false);
-    },
-  });
-
   const defaultInitialValues = {
     name: "",
     artTopic: [],
-    image: files,
+    image: [],
   };
 
   const validationSchema = () =>
@@ -97,7 +83,7 @@ const SingleCategoryPage = () => {
             artTopic: initialData?.artTopic?.map(
               ({ _id: value, name: label }) => ({ value, label })
             ),
-            image: files /**maybe This is wrong! */,
+            image: [initialData?.image] /**maybe This is wrong! */,
           } || defaultInitialValues
         }
         onSubmit={(values, formikHelpers) => {

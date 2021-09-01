@@ -33,6 +33,7 @@ const CustomField = ({ label, ...props }) => {
         errorMessage={error?.url}
         required
         label="آدرس"
+        value={field.value?.url}
         onChange={(e) => setValue({ ...field.value, url: e?.target.value })}
       />
       <div>
@@ -42,7 +43,7 @@ const CustomField = ({ label, ...props }) => {
           required
           errorMessage={error?.image}
           files={
-            field.value.image
+            field.value?.image
               ? [{ src: field.value?.image, id: field.value?.image }]
               : []
           }
@@ -64,6 +65,7 @@ const CustomField = ({ label, ...props }) => {
           errorMessage={error?.text}
           label="متن"
           required
+          value={field.value?.text}
           onChange={(e) => setValue({ ...field.value, text: e?.target.value })}
         />{" "}
       </div>

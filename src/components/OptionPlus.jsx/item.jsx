@@ -34,6 +34,7 @@ const Item = ({
         <TextInput
           type="text"
           label="عنوان"
+          value={values?.title}
           errorMessage={errorMessage?.text}
           onChange={(e) =>
             handleChange({ ...values, title: e?.target.value }, id)
@@ -61,6 +62,7 @@ const Item = ({
           <TextArea
             label="متن"
             errorMessage={errorMessage?.text}
+            value={values?.text}
             onChange={(e) =>
               handleChange({ ...values, text: e?.target.value }, id)
             }
