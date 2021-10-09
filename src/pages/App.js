@@ -24,6 +24,8 @@ import SkillsPage from "./Skills";
 import CreateSkillsPage from "./Skills/create";
 import SingleSkillsPage from "./Skills/detail";
 import BlogPage from "./Blog";
+import CreateBlogPage from "./Blog/create";
+import SingleBlogPage from "./Blog/detail";
 import ArtWorksPage from "./ArtWorks/index";
 import CreateArtWorkPage from "./ArtWorks/create";
 import SingleArtWorkPage from "./ArtWorks/detail";
@@ -149,12 +151,31 @@ function App() {
                   </Layout>
                 )}
               />
+              {/* Blog */}
               <Route
                 exact
-                path="/blog"
+                path="/blogs"
                 render={() => (
                   <Layout>
                     <BlogPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/blogs/create"
+                render={() => (
+                  <Layout>
+                    <CreateBlogPage />
+                  </Layout>
+                )}
+              />
+              <Route
+                exact
+                path="/blogs/:id"
+                render={() => (
+                  <Layout>
+                    <SingleBlogPage />
                   </Layout>
                 )}
               />

@@ -2,11 +2,11 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "../../components/Table";
 import PageLayout from "../../components/Layout/PageListLayout";
+import ArtistsFormModal from "../../components/Modal/ArtistsFormModal";
 import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import filter from "../../services/utils/filter";
 import { useAlert } from "../../services/context/AlertContext/index";
-import { useHistory } from "react-router-dom";
 
 const useStyle = makeStyles((theme) => ({
   container: {},
@@ -15,7 +15,6 @@ const useStyle = makeStyles((theme) => ({
 const BlogPage = () => {
   const classes = useStyle();
   const alert = useAlert();
-  const history = useHistory();
   const queryClient = useQueryClient();
   const [search, setSearch] = React.useState(undefined);
 
@@ -46,15 +45,15 @@ const BlogPage = () => {
       <div className="bg-white p-10">
         <PageLayout
           addButtonTitle="ایجاد بلاگ جدید"
-          searchInputPlaceholder="بر روی عنوان تاپیک ها سرچ کنید "
+          searchInputPlaceholder="بر روی اسم نویسنده ها سرچ کنید "
           searchValue={search}
           onSearchInputChange={(e) => {
             setSearch(e);
           }}
-          onAddButtonClick={() => {
-            history.push("/blogs/create");
-          }}
-        />
+        >
+          <ArtistsFormModal />
+          {/* Modal Component */}
+        </PageLayout>
         <Table
           tableHeaderData={[
             { title: "عنوان", value: "title" },

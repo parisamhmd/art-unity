@@ -10,6 +10,7 @@ import axios from "axios";
 import * as Yup from "yup";
 import { useMutation } from "react-query";
 import { useHistory } from "react-router-dom";
+import Editor from "../../components/Editor";
 
 const CreateTopicPage = () => {
   const history = useHistory();
@@ -61,6 +62,7 @@ const CreateTopicPage = () => {
               <Grid item xs={12} className="w-full">
                 <InputField name="name" label="نام" required />
               </Grid>
+              <Editor />
               <div className="flex flex-col items-center gap-4  mt-9 w-60">
                 <Button type="submit" selected children="ایجاد" />
               </div>

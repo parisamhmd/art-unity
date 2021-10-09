@@ -71,7 +71,7 @@ const SingleCategoryPage = () => {
 
   return (
     <div className="bg-white p-10 ">
-      <PageDetailLayout title="افزودن طبقه‌بندی جدید" />
+      <PageDetailLayout title="ویرایش طبقه‌بندی جدید" />
       <Formik
         enableReinitialize
         validateOnBlur={false}
@@ -83,7 +83,7 @@ const SingleCategoryPage = () => {
             artTopic: initialData?.artTopic?.map(
               ({ _id: value, name: label }) => ({ value, label })
             ),
-            image: [initialData?.image] /**maybe This is wrong! */,
+            image: initialData?.image ? [initialData?.image] : [],
           } || defaultInitialValues
         }
         onSubmit={(values, formikHelpers) => {

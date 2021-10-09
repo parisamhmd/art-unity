@@ -27,7 +27,7 @@ export const routes = [
     icon: <StarIcon />,
   },
   {
-    path: "/blog",
+    path: "/blogs",
     title: "بلاگ",
     icon: <FavoriteIcon />,
   },
