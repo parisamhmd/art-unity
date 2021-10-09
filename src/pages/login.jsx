@@ -1,0 +1,101 @@
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "../components/Button";
+import logo from "../services/assets/Img/Logo/logo.svg";
+import MailOutlineIcon from "@material-ui/icons/Person";
+import TextInput from "../components/TextInput";
+import { useMutation } from "react-query";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useHistory } from "react-router-dom";
+import { useAlert } from "../services/context/AlertContext";
+
+const LoginPage = () => {
+  const classes = useStyle();
+  const history = useHistory();
+  const alert = useAlert();
+
+  const [number, setNumber] = React.useState("");
+
+  const { mutate: login } = useMutation(
+    (newUser) =>
+      axios.post("/admin/login", {
+        phoneNumber: number.slice(1, 11),
+      }),
+    {
+      onSuccess: (response) => {
+        Cookies.set("token", response.data.token);
+        history.push("/");
+      },
+      onError: (error) => {
+        if (error.response.status === 404)
+          alert.error({ text: "کاربری با این شماره تلفن یافت نشد" });
+      },
+    }
+  );
+  return (
+    <div className={classes.container}>
+      <div className={classes.box}>
+        <img
+          style={{ height: "6rem", width: "20rem" }}
+          src={logo}
+          alt="art-unity"
+        />
+        <div className="border-t-2 mt-4">
+          <p className={classes.text}>ورود به پنل کاربری ادمین</p>
+          <div className="mb-2">
+            <TextInput
+              placeholder="09XXXXXXXXX"
+              value={number}
+              icon={<MailOutlineIcon />}
+              type="text"
+              label="تلفن همراه"
+              isNumber
+              onChange={(event) => {
+                const e = event.target.value;
+                e?.length < 12 && setNumber(e);
+              }}
+            />
+          </div>
+          <Button
+            disabled={number.length < 11}
+            onClick={() => {
+              login();
+            }}
+          >
+            ورود
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoginPage;
+
+const useStyle = makeStyles((theme) => ({
+  container: {
+    backgroundColor: "#D9D9D9",
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+  },
+  box: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    height: "26rem",
+    marginTop: "7rem",
+    padding: "2rem 3rem",
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey[100]}`,
+    borderRadius: "5px",
+  },
+  text: {
+    fontFamily: "Vazir",
+    fontWeight: "bold",
+    color: theme.palette.text.primary,
+    fontSize: "1.875rem",
+    margin: "1rem 0 2rem 0",
+  },
+}));

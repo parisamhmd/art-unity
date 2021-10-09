@@ -1,0 +1,77 @@
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Grid } from "@material-ui/core";
+import Button from "../../components/Button";
+import InputField from "../../components/FormicFields/TextInputField";
+import PageDetailLayout from "../../components/Layout/PageDetailLayout";
+import { useAlert } from "../../services/context/AlertContext/index";
+import { Form, Formik } from "formik";
+import axios from "axios";
+import * as Yup from "yup";
+import { useMutation } from "react-query";
+import { useHistory } from "react-router-dom";
+
+const CreateSkillPage = () => {
+  const history = useHistory();
+  const classes = useStyle();
+  const alert = useAlert();
+
+  const createTopic = async (data) => {
+    await axios.post("/admin/occupation/create", data);
+  };
+
+  const { mutate: create } = useMutation(createTopic, {
+    onSuccess: () => {
+      history.push("/skills");
+      alert.success({ text: "حرفه با موفقیت افزوده شد" });
+    },
+    onError: (error) => {},
+  });
+
+  const defaultInitialValues = {
+    name: "",
+  };
+
+  const validationSchema = () =>
+    Yup.object({
+      name: Yup.string().required("این فیلد الزامی است"),
+    });
+
+  return (
+    <div className="bg-white p-10 ">
+      <PageDetailLayout title="افزودن حرفه جدید" />
+      <Formik
+        enableReinitialize
+        validateOnBlur={false}
+        validateOnChange={false}
+        validationSchema={validationSchema}
+        initialValues={defaultInitialValues}
+        onSubmit={(values, formikHelpers) => {
+          create(values);
+        }}
+      >
+        {() => (
+          <Form>
+            <Grid
+              container
+              direction="column"
+              alignItems="center"
+              style={{ direction: "ltr" }}
+            >
+              <Grid item xs={12} className="w-full">
+                <InputField name="name" label="نام" required />
+              </Grid>
+              <div className="flex flex-col items-center gap-4  mt-9 w-60">
+                <Button type="submit" selected children="ایجاد" />
+              </div>
+            </Grid>
+          </Form>
+        )}
+      </Formik>
+    </div>
+  );
+};
+
+export default CreateSkillPage;
+
+const useStyle = makeStyles((theme) => ({}));
